@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{8BF24C6F-2997-4E7E-963C-5EBDCA278807}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>SDL2</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SDL2.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SDL2</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SDL2.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SDL2</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">SDL2.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">SDL2</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">SDL2.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">SDL2</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR="Debug";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR=\"Debug\";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/Debug/SDL2.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/Debug/SDL2.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR="Release";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR=\"Release\";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/Release/SDL2.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/Release/SDL2.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR="MinSizeRel";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR=\"MinSizeRel\";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/MinSizeRel/SDL2.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/MinSizeRel/SDL2.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR="RelWithDebInfo";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;USING_GENERATED_CONFIG_H;CMAKE_INTDIR=\"RelWithDebInfo\";SDL2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\include;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/RelWithDebInfo/SDL2.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/RelWithDebInfo/SDL2.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3 -BC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build --check-stamp-file C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GNU-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeClDeps.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompilerABI.c;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckFunctionExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceRuns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckTypeSize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckStructHasMember.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDependentOption.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPkgConfig.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\macros.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\sdlchecks.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include\SDL_config.h.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3 -BC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build --check-stamp-file C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GNU-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeClDeps.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompilerABI.c;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckFunctionExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceRuns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckTypeSize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckStructHasMember.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDependentOption.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPkgConfig.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\macros.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\sdlchecks.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include\SDL_config.h.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3 -BC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build --check-stamp-file C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GNU-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeClDeps.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompilerABI.c;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckFunctionExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceRuns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckTypeSize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckStructHasMember.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDependentOption.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPkgConfig.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\macros.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\sdlchecks.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include\SDL_config.h.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3 -BC:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build --check-stamp-file C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\GNU-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeFindBinUtils.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeClDeps.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompilerABI.c;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCCompiler.cmake.in;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\3.3.1\CMakeCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckFunctionExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckLibraryExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckSymbolExists.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceRuns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckTypeSize.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFile.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckIncludeFileCXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckStructHasMember.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeDependentOption.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPkgConfig.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.3\Modules\CMakeParseArguments.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\macros.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\cmake\sdlchecks.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\include\SDL_config.h.cmake;C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Duncan\Downloads\SDL2-2.0.3\SDL2-2.0.3\build\CMakeFiles\generate.stamp</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\SDL.c"  />
+    <ClCompile Include="..\src\SDL_assert.c"  />
+    <ClCompile Include="..\src\SDL_error.c"  />
+    <ClCompile Include="..\src\SDL_hints.c"  />
+    <ClCompile Include="..\src\SDL_log.c"  />
+    <ClCompile Include="..\src\atomic\SDL_atomic.c"  />
+    <ClCompile Include="..\src\atomic\SDL_spinlock.c"  />
+    <ClCompile Include="..\src\audio\SDL_audio.c"  />
+    <ClCompile Include="..\src\audio\SDL_audiocvt.c"  />
+    <ClCompile Include="..\src\audio\SDL_audiodev.c"  />
+    <ClCompile Include="..\src\audio\SDL_audiotypecvt.c"  />
+    <ClCompile Include="..\src\audio\SDL_mixer.c"  />
+    <ClCompile Include="..\src\audio\SDL_wave.c"  />
+    <ClCompile Include="..\src\cpuinfo\SDL_cpuinfo.c"  />
+    <ClCompile Include="..\src\dynapi\SDL_dynapi.c"  />
+    <ClCompile Include="..\src\events\SDL_clipboardevents.c"  />
+    <ClCompile Include="..\src\events\SDL_dropevents.c"  />
+    <ClCompile Include="..\src\events\SDL_events.c"  />
+    <ClCompile Include="..\src\events\SDL_gesture.c"  />
+    <ClCompile Include="..\src\events\SDL_keyboard.c"  />
+    <ClCompile Include="..\src\events\SDL_mouse.c"  />
+    <ClCompile Include="..\src\events\SDL_quit.c"  />
+    <ClCompile Include="..\src\events\SDL_touch.c"  />
+    <ClCompile Include="..\src\events\SDL_windowevents.c"  />
+    <ClCompile Include="..\src\file\SDL_rwops.c"  />
+    <ClCompile Include="..\src\libm\e_atan2.c"  />
+    <ClCompile Include="..\src\libm\e_log.c"  />
+    <ClCompile Include="..\src\libm\e_pow.c"  />
+    <ClCompile Include="..\src\libm\e_rem_pio2.c"  />
+    <ClCompile Include="..\src\libm\e_sqrt.c"  />
+    <ClCompile Include="..\src\libm\k_cos.c"  />
+    <ClCompile Include="..\src\libm\k_rem_pio2.c"  />
+    <ClCompile Include="..\src\libm\k_sin.c"  />
+    <ClCompile Include="..\src\libm\s_atan.c"  />
+    <ClCompile Include="..\src\libm\s_copysign.c"  />
+    <ClCompile Include="..\src\libm\s_cos.c"  />
+    <ClCompile Include="..\src\libm\s_fabs.c"  />
+    <ClCompile Include="..\src\libm\s_floor.c"  />
+    <ClCompile Include="..\src\libm\s_scalbn.c"  />
+    <ClCompile Include="..\src\libm\s_sin.c"  />
+    <ClCompile Include="..\src\render\SDL_d3dmath.c"  />
+    <ClCompile Include="..\src\render\SDL_render.c"  />
+    <ClCompile Include="..\src\render\SDL_yuv_mmx.c"  />
+    <ClCompile Include="..\src\render\SDL_yuv_sw.c"  />
+    <ClCompile Include="..\src\render\direct3d\SDL_render_d3d.c"  />
+    <ClCompile Include="..\src\render\direct3d11\SDL_render_d3d11.c"  />
+    <ClCompile Include="..\src\render\opengl\SDL_render_gl.c"  />
+    <ClCompile Include="..\src\render\opengl\SDL_shaders_gl.c"  />
+    <ClCompile Include="..\src\render\opengles\SDL_render_gles.c"  />
+    <ClCompile Include="..\src\render\opengles2\SDL_render_gles2.c"  />
+    <ClCompile Include="..\src\render\opengles2\SDL_shaders_gles2.c"  />
+    <ClCompile Include="..\src\render\psp\SDL_render_psp.c"  />
+    <ClCompile Include="..\src\render\software\SDL_blendfillrect.c"  />
+    <ClCompile Include="..\src\render\software\SDL_blendline.c"  />
+    <ClCompile Include="..\src\render\software\SDL_blendpoint.c"  />
+    <ClCompile Include="..\src\render\software\SDL_drawline.c"  />
+    <ClCompile Include="..\src\render\software\SDL_drawpoint.c"  />
+    <ClCompile Include="..\src\render\software\SDL_render_sw.c"  />
+    <ClCompile Include="..\src\render\software\SDL_rotate.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_getenv.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_iconv.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_malloc.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_qsort.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_stdlib.c"  />
+    <ClCompile Include="..\src\stdlib\SDL_string.c"  />
+    <ClCompile Include="..\src\thread\SDL_thread.c"  />
+    <ClCompile Include="..\src\timer\SDL_timer.c"  />
+    <ClCompile Include="..\src\video\SDL_blit.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_0.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_1.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_A.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_auto.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_copy.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_N.c"  />
+    <ClCompile Include="..\src\video\SDL_blit_slow.c"  />
+    <ClCompile Include="..\src\video\SDL_bmp.c"  />
+    <ClCompile Include="..\src\video\SDL_clipboard.c"  />
+    <ClCompile Include="..\src\video\SDL_egl.c"  />
+    <ClCompile Include="..\src\video\SDL_fillrect.c"  />
+    <ClCompile Include="..\src\video\SDL_pixels.c"  />
+    <ClCompile Include="..\src\video\SDL_rect.c"  />
+    <ClCompile Include="..\src\video\SDL_RLEaccel.c"  />
+    <ClCompile Include="..\src\video\SDL_shape.c"  />
+    <ClCompile Include="..\src\video\SDL_stretch.c"  />
+    <ClCompile Include="..\src\video\SDL_surface.c"  />
+    <ClCompile Include="..\src\video\SDL_video.c"  />
+    <ClCompile Include="..\src\joystick\SDL_gamecontroller.c"  />
+    <ClCompile Include="..\src\joystick\SDL_joystick.c"  />
+    <ClCompile Include="..\src\haptic\SDL_haptic.c"  />
+    <ClCompile Include="..\src\power\SDL_power.c"  />
+    <ClCompile Include="..\src\audio\dummy\SDL_dummyaudio.c"  />
+    <ClCompile Include="..\src\audio\disk\SDL_diskaudio.c"  />
+    <ClCompile Include="..\src\video\dummy\SDL_nullevents.c"  />
+    <ClCompile Include="..\src\video\dummy\SDL_nullframebuffer.c"  />
+    <ClCompile Include="..\src\video\dummy\SDL_nullvideo.c"  />
+    <ClCompile Include="..\src\core\windows\SDL_windows.c"  />
+    <ClCompile Include="..\src\audio\winmm\SDL_winmm.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsclipboard.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsevents.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsframebuffer.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowskeyboard.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsmessagebox.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsmodes.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsmouse.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsopengl.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsopengles.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsshape.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowsvideo.c"  />
+    <ClCompile Include="..\src\video\windows\SDL_windowswindow.c"  />
+    <ClCompile Include="..\src\thread\windows\SDL_sysmutex.c"  />
+    <ClCompile Include="..\src\thread\windows\SDL_syssem.c"  />
+    <ClCompile Include="..\src\thread\windows\SDL_systhread.c"  />
+    <ClCompile Include="..\src\thread\windows\SDL_systls.c"  />
+    <ClCompile Include="..\src\thread\generic\SDL_syscond.c"  />
+    <ClCompile Include="..\src\power\windows\SDL_syspower.c"  />
+    <ClCompile Include="..\src\filesystem\windows\SDL_sysfilesystem.c"  />
+    <ClCompile Include="..\src\timer\windows\SDL_systimer.c"  />
+    <ClCompile Include="..\src\loadso\windows\SDL_sysloadso.c"  />
+    <ClCompile Include="..\src\joystick\windows\SDL_mmjoystick.c"  />
+    <ClCompile Include="..\src\haptic\dummy\SDL_syshaptic.c"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/ZERO_CHECK.vcxproj">
+      <Project>0CEDA1FA-2F61-4603-9368-639200B2B2FE</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

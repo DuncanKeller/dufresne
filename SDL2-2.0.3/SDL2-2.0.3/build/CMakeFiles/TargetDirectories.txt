@@ -1,0 +1,5 @@
+C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/CMakeFiles/SDL2-static.dir
+C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/CMakeFiles/SDL2.dir
+C:/Users/Duncan/Downloads/SDL2-2.0.3/SDL2-2.0.3/build/CMakeFiles/SDL2main.dir
