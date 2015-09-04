@@ -26,3 +26,18 @@
 *.exe
 *.out
 *.app
+
+# etc
+*.tlog
+*.unsuccessfulbuild
+*.lastbuildstate
+*.cache
+*.user
+*.manifest
+*.manifest.res
+*.manifest.rc
+*.log
+*.exp
+*.rc
+*.lastbuildstate
+*.res
