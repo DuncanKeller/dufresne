@@ -15,6 +15,26 @@ typedef int64_t int64;
 
 #define Pi32 3.14159265359
 
+struct Rectangle
+{
+	float left;
+	float right;
+	float top;
+	float bottom;
+};
+
+struct Vec2
+{
+	float x;
+	float y;
+};
+
+struct Vec3
+{
+	float x;
+	float y;
+	float z;
+};
 
 void dfAssert(bool);
 

@@ -14,8 +14,8 @@ public:
 	// TODO: replace temporary max with a dynamic array solution
 	static const int maxComponents = 5;
 	int numComponents;
-	DFComponent components[maxComponents];
+	dfComponent components[maxComponents];
 	
-	void RegisterComponent(DFComponent c);
-	DFComponent GetComponent(char* name);
+	void RegisterComponent(dfComponent c);
+	dfComponent* GetComponent(char* name);
 };

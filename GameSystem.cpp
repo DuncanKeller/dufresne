@@ -24,7 +24,7 @@ void GameSystem::Update()
 	}
 }
 
-void GameSystem::RegisterComponent(DFComponent newComponent)
+void GameSystem::RegisterComponent(dfComponent newComponent)
 {
 	if(numComponents < maxComponents - 1)
 	{
@@ -36,17 +36,15 @@ void GameSystem::RegisterComponent(DFComponent newComponent)
 		dfLog("max components reached... need to make dyanmic array, or better component storage solution");
 	}
 }
-/*
-TODO replace componenet system to use pointers so I can return null
-DFComponent GameSystem::GetComponent(char* name)
+
+dfComponent* GameSystem::GetComponent(char* name)
 {
 	for(int i = 0; i < numComponents; i++)
 	{
 		if(dfStrCmp(components[i].name, name))
 		{
-			return components[i];
+			return &components[i];
 		}
 	}
-	return 0;
+	return NULL;
 }
-*/

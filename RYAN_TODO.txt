@@ -1,0 +1,43 @@
+Some stuff that needs work - have at whatever you feel like. Prioritized from "least likely that I'll do it" to "I'll get around to it eventually"
+
+Emscripten
+-Self explanatory. Getting it into the project and such
+
+Package robustness
+-Right now asset manager just loads loose packages, so adding the ability to load a zip as a package,
+	and even load from the exe
+-Asset manager in general needs some cleaning up, so be warned. Probably no major changes to it
+	except for making everything use the same string class. You can think about the string
+	class we will use if you want to.
+
+Sound
+-Playwave doesn't compile for me, so I haven't been eager to work on this
+-Asset Manager can return a void* to the asset and the size of the memory block,
+	so a way to create a SDL music/sound file using that would be good
+	(doesn't actually need to interface with asset manager, just a method
+	like PlaySound(void* sound, int soundSize) would be cool
+-Basic features like looping for music, volume, stuff like that
+-Simpler the better, it would be nice to be able to call it from anywhere in the project
+	with input, I basically have it inherit from gameSystem.cpp, and will have a input obj
+	at global scope
+
+Tilemap Integration
+-Read in tilemap file and load info into a struct or something like that
+-Again, asset manager will be able to do the file IO and return the data as a void* + file size info,
+	so rely on that if it'll be easiest for you
+-Not sure what we want to store this as (component, game system, none of the above?) so some thought to that
+
+Meshes
+-Mesh class is a stub. Since we're doing 2D we mainly need a square, but
+	polygons would be nice too.
+-Needs to load verts and UV coords into a GL vertex buffer object.
+
+Component robustness
+-Component system if pretty bare-bones right now, and has a lot of stub code. 
+	Feel free to work on that if you'd like.
+
+Box2D integration
+-Self explanatory. 
+
+Basic collision stuff
+-Bounding box classes, collision detection code, etc
