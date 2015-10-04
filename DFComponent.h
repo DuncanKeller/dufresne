@@ -1,9 +1,9 @@
 #pragma once
-class DFComponent
+class dfComponent
 {
 public:
-	DFComponent(void);
-	~DFComponent(void);
+	dfComponent(void);
+	~dfComponent(void);
 
 	virtual void Init();
 	virtual void Update();

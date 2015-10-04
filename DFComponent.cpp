@@ -1,21 +1,21 @@
 #include "DFComponent.h"
 
 
-DFComponent::DFComponent(void)
+dfComponent::dfComponent(void)
 {
 }
 
 
-DFComponent::~DFComponent(void)
+dfComponent::~dfComponent(void)
 {
 }
 
-void DFComponent::Init()
+void dfComponent::Init()
 {
 
 }
 
-void DFComponent::Update()
+void dfComponent::Update()
 {
 
 }
