@@ -26,6 +26,123 @@ dfFile AssetManager::GetAsset(const wchar_t* key)
 	return assetMap[key];
 }
 
+void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
+{
+	const char* matchingVert = "!vert";
+	int matchingVertIndex = 0;
+	const char* matchingFrag = "!frag";
+	int matchingFragIndex = 0;
+	const char* matchingString = "uniform";
+	int strLen = dfStrLen(matchingString);
+	int matchingIndex = 0;
+	int numMatches = 0;
+
+	bool gettingLine = false;
+	dfBasicType lastType;
+	bool doneReadingType = false;
+	std::vector<char> currentType;
+
+	// todo cache strlen, shaders can be looong
+	for(int i = 0; i < dfStrLen(fullShaderSrc); i++)
+	{
+		// vert or frag
+		if(fullShaderSrc[i] == matchingVert[matchingVertIndex])
+		{
+			matchingVertIndex++;
+			if(matchingVertIndex == 5) // length of "!vert" or "!frag"
+			{
+				shader.vertFragType = GL_VERTEX_SHADER;
+			}
+		}
+		if(fullShaderSrc[i] == matchingFrag[matchingFragIndex])
+		{
+			matchingFragIndex++;
+			if(matchingFragIndex == 5) // length of "!vert" or "!frag"
+			{
+				shader.vertFragType = GL_FRAGMENT_SHADER; 
+			}
+		}
+
+		if(fullShaderSrc[i] == matchingString[matchingIndex])
+		{
+			matchingIndex++;
+			if(matchingIndex == strLen)
+			{
+				// match found, add line to list
+				gettingLine = true;
+				matchingIndex = 0;
+				UniformInfo newInfo;			
+				shader.uniforms.push_back(newInfo);
+				continue;
+			}
+		}
+		if(gettingLine)
+		{
+
+			if(!doneReadingType) // need to get shader type
+			{
+				if(fullShaderSrc[i] != ' ') // reading shader type
+				{
+					currentType.push_back(fullShaderSrc[i]);
+				}
+				else if(currentType.size() > 0) // done reading type
+				{
+					shader.uniforms[numMatches].type = dfGetTypeFromString(currentType);
+					lastType = shader.uniforms[numMatches].type;
+
+					doneReadingType = true;
+					currentType.clear();
+				}
+			}
+			else  // read in shader name
+			{
+				if(fullShaderSrc[i] != ' ') // reading shader type
+				{
+					if(fullShaderSrc[i] == ',') // new name, not end of line
+					{
+						shader.uniforms[numMatches].type = lastType;
+						numMatches++; 
+						UniformInfo newInfo;
+						shader.uniforms.push_back(newInfo);
+					}
+					else if(fullShaderSrc[i] == ';')  // new name, end of line
+					{
+						shader.uniforms[numMatches].type = lastType;
+						numMatches++; 
+
+						lastType = DF_null;
+						doneReadingType = false;
+						gettingLine = false;
+					}
+					else
+					{
+						shader.uniforms[numMatches].name.push_back(fullShaderSrc[i]);
+					}
+				}
+			}
+		}	
+	}
+}
+
+std::vector<wchar_t>  AssetManager::GetFileExtension(const wchar_t* fullFilename)
+{
+	int fullLength = dfStrLen(fullFilename);
+	int length = 0;
+	std::vector<wchar_t> result;
+	for(int i = fullLength; i > 0; i--)
+	{
+		if(fullFilename[i] == '.')
+		{
+			for(int j = i+1; j < fullLength; j++)
+			{
+				result.push_back(fullFilename[j]);
+			}
+		}
+	}
+
+	return result;
+}
+
 bool AssetManager::LoadLoosePackage(std::wstring path)
 {
 	HANDLE hFind = INVALID_HANDLE_VALUE;
@@ -154,6 +271,20 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 				assetMap[filename] = newAsset;
 				
 				loadLocation += filesizeOUT;
+
+				// check file type for extra stuff
+				std::vector<wchar_t> fileType = GetFileExtension(filename);
+				if(dfStrCmp(fileType, "glsl"))
+				{
+					ShaderInfo shader;
+					shader.vertFragType = 0;
+					shader.shaderFile = newAsset;
+
+					InitShader(newAsset.contents, shader);
+
+					shaders.push_back(shader);
+					shaderMap[filename] = shader;
+				}
 			}
 			else
 			{
