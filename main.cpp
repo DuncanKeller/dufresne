@@ -12,8 +12,8 @@
 
 #include "AssetManager.h"
 #include "Input.h"
-
-
+#include "TestGameSystem.h"
+#include "RenderSystem.h"
 
 void GameExit(int ReturnValue)
 {
@@ -67,6 +67,17 @@ int CALLBACK WinMain(
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		width, height, flags);
+
+
+	// init gl
+	SDL_GLContext glcontext;
+    glcontext = SDL_GL_CreateContext(screen);
+	GLint GlewInitResult = glewInit();
+	if (GlewInitResult != GLEW_OK) 
+	{
+		printf("ERROR: %s\n",glewGetErrorString(GlewInitResult));
+		GameExit( 1 );
+	}
 		
 	AssetManager am = AssetManager();
 	std::wstring path = L"fart\\";
@@ -76,10 +87,23 @@ int CALLBACK WinMain(
 
 	Input inp = Input();
 	inp.Init();
+
+	RenderSystem renderer = RenderSystem();
+	renderer.Init();
+
+	TestGameSystem test = TestGameSystem();
+	test.Init();
+
+	std::vector<GameSystem*> testRenderList;
+	testRenderList.push_back(&test);
 	
 	while(true)
 	{
 		inp.Update();
+
+		renderer.Update();
+
+		renderer.RenderLoop(&testRenderList);
 	}
 
 

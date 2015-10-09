@@ -6,8 +6,8 @@
 #include "STDUNC.h"
 #include <vector>
 #include <windows.h>
-//#include <GL/glut.h>
 #include <GL/GL.h>
+#include "MatMath.h"
 
 const int DF_MAX_UNIFORMS = 8;
 
@@ -18,6 +18,7 @@ struct ShaderUniform
 	int arrSize;
 	union
 	{
+		unsigned int* valueUInt;
 		int* valueInt;
 		float* valueFloat;
 		float* valueFloatArr[16];
@@ -31,8 +32,7 @@ struct RenderInfo
 	unsigned int glTexture;
 	Mesh mesh;
 	ShaderUniform uniforms[DF_MAX_UNIFORMS]; // todo dynamic arr, maybe?
-	// Shader info
-	// Texture info
+	mat4* matrix;
 };
 
 class Renderer :
@@ -46,7 +46,18 @@ public:
 
 	RenderInfo renderInfo;
 
+	void SetDefaultRenderInfo();
+
+	
+	static void InitDefaultShader();
+	
+
 	void Render();
+
+private:
+	static bool defaultShaderAssigned;
+	static unsigned int defaultShaderProgram;
+	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 };
 
 // todo - idea for renderer

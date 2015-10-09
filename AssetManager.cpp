@@ -28,6 +28,7 @@ dfFile AssetManager::GetAsset(const wchar_t* key)
 
 void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
 {
+	// TODO array support
 	const char* matchingVert = "!vert";
 	int matchingVertIndex = 0;
 	const char* matchingFrag = "!frag";

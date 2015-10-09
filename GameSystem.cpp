@@ -20,16 +20,16 @@ void GameSystem::Update()
 	dfAssert(numComponents < maxComponents);
 	for(int i = 0; i < numComponents; i++)
 	{
-		components[i].Update();
+		(*components[i]).Update();
 	}
 }
 
-void GameSystem::RegisterComponent(dfComponent newComponent)
+void GameSystem::RegisterComponent(dfComponent* newComponent)
 {
 	if(numComponents < maxComponents - 1)
 	{
 		components[++numComponents] = newComponent;
-		components[numComponents].Init();
+		(*components[numComponents]).Init();
 	}
 	else
 	{
@@ -37,13 +37,13 @@ void GameSystem::RegisterComponent(dfComponent newComponent)
 	}
 }
 
-dfComponent* GameSystem::GetComponent(char* name)
+dfComponent* GameSystem::GetComponentByName(char* name)
 {
 	for(int i = 0; i < numComponents; i++)
 	{
-		if(dfStrCmp(components[i].name, name))
+		if(dfStrCmp((*components[i]).name, name))
 		{
-			return &components[i];
+			return components[i];
 		}
 	}
 	return NULL;

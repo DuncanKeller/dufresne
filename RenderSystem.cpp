@@ -13,15 +13,7 @@ RenderSystem::~RenderSystem(void)
 
 void RenderSystem::Init()
 {
-	// create default shader program
-	defaultShaderProg = glCreateProgram();
-
-	unsigned int vs = CompileShader("layout(location = 0) in vec3 vertex_position;layout(location = 2) in vec2 in_texture_coordinates;out vec2 texture_coordinates;uniform mat4 model;uniform sampler2D basic_texture;void main () {texture_coordinates = in_texture_coordinates;gl_Position = model * vec4 (vertex_position, 1.0);}", GL_VERTEX_SHADER);
-	unsigned int fs = CompileShader("in vec2 texture_coordinates;uniform sampler2D basic_texture;out vec4 frag_color;void main () {vec4 texel = texture2D (basic_texture, texture_coordinates);frag_color = texel;}", GL_FRAGMENT_SHADER);
-
-	glAttachShader (defaultShaderProg, vs);
-	glAttachShader (defaultShaderProg, fs);
-	glLinkProgram (defaultShaderProg);
+	
 }
 
 void RenderSystem::Update()
@@ -29,10 +21,10 @@ void RenderSystem::Update()
 
 }
 
-unsigned int RenderSystem::CompileShader(const char* shader, GLuint type)
+unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 {
-	unsigned int shaderIndex = glCreateShader (type);
-	glShaderSource (shaderIndex, 1, &shader, NULL);
+	unsigned int shaderIndex = glCreateShader (shader.vertFragType);
+	glShaderSource (shaderIndex, 1, (const GLchar** )&shader.shaderFile.contents, NULL);
 	glCompileShader (shaderIndex);
 	int params = -1;
 	glGetShaderiv (shaderIndex, GL_COMPILE_STATUS, &params);
@@ -96,44 +88,51 @@ void RenderSystem::SortRenderBox(int boxIndex)
 	// todo implement
 }
 
-void RenderSystem::RenderLoop()
+// todo better way than just passing around big vector
+// needs to handle scene hirarchy eventually
+void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems) 
 {
+	// todo move into broader scope
 	int numberOfGroups = 20;
 	int sizeOfAGroup = 100;
 
-	// 1: add all render-able objects into render box
-	for(int i = 0; i < numberOfGroups; i++)
+	for(int sIndex = 0; sIndex < gameSystems->size(); sIndex++)
 	{
-		renderBox[i].clear();
-	}
-
-	for(int i = 0; i < 5 /* number of components */; i++)
-	{
-		if(true) // component has renderer
+		// 1: add all render-able objects into render box
+		for(int i = 0; i < renderBox.size(); i++)
 		{
-			//AddToRenderBox(thing);
+			renderBox[i].clear();
 		}
-	}
 
-	// 2: sort renderboxes by similar shader program
-	for(int i = 0; i < numberOfGroups; i++)
-	{
-		SortRenderBox(i);
-	}
-
-	// 3 render all boxes
-	unsigned int currentShaderProgram = 0;
-	bool firstRender = true;
-
-	for(int i = 0; i < numberOfGroups; i++)
-	{
-		for(int n = 0; n < (int)renderBox[i].size(); n++)
+		for(int i = 0; i < 5 /* number of components */; i++)
 		{
-			unsigned int newShaderProg = renderBox[i][n].glShaderProgram;
-			if(firstRender) // always set shader program for the first render
+			Renderer* renderer = (*gameSystems)[sIndex]->GetComponent<Renderer>();
+			if(renderer)
 			{
-				firstRender = false;
-				glUseProgram(newShaderProg);
+				AddToRenderBox(renderer->renderInfo);
+			}
+		}
+
+		// 2: sort renderboxes by similar shader program
+		for(int i = 0; i < numberOfGroups; i++)
+		{
+			SortRenderBox(i);
+		}
+
+		// 3 render all boxes
+		unsigned int currentShaderProgram = 0;
+		bool firstRender = true;
+
+		for(int i = 0; i < numberOfGroups; i++)
+		{
+			for(int n = 0; n < (int)renderBox[i].size(); n++)
+			{
+				unsigned int newShaderProg = renderBox[i][n].glShaderProgram;
+				if(firstRender) // always set shader program for the first render
+				{
+					firstRender = false;
+					glUseProgram(newShaderProg);
+				}
 				// update uniforms from list
 				for(int uIndex = 0; uIndex < DF_MAX_UNIFORMS; uIndex++) 
 				{
@@ -143,19 +142,20 @@ void RenderSystem::RenderLoop()
 						// todo implement a buncha deez fuckers
 						switch(renderBox[i][n].uniforms[uIndex].type)
 						{
-							case DF_int:
-								glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
-								break;
-							case DF_float:
-								glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
-								break;
-							case DF_float_arr:
-								dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
-								glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
-								break;
+						case DF_int:
+							glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
+							break;
+						case DF_float:
+							glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
+							break;
+						case DF_float_arr:
+							dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
+							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
+							break;
 						}
 					}
 				}
+
 
 				unsigned int newTexture = renderBox[i][n].glTexture;
 				glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
@@ -163,6 +163,7 @@ void RenderSystem::RenderLoop()
 
 				glBindVertexArray (renderBox[i][n].mesh.vertextArrayObject);
 				glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
+
 			}
 		}
 	}
