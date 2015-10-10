@@ -66,7 +66,7 @@ void RenderSystem::AddToRenderBox(RenderInfo r)
 
 	if((int)renderBox.size() <= r.depth)
 	{
-		for(int i = 0; i < r.depth - (int)renderBox.size(); i++)
+		for(int i = 0; i < (r.depth+1) - (int)renderBox.size(); i++)
 		{
 			std::vector<RenderInfo> newBox;
 			newBox.reserve(sizeOfAGroup);
@@ -123,7 +123,7 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 		unsigned int currentShaderProgram = 0;
 		bool firstRender = true;
 
-		for(int i = 0; i < numberOfGroups; i++)
+		for(int i = 0; i < renderBox.size(); i++)
 		{
 			for(int n = 0; n < (int)renderBox[i].size(); n++)
 			{

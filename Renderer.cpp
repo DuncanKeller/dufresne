@@ -46,7 +46,6 @@ void Renderer::Render()
 
 }
 
-
 unsigned int Renderer::CompileShaderFromSrc(const char* shader, GLuint type)
 {
 	unsigned int shaderIndex = glCreateShader (type);

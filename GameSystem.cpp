@@ -4,6 +4,10 @@
 GameSystem::GameSystem(void)
 {
 	numComponents = 0;
+	for(int i = 0; i < numComponents; i++)
+	{
+		components[i] = NULL;
+	}
 }
 
 
@@ -13,6 +17,7 @@ GameSystem::~GameSystem(void)
 
 void GameSystem::Init()
 {
+	
 }
 
 void GameSystem::Update()
@@ -28,8 +33,9 @@ void GameSystem::RegisterComponent(dfComponent* newComponent)
 {
 	if(numComponents < maxComponents - 1)
 	{
-		components[++numComponents] = newComponent;
+		components[numComponents] = newComponent;
 		(*components[numComponents]).Init();
+		numComponents++;
 	}
 	else
 	{

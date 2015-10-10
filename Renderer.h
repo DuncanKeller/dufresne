@@ -47,7 +47,6 @@ public:
 	RenderInfo renderInfo;
 
 	void SetDefaultRenderInfo();
-
 	
 	static void InitDefaultShader();
 	

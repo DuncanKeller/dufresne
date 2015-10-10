@@ -24,10 +24,11 @@ public:
 	dfComponent* GetComponentByName(char* name);
 	template<class T> T* GetComponent()
 	{
-		T* classInstance = NULL;
+		T* classInstance = NULL; 
 		for(int i = 0; i < numComponents; i++)
 		{
-			classInstance = (T*)(components[i]);
+			classInstance = dynamic_cast<T*>(components[i]);
+			//classInstance = (T*)(components[i]);
 			if(classInstance)
 			{
 				return classInstance;
