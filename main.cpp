@@ -10,10 +10,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "AssetManager.h"
+#include "dfBasic.h"
 #include "Input.h"
 #include "TestGameSystem.h"
 #include "RenderSystem.h"
+#include "AssetManager.h"
 
 void GameExit(int ReturnValue)
 {
@@ -79,11 +80,11 @@ int CALLBACK WinMain(
 		GameExit( 1 );
 	}
 		
-	AssetManager am = AssetManager();
+	assMan = AssetManager();
 	std::wstring path = L"fart\\";
-	am.CalculateLoosePackageSize(path);
-	am.LoadLoosePackage(path);
-	am.DebugTestWritePoolToFile();
+	assMan.CalculateLoosePackageSize(path);
+	assMan.LoadLoosePackage(path);
+	assMan.DebugTestWritePoolToFile();
 
 	Input inp = Input();
 	inp.Init();

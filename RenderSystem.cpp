@@ -152,6 +152,14 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 							dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
 							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
 							break;
+						case DF_mat4x4:
+							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, renderBox[i][n].uniforms[uIndex].valueFloat);
+							break;
+						case DF_sampler2D:
+							// todo: fart, I forget how to use thisss
+							//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
+							glUniform1i (uniformLoc, 0);
+							break;
 						}
 					}
 				}

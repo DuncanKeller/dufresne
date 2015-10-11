@@ -81,10 +81,12 @@ void Renderer::InitDefaultShader()
 void Renderer::SetDefaultRenderInfo()
 {
 	renderInfo.depth = 10;
+	renderInfo.glTexture = 0;
 	CreateDefaultMesh(&renderInfo.mesh);
 	renderInfo.glShaderProgram = defaultShaderProgram;
 	renderInfo.uniforms[0].type = DF_mat4x4;
 	renderInfo.uniforms[0].name = "model";
+	renderInfo.uniforms[0].valueFloat = &(renderInfo.matrix->m[0]);
 	renderInfo.uniforms[1].type = DF_sampler2D;
 	renderInfo.uniforms[1].name = "basic_texture";
 	renderInfo.uniforms[1].valueUInt = &renderInfo.glTexture;

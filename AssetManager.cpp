@@ -1,5 +1,6 @@
 #include "AssetManager.h"
 
+AssetManager assMan;
 
 AssetManager::AssetManager(void)
 {
@@ -21,9 +22,19 @@ void AssetManager::InitAssetPool(int size)
 	poolsize = size;
 }
 
+double AssetManager::GetHash(const wchar_t* filename)
+{
+	double hash = 0;
+	for(int i = 0; i < dfStrLen(filename); i++)
+	{
+		hash += i * filename[i];
+	}
+	return hash;
+}
+
 dfFile AssetManager::GetAsset(const wchar_t* key)
 {
-	return assetMap[key];
+	return assetMap[GetHash(key)];
 }
 
 void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
@@ -269,7 +280,8 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 				dfFile newAsset;
 				newAsset.size = filesizeOUT;
 				newAsset.contents = loadLocation;
-				assetMap[filename] = newAsset;
+				
+				assetMap[GetHash(filename)] = newAsset;
 				
 				loadLocation += filesizeOUT;
 
@@ -284,7 +296,7 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 					InitShader(newAsset.contents, shader);
 
 					shaders.push_back(shader);
-					shaderMap[filename] = shader;
+					shaderMap[(wchar_t*)filename] = shader;
 				}
 			}
 			else

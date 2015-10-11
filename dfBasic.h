@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "STDUNC.h"
 
 enum dfBasicType
 {
@@ -17,3 +18,4 @@ enum dfBasicType
 };
 
 dfBasicType dfGetTypeFromString(std::vector<char> str);
+

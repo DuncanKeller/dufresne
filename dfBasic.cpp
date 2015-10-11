@@ -1,5 +1,4 @@
 #include "dfBasic.h"
-#include "STDUNC.h"
 
 dfBasicType dfGetTypeFromString(std::vector<char> str)
 {
