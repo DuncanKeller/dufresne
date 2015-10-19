@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include <stdlib.h>
 #include "AssetManager.h"
+#include "SDL.h"
 
 class RenderSystem :
 	public GameSystem

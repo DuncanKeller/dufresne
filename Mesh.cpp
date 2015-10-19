@@ -55,18 +55,17 @@ void CreateDefaultMesh(Mesh *mesh)
 	glBufferData (GL_ARRAY_BUFFER, points.size() * sizeof (float), &points[0], GL_STATIC_DRAW);
 
 	// vbo uvs
-	unsigned int vbo_uvs = 0;
-	glGenBuffers(1, &vbo_uvs);
-	glBindBuffer (GL_ARRAY_BUFFER, vbo_uvs);
+	glGenBuffers(1, &mesh->uvBufferObject);
+	glBindBuffer (GL_ARRAY_BUFFER, mesh->uvBufferObject);
 	glBufferData (GL_ARRAY_BUFFER, uvcoords.size() * sizeof (float), &uvcoords[0], GL_STATIC_DRAW);
 
 	// vao
-	glGenVertexArrays (1, &mesh->vertextArrayObject);
-	glBindVertexArray (mesh->vertextArrayObject);
+	glGenVertexArrays (1, &mesh->vertexArrayObject);
+	glBindVertexArray (mesh->vertexArrayObject);
 	glEnableVertexAttribArray (0);
 	glEnableVertexAttribArray (1);
 	glBindBuffer (GL_ARRAY_BUFFER, mesh->vertexBufferObject);
     glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
-	glBindBuffer (GL_ARRAY_BUFFER, vbo_uvs);
+	glBindBuffer (GL_ARRAY_BUFFER, mesh->uvBufferObject);
     glVertexAttribPointer (1, 2, GL_FLOAT, GL_FALSE, 0, (GLubyte*)NULL);
 }

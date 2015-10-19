@@ -7,6 +7,7 @@
 #include <GL/GL.h>
 #include "dfBasic.h"
 #include "AssetManager.h"
+#include "SDL_image.h"
 
 class TestGameSystem :
 	public GameSystem

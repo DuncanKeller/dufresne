@@ -22,6 +22,7 @@ void TestGameSystem::Init()
 	render.renderInfo.matrix = &tf.matrix;
 
 	tf.matrix = MatMath::identity_mat4();
+	tf.SetScale(.7f,-.7f,1.f);
 	
 	render.renderInfo.uniforms[0].valueFloat = &(render.renderInfo.matrix->m[0]);
 
@@ -35,18 +36,31 @@ void TestGameSystem::Init()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture (GL_TEXTURE_2D, render.renderInfo.glTexture);
 
-	dfFile textureFile = assMan.GetAsset(L"fart\\testTexture.jpg");
+	dfFile textureFile = assMan.GetAsset(L"fart\\testTexture2.png");
+	SDL_RWops* textureWops = SDL_RWFromMem((void*)textureFile.contents, textureFile.size);
+	SDL_Surface *textureSurface = IMG_LoadTyped_RW(textureWops, 0, "PNG");
+	if(!textureSurface) {
+		const char* theFart = IMG_GetError();
+		dfLog((char*)IMG_GetError());
+		dfAssert(false); // could not create image asset
+	}
+
+	// gl texture params
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	glTexImage2D (
 	  GL_TEXTURE_2D,
 	  0,
-	  GL_RGB,
-	  400,
-	  390,
+	  GL_RGBA,
+	  256,
+	  192,
 	  0,
-	  GL_RGB,
+	  GL_RGBA,
 	  GL_UNSIGNED_BYTE,
-	  (unsigned char*)textureFile.contents
+	  textureSurface->pixels
 	);
 }
 

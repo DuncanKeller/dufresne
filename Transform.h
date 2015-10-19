@@ -16,6 +16,9 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetPos(Vec3 p);
 
+	void SetScale(float x, float y, float z);
+	void SetScale(Vec3 p);
+
 	void UpdateMatrix();
 
 	mat4 matrix;

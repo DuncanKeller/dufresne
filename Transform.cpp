@@ -3,6 +3,9 @@
 
 Transform::Transform(void)
 {
+	pos.x = 0; pos.y = 0; pos.z = 0;
+	scale.x = 1; scale.y = 1; scale.z = 1;
+	rotation.x = 0; rotation.y = 0; rotation.z = 0;
 }
 
 
@@ -27,25 +30,63 @@ void Transform::SetPos(Vec3 p)
 	UpdateMatrix();
 }
 
+void Transform::SetScale(float x, float y, float z)
+{
+	scale.x = x;
+	scale.y = y;
+	UpdateMatrix();
+}
+
+void Transform::SetScale(Vec3 p)
+{
+	scale.x = p.x;
+	scale.y = p.y;
+	UpdateMatrix();
+}
+
+
 void Transform::UpdateMatrix()
 {
-	matrix.m[0] = 0.f;
+	matrix.m[0] = scale.x;
+	matrix.m[1] = 0.f;
+	matrix.m[2] = 0.f;
+	matrix.m[3] = 0.f;
+
+	matrix.m[4] = 0.f;
+	matrix.m[5] = scale.y;
+	matrix.m[6] = 0.f;
+	matrix.m[7] = 0.f;
+
+	matrix.m[8] = 0.f;
+	matrix.m[9] = 0.f;
+	matrix.m[10] = 1.f;
+	matrix.m[11] = 0.f;
+
+	matrix.m[12] = pos.x;
+	matrix.m[13] = pos.y;
+	matrix.m[14] = pos.z;
+	matrix.m[15] = 1.f;
+}
+
+
+/*
+matrix.m[0] = scale.x;
 	matrix.m[1] = 0.f;
 	matrix.m[2] = 0.f;
 	matrix.m[3] = pos.x;
 
 	matrix.m[4] = 0.f;
-	matrix.m[5] = 0.f;
+	matrix.m[5] = scale.y;
 	matrix.m[6] = 0.f;
 	matrix.m[7] = pos.y;
 
 	matrix.m[8] = 0.f;
 	matrix.m[9] = 0.f;
-	matrix.m[10] = 0.f;
+	matrix.m[10] = 1.f;
 	matrix.m[11] = pos.z;
 
 	matrix.m[12] = 0.f;
 	matrix.m[13] = 0.f;
 	matrix.m[14] = 0.f;
-	matrix.m[15] = 0.f;
-}
+	matrix.m[15] = 1.f;
+	*/

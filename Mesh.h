@@ -8,9 +8,10 @@
 struct Mesh
 {
 	unsigned int numVerts;
-
+	
+	unsigned int vertexArrayObject;
 	unsigned int vertexBufferObject;
-	unsigned int vertextArrayObject;
+	unsigned int uvBufferObject;
 };
 
 void CreateDefaultMesh(Mesh *mesh);

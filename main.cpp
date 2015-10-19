@@ -9,6 +9,7 @@
 #include "SDL.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "SDL_image.h"
 
 #include "dfBasic.h"
 #include "Input.h"
@@ -69,6 +70,15 @@ int CALLBACK WinMain(
 		SDL_WINDOWPOS_UNDEFINED,
 		width, height, flags);
 
+	flags = IMG_INIT_JPG | IMG_INIT_PNG;
+	int initted = IMG_Init(flags);
+	if(initted & flags != flags) 
+	{
+		printf("Failed to Init SDL Image\n");
+		printf("IMG_Init: %s\n", IMG_GetError());
+		GameExit( 1 );
+		// handle error
+	}
 
 	// init gl
 	SDL_GLContext glcontext;
@@ -79,6 +89,7 @@ int CALLBACK WinMain(
 		printf("ERROR: %s\n",glewGetErrorString(GlewInitResult));
 		GameExit( 1 );
 	}
+	glEnable(GL_TEXTURE_2D);
 		
 	assMan = AssetManager();
 	std::wstring path = L"fart\\";
@@ -95,8 +106,21 @@ int CALLBACK WinMain(
 	TestGameSystem test = TestGameSystem();
 	test.Init();
 
+	TestGameSystem test2 = TestGameSystem();
+	test2.Init();
+	test2.tf.SetScale(1.6f,1.6f,1);
+	test2.render.renderInfo.depth = 2;
+
+	TestGameSystem test3 = TestGameSystem();
+	test3.Init();
+	test3.tf.SetScale(-.2f,-.2f,1);
+	test3.render.renderInfo.depth = 12;
+	test3.tf.SetPos(0,.5,0);
+
 	std::vector<GameSystem*> testRenderList;
 	testRenderList.push_back(&test);
+	testRenderList.push_back(&test2);
+	testRenderList.push_back(&test3);
 	
 	while(true)
 	{
@@ -105,6 +129,8 @@ int CALLBACK WinMain(
 		renderer.Update();
 
 		renderer.RenderLoop(&testRenderList);
+
+		SDL_GL_SwapWindow(screen);
 	}
 
 
