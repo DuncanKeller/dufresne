@@ -140,6 +140,7 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 			// update uniforms from list
 			for(int uIndex = 0; uIndex < DF_MAX_UNIFORMS; uIndex++) 
 			{
+				// todo log warning if it can't find the matching uniform name
 				if(renderBox[i][n].uniforms[uIndex].valueInt != 0) // todo is it OK just to check int, instead of depending on type?
 				{
 					int uniformLoc = glGetUniformLocation (newShaderProg, renderBox[i][n].uniforms[uIndex].name);
@@ -163,6 +164,21 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 						// todo: fart, I forget how to use thisss
 						//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
 						glUniform1i (uniformLoc, 0);
+						break;
+					case DF_vec2:
+						glUniform2f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+							renderBox[i][n].uniforms[uIndex].valueFloat[1]);
+						break;
+					case DF_vec3:
+						glUniform3f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+							renderBox[i][n].uniforms[uIndex].valueFloat[1],
+							renderBox[i][n].uniforms[uIndex].valueFloat[2]);
+						break;
+					case DF_vec4:
+						glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+							renderBox[i][n].uniforms[uIndex].valueFloat[1],
+							renderBox[i][n].uniforms[uIndex].valueFloat[2],
+							renderBox[i][n].uniforms[uIndex].valueFloat[3]);
 						break;
 					}
 				}

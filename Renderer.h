@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <GL/GL.h>
 #include "MatMath.h"
+#include "SDL.h"
 
 const int DF_MAX_UNIFORMS = 8;
 
@@ -48,6 +49,8 @@ public:
 
 	void SetDefaultRenderInfo();
 	
+	static void Renderer::PrintShaderLog(const unsigned int& index);
+	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static void InitDefaultShader();
 	
 
@@ -57,6 +60,12 @@ private:
 	static bool defaultShaderAssigned;
 	static unsigned int defaultShaderProgram;
 	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
+
+	
+	//test fields todo remove
+	float testRect[4];
+	float testResolution[2];
+	
 };
 
 // todo - idea for renderer

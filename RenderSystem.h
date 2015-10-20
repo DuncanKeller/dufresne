@@ -23,7 +23,7 @@ public:
 	unsigned int CompileShader(ShaderInfo shader);
 
 	std::vector<std::vector<RenderInfo>> renderBox;
-	
+
 
 };
 

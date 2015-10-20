@@ -24,7 +24,8 @@ void TestGameSystem::Init()
 	tf.matrix = MatMath::identity_mat4();
 	tf.SetScale(.7f,-.7f,1.f);
 	
-	render.renderInfo.uniforms[0].valueFloat = &(render.renderInfo.matrix->m[0]);
+	// was model matrix, now coords...
+	//render.renderInfo.uniforms[0].valueFloat = &(render.renderInfo.matrix->m[0]);
 
 	RegisterComponent(&render);
 
@@ -70,6 +71,7 @@ void TestGameSystem::Update()
 	GameSystem::Update();
 }
 
+// todo
 // notes
 // 1
 // render.renderInfo.matrix = &tf.matrix;
