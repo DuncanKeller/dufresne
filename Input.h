@@ -200,6 +200,7 @@ public:
 
 	void GamepadDisconnected(Gamepad*);
 
+	void HandleKeyboard(SDL_Keycode keycode, bool pressed);
 	void ProcessButton(ButtonState*, bool);
 
 	virtual void Init();

@@ -41,19 +41,19 @@ void Renderer::Update()
 	// todo git ridda dis testing shit
 	if(input.keyboard.arrowUp.buttonDown)
 	{
-		testRect[1] += 5;
+		testRect[1] += .01f;
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
-		testRect[1] -= 5;
+		testRect[1] -= .01f;
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
-		testRect[0] -= 5;
+		testRect[0] -= .01f;
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
-		testRect[0] += 5;
+		testRect[0] += .01f;
 	}
 }
 

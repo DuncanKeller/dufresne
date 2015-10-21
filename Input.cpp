@@ -72,7 +72,7 @@ void Input::ClearKeyboard(Keyboard* keys)
 {
 	for(int i = 0; i < MAX_KEYS_ON_KEYBOARD; i++)
 	{
-		ClearButttonState(&keys->buttonArray[i]);
+		keys->buttonArray[i].tapped = false;
 	}
 }
 
@@ -91,6 +91,373 @@ void Input::ProcessButton(ButtonState* btn, bool buttonDown)
 	btn->buttonDown = buttonDown;
 	if(!btn->lastFrameDown)
 		btn->tapped = true;
+}
+
+void Input::HandleKeyboard(SDL_Keycode keycode, bool pressed)
+{
+	switch( keycode )
+    {
+		case SDLK_BACKSPACE:
+			ProcessButton(&keyboard.backspace, pressed);
+		break;
+		case SDLK_TAB:
+			ProcessButton(&keyboard.tab, pressed);
+		break;
+		case SDLK_RETURN:
+			ProcessButton(&keyboard.enter, pressed);
+		break;
+		case SDLK_PAUSE:
+			ProcessButton(&keyboard.pauseBreak, pressed);
+		break;
+		case SDLK_ESCAPE:
+			ProcessButton(&keyboard.esc, pressed);
+		break;
+		case SDLK_SPACE:
+			ProcessButton(&keyboard.spacebar, pressed);
+		break;
+		case SDLK_QUOTEDBL:
+			ProcessButton(&keyboard.quotes, pressed);
+		break;
+		case SDLK_QUOTE:
+			ProcessButton(&keyboard.quotes, pressed);
+		break;
+		case SDLK_PLUS:
+			ProcessButton(&keyboard.plus, pressed);
+		break;
+		case SDLK_EQUALS:
+			ProcessButton(&keyboard.plus, pressed);
+		break;
+		case SDLK_MINUS:
+			ProcessButton(&keyboard.minus, pressed);
+		break;
+		case SDLK_UNDERSCORE:
+			ProcessButton(&keyboard.minus, pressed);
+		break;
+		case SDLK_SLASH:
+			ProcessButton(&keyboard.forwardSlash, pressed);
+		break;
+		case SDLK_QUESTION:
+			ProcessButton(&keyboard.forwardSlash, pressed);
+		break;
+		case SDLK_0:
+			ProcessButton(&keyboard.n0, pressed);
+		break;
+		case SDLK_RIGHTPAREN:
+			ProcessButton(&keyboard.n0, pressed);
+		break;
+		case SDLK_1:
+			ProcessButton(&keyboard.n1, pressed);
+		break;
+		case SDLK_EXCLAIM:
+			ProcessButton(&keyboard.n1, pressed);
+		break;
+		case SDLK_2:
+			ProcessButton(&keyboard.n2, pressed);
+		break;
+		case SDLK_AT:
+			ProcessButton(&keyboard.n2, pressed);
+		break;
+		case SDLK_3:
+			ProcessButton(&keyboard.n3, pressed);
+		break;
+		case SDLK_HASH:
+			ProcessButton(&keyboard.n3, pressed);
+		break;
+		case SDLK_4:
+			ProcessButton(&keyboard.n4, pressed);
+		break;
+		case SDLK_DOLLAR:
+			ProcessButton(&keyboard.n4, pressed);
+		break;
+		case SDLK_5:
+			ProcessButton(&keyboard.n5, pressed);
+		break;
+		case SDLK_PERCENT:
+			ProcessButton(&keyboard.n5, pressed);
+		break;
+		case SDLK_6:
+			ProcessButton(&keyboard.n6, pressed);
+		break;
+		case SDLK_CARET:
+			ProcessButton(&keyboard.n6, pressed);
+		break;
+		case SDLK_7:
+			ProcessButton(&keyboard.n7, pressed);
+		break;
+		case SDLK_AMPERSAND:
+			ProcessButton(&keyboard.n7, pressed);
+		break;
+		case SDLK_8:
+			ProcessButton(&keyboard.n8, pressed);
+		break;
+		case SDLK_ASTERISK:
+			ProcessButton(&keyboard.n8, pressed);
+		break;
+		case SDLK_9:
+			ProcessButton(&keyboard.n9, pressed);
+		break;
+		case SDLK_LEFTPAREN:
+			ProcessButton(&keyboard.n9, pressed);
+		break;
+		case SDLK_COLON:
+			ProcessButton(&keyboard.semicolon, pressed);
+		break;
+		case SDLK_SEMICOLON:
+			ProcessButton(&keyboard.semicolon, pressed);
+		break;
+		case SDLK_LESS:
+			ProcessButton(&keyboard.lessThan, pressed);
+		break;
+		case SDLK_COMMA:
+			ProcessButton(&keyboard.lessThan, pressed);
+		break;
+		case SDLK_GREATER:
+			ProcessButton(&keyboard.greaterThan, pressed);
+		break;
+		case SDLK_PERIOD:
+			ProcessButton(&keyboard.greaterThan, pressed);
+		break;
+		case SDLK_LEFTBRACKET:
+			ProcessButton(&keyboard.leftBracket, pressed);
+		break;
+		case SDLK_BACKSLASH:
+			ProcessButton(&keyboard.backslash, pressed);
+		break;
+		case SDLK_RIGHTBRACKET:
+			ProcessButton(&keyboard.rightBracket, pressed);
+		break;
+		case SDLK_BACKQUOTE:
+			ProcessButton(&keyboard.tilde, pressed);
+		break;
+		case SDLK_a:
+			ProcessButton(&keyboard.a, pressed);
+		break;
+		case SDLK_b:
+			ProcessButton(&keyboard.b, pressed);
+		break;
+		case SDLK_c:
+			ProcessButton(&keyboard.c, pressed);
+		break;
+		case SDLK_d:
+			ProcessButton(&keyboard.d, pressed);
+		break;
+		case SDLK_e:
+			ProcessButton(&keyboard.e, pressed);
+		break;
+		case SDLK_f:
+			ProcessButton(&keyboard.f, pressed);
+		break;
+		case SDLK_g:
+			ProcessButton(&keyboard.g, pressed);
+		break;
+		case SDLK_h:
+			ProcessButton(&keyboard.h, pressed);
+		break;
+		case SDLK_i:
+			ProcessButton(&keyboard.i, pressed);
+		break;
+		case SDLK_j:
+			ProcessButton(&keyboard.j, pressed);
+		break;
+		case SDLK_k:
+			ProcessButton(&keyboard.k, pressed);
+		break;
+		case SDLK_l:
+			ProcessButton(&keyboard.l, pressed);
+		break;
+		case SDLK_m:
+			ProcessButton(&keyboard.m, pressed);
+		break;
+		case SDLK_n:
+			ProcessButton(&keyboard.n, pressed);
+		break;
+		case SDLK_o:
+			ProcessButton(&keyboard.o, pressed);
+		break;
+		case SDLK_p:
+			ProcessButton(&keyboard.p, pressed);
+		break;
+		case SDLK_q:
+			ProcessButton(&keyboard.q, pressed);
+		break;
+		case SDLK_r:
+			ProcessButton(&keyboard.r, pressed);
+		break;
+		case SDLK_s:
+			ProcessButton(&keyboard.s, pressed);
+		break;
+		case SDLK_t:
+			ProcessButton(&keyboard.t, pressed);
+		break;
+		case SDLK_u:
+			ProcessButton(&keyboard.u, pressed);
+		break;
+		case SDLK_v:
+			ProcessButton(&keyboard.v, pressed);
+		break;
+		case SDLK_w:
+			ProcessButton(&keyboard.w, pressed);
+		break;
+		case SDLK_x:
+			ProcessButton(&keyboard.x, pressed);
+		break;
+		case SDLK_y:
+			ProcessButton(&keyboard.y, pressed);
+		break;
+		case SDLK_z:
+			ProcessButton(&keyboard.z, pressed);
+		break;
+		case SDLK_DELETE:
+			ProcessButton(&keyboard.deleteKey, pressed);
+		break;
+		case SDLK_KP_0:
+			ProcessButton(&keyboard.numpad0, pressed);
+		break;
+		case SDLK_KP_1:
+			ProcessButton(&keyboard.numpad1, pressed);
+		break;
+		case SDLK_KP_2:
+			ProcessButton(&keyboard.numpad2, pressed);
+		break;
+		case SDLK_KP_3:
+			ProcessButton(&keyboard.numpad3, pressed);
+		break;
+		case SDLK_KP_4:
+			ProcessButton(&keyboard.numpad4, pressed);
+		break;
+		case SDLK_KP_5:
+			ProcessButton(&keyboard.numpad5, pressed);
+		break;
+		case SDLK_KP_6:
+			ProcessButton(&keyboard.numpad6, pressed);
+		break;
+		case SDLK_KP_7:
+			ProcessButton(&keyboard.numpad7, pressed);
+		break;
+		case SDLK_KP_8:
+			ProcessButton(&keyboard.numpad8, pressed);
+		break;
+		case SDLK_KP_9:
+			ProcessButton(&keyboard.numpad9, pressed);
+		break;
+		case SDLK_KP_PERIOD:
+			ProcessButton(&keyboard.numpadDecimal, pressed);
+		break;
+		case SDLK_KP_DIVIDE:
+			ProcessButton(&keyboard.numpadSlash, pressed);
+		break;
+		case SDLK_KP_MULTIPLY:
+			ProcessButton(&keyboard.numpadAsterisk, pressed);
+		break;
+		case SDLK_KP_MINUS:
+			ProcessButton(&keyboard.numpadMinus, pressed);
+		break;
+		case SDLK_KP_PLUS:
+			ProcessButton(&keyboard.numpadPlus, pressed);
+		break;
+		case SDLK_KP_ENTER:
+			ProcessButton(&keyboard.numpadEnter, pressed);
+		break;
+		case SDLK_UP:
+			ProcessButton(&keyboard.arrowUp, pressed);
+		break;
+		case SDLK_DOWN:
+			ProcessButton(&keyboard.arrowDown, pressed);
+		break;
+		case SDLK_RIGHT:
+			ProcessButton(&keyboard.arrowRight, pressed);
+		break;
+		case SDLK_LEFT:
+			ProcessButton(&keyboard.arrowLeft, pressed);
+		break;
+		case SDLK_INSERT:
+			ProcessButton(&keyboard.insert, pressed);
+		break;
+		case SDLK_HOME:
+			ProcessButton(&keyboard.home, pressed);
+		break;
+		case SDLK_END:
+			ProcessButton(&keyboard.end, pressed);
+		break;
+		case SDLK_PAGEUP:
+			ProcessButton(&keyboard.pgUp, pressed);
+		break;
+		case SDLK_PAGEDOWN:
+			ProcessButton(&keyboard.pgDown, pressed);
+		break;
+		case SDLK_F1:
+			ProcessButton(&keyboard.f1, pressed);
+		break;
+		case SDLK_F2:
+			ProcessButton(&keyboard.f2, pressed);
+		break;
+		case SDLK_F3:
+			ProcessButton(&keyboard.f3, pressed);
+		break;
+		case SDLK_F4:
+			ProcessButton(&keyboard.f4, pressed);
+		break;
+		case SDLK_F5:
+			ProcessButton(&keyboard.f5, pressed);
+		break;
+		case SDLK_F6:
+			ProcessButton(&keyboard.f6, pressed);
+		break;
+		case SDLK_F7:
+			ProcessButton(&keyboard.f7, pressed);
+		break;
+		case SDLK_F8:
+			ProcessButton(&keyboard.f8, pressed);
+		break;
+		case SDLK_F9:
+			ProcessButton(&keyboard.f9, pressed);
+		break;
+		case SDLK_F10:
+			ProcessButton(&keyboard.f10, pressed);
+		break;
+		case SDLK_F11:
+			ProcessButton(&keyboard.f11, pressed);
+		break;
+		case SDLK_F12:
+			ProcessButton(&keyboard.f12, pressed);
+		break;
+		case SDLK_NUMLOCKCLEAR:
+			ProcessButton(&keyboard.numlock, pressed);
+		break;
+		case SDLK_CAPSLOCK:
+			ProcessButton(&keyboard.capsLock, pressed);
+		break;
+		case SDLK_SCROLLLOCK:
+			ProcessButton(&keyboard.scrLk, pressed);
+		break;
+		case SDLK_RSHIFT:
+			ProcessButton(&keyboard.rightShift, pressed);
+		break;
+		case SDLK_LSHIFT:
+			ProcessButton(&keyboard.leftShift, pressed);
+		break;
+		case SDLK_RCTRL:
+			ProcessButton(&keyboard.rightCtrl, pressed);
+		break;
+		case SDLK_LCTRL:
+			ProcessButton(&keyboard.leftCtrl, pressed);
+		break;
+		case SDLK_RALT:
+			ProcessButton(&keyboard.rightAlt, pressed);
+		break;
+		case SDLK_LALT:
+			ProcessButton(&keyboard.leftAlt, pressed);
+		break;
+		case SDLK_LGUI:
+			ProcessButton(&keyboard.windowsKey, pressed);
+		break;
+		case SDLK_RGUI:
+			ProcessButton(&keyboard.windowsKey, pressed);
+		break;
+		case SDLK_PRINTSCREEN:
+			ProcessButton(&keyboard.prtScrn, pressed);
+		break;
+	}
 }
 
 void Input::Update()
@@ -122,369 +489,10 @@ void Input::Update()
 				GamepadDisconnected(&gamepads[event.jdevice.which]);
 			break;
 			case SDL_KEYDOWN:
-				switch( event.key.keysym.sym )
-                {
-					case SDLK_BACKSPACE:
-						ProcessButton(&keyboard.backspace, true);
-					break;
-					case SDLK_TAB:
-						ProcessButton(&keyboard.tab, true);
-					break;
-					case SDLK_RETURN:
-						ProcessButton(&keyboard.enter, true);
-					break;
-					case SDLK_PAUSE:
-						ProcessButton(&keyboard.pauseBreak, true);
-					break;
-					case SDLK_ESCAPE:
-						ProcessButton(&keyboard.esc, true);
-					break;
-					case SDLK_SPACE:
-						ProcessButton(&keyboard.spacebar, true);
-					break;
-					case SDLK_QUOTEDBL:
-						ProcessButton(&keyboard.quotes, true);
-					break;
-					case SDLK_QUOTE:
-						ProcessButton(&keyboard.quotes, true);
-					break;
-					case SDLK_PLUS:
-						ProcessButton(&keyboard.plus, true);
-					break;
-					case SDLK_EQUALS:
-						ProcessButton(&keyboard.plus, true);
-					break;
-					case SDLK_MINUS:
-						ProcessButton(&keyboard.minus, true);
-					break;
-					case SDLK_UNDERSCORE:
-						ProcessButton(&keyboard.minus, true);
-					break;
-					case SDLK_SLASH:
-						ProcessButton(&keyboard.forwardSlash, true);
-					break;
-					case SDLK_QUESTION:
-						ProcessButton(&keyboard.forwardSlash, true);
-					break;
-					case SDLK_0:
-						ProcessButton(&keyboard.n0, true);
-					break;
-					case SDLK_RIGHTPAREN:
-						ProcessButton(&keyboard.n0, true);
-					break;
-					case SDLK_1:
-						ProcessButton(&keyboard.n1, true);
-					break;
-					case SDLK_EXCLAIM:
-						ProcessButton(&keyboard.n1, true);
-					break;
-					case SDLK_2:
-						ProcessButton(&keyboard.n2, true);
-					break;
-					case SDLK_AT:
-						ProcessButton(&keyboard.n2, true);
-					break;
-					case SDLK_3:
-						ProcessButton(&keyboard.n3, true);
-					break;
-					case SDLK_HASH:
-						ProcessButton(&keyboard.n3, true);
-					break;
-					case SDLK_4:
-						ProcessButton(&keyboard.n4, true);
-					break;
-					case SDLK_DOLLAR:
-						ProcessButton(&keyboard.n4, true);
-					break;
-					case SDLK_5:
-						ProcessButton(&keyboard.n5, true);
-					break;
-					case SDLK_PERCENT:
-						ProcessButton(&keyboard.n5, true);
-					break;
-					case SDLK_6:
-						ProcessButton(&keyboard.n6, true);
-					break;
-					case SDLK_CARET:
-						ProcessButton(&keyboard.n6, true);
-					break;
-					case SDLK_7:
-						ProcessButton(&keyboard.n7, true);
-					break;
-					case SDLK_AMPERSAND:
-						ProcessButton(&keyboard.n7, true);
-					break;
-					case SDLK_8:
-						ProcessButton(&keyboard.n8, true);
-					break;
-					case SDLK_ASTERISK:
-						ProcessButton(&keyboard.n8, true);
-					break;
-					case SDLK_9:
-						ProcessButton(&keyboard.n9, true);
-					break;
-					case SDLK_LEFTPAREN:
-						ProcessButton(&keyboard.n9, true);
-					break;
-					case SDLK_COLON:
-						ProcessButton(&keyboard.semicolon, true);
-					break;
-					case SDLK_SEMICOLON:
-						ProcessButton(&keyboard.semicolon, true);
-					break;
-					case SDLK_LESS:
-						ProcessButton(&keyboard.lessThan, true);
-					break;
-					case SDLK_COMMA:
-						ProcessButton(&keyboard.lessThan, true);
-					break;
-					case SDLK_GREATER:
-						ProcessButton(&keyboard.greaterThan, true);
-					break;
-					case SDLK_PERIOD:
-						ProcessButton(&keyboard.greaterThan, true);
-					break;
-					case SDLK_LEFTBRACKET:
-						ProcessButton(&keyboard.leftBracket, true);
-					break;
-					case SDLK_BACKSLASH:
-						ProcessButton(&keyboard.backslash, true);
-					break;
-					case SDLK_RIGHTBRACKET:
-						ProcessButton(&keyboard.rightBracket, true);
-					break;
-					case SDLK_BACKQUOTE:
-						ProcessButton(&keyboard.tilde, true);
-					break;
-					case SDLK_a:
-						ProcessButton(&keyboard.a, true);
-					break;
-					case SDLK_b:
-						ProcessButton(&keyboard.b, true);
-					break;
-					case SDLK_c:
-						ProcessButton(&keyboard.c, true);
-					break;
-					case SDLK_d:
-						ProcessButton(&keyboard.d, true);
-					break;
-					case SDLK_e:
-						ProcessButton(&keyboard.e, true);
-					break;
-					case SDLK_f:
-						ProcessButton(&keyboard.f, true);
-					break;
-					case SDLK_g:
-						ProcessButton(&keyboard.g, true);
-					break;
-					case SDLK_h:
-						ProcessButton(&keyboard.h, true);
-					break;
-					case SDLK_i:
-						ProcessButton(&keyboard.i, true);
-					break;
-					case SDLK_j:
-						ProcessButton(&keyboard.j, true);
-					break;
-					case SDLK_k:
-						ProcessButton(&keyboard.k, true);
-					break;
-					case SDLK_l:
-						ProcessButton(&keyboard.l, true);
-					break;
-					case SDLK_m:
-						ProcessButton(&keyboard.m, true);
-					break;
-					case SDLK_n:
-						ProcessButton(&keyboard.n, true);
-					break;
-					case SDLK_o:
-						ProcessButton(&keyboard.o, true);
-					break;
-					case SDLK_p:
-						ProcessButton(&keyboard.p, true);
-					break;
-					case SDLK_q:
-						ProcessButton(&keyboard.q, true);
-					break;
-					case SDLK_r:
-						ProcessButton(&keyboard.r, true);
-					break;
-					case SDLK_s:
-						ProcessButton(&keyboard.s, true);
-					break;
-					case SDLK_t:
-						ProcessButton(&keyboard.t, true);
-					break;
-					case SDLK_u:
-						ProcessButton(&keyboard.u, true);
-					break;
-					case SDLK_v:
-						ProcessButton(&keyboard.v, true);
-					break;
-					case SDLK_w:
-						ProcessButton(&keyboard.w, true);
-					break;
-					case SDLK_x:
-						ProcessButton(&keyboard.x, true);
-					break;
-					case SDLK_y:
-						ProcessButton(&keyboard.y, true);
-					break;
-					case SDLK_z:
-						ProcessButton(&keyboard.z, true);
-					break;
-					case SDLK_DELETE:
-						ProcessButton(&keyboard.deleteKey, true);
-					break;
-					case SDLK_KP_0:
-						ProcessButton(&keyboard.numpad0, true);
-					break;
-					case SDLK_KP_1:
-						ProcessButton(&keyboard.numpad1, true);
-					break;
-					case SDLK_KP_2:
-						ProcessButton(&keyboard.numpad2, true);
-					break;
-					case SDLK_KP_3:
-						ProcessButton(&keyboard.numpad3, true);
-					break;
-					case SDLK_KP_4:
-						ProcessButton(&keyboard.numpad4, true);
-					break;
-					case SDLK_KP_5:
-						ProcessButton(&keyboard.numpad5, true);
-					break;
-					case SDLK_KP_6:
-						ProcessButton(&keyboard.numpad6, true);
-					break;
-					case SDLK_KP_7:
-						ProcessButton(&keyboard.numpad7, true);
-					break;
-					case SDLK_KP_8:
-						ProcessButton(&keyboard.numpad8, true);
-					break;
-					case SDLK_KP_9:
-						ProcessButton(&keyboard.numpad9, true);
-					break;
-					case SDLK_KP_PERIOD:
-						ProcessButton(&keyboard.numpadDecimal, true);
-					break;
-					case SDLK_KP_DIVIDE:
-						ProcessButton(&keyboard.numpadSlash, true);
-					break;
-					case SDLK_KP_MULTIPLY:
-						ProcessButton(&keyboard.numpadAsterisk, true);
-					break;
-					case SDLK_KP_MINUS:
-						ProcessButton(&keyboard.numpadMinus, true);
-					break;
-					case SDLK_KP_PLUS:
-						ProcessButton(&keyboard.numpadPlus, true);
-					break;
-					case SDLK_KP_ENTER:
-						ProcessButton(&keyboard.numpadEnter, true);
-					break;
-					case SDLK_UP:
-						ProcessButton(&keyboard.arrowUp, true);
-					break;
-					case SDLK_DOWN:
-						ProcessButton(&keyboard.arrowDown, true);
-					break;
-					case SDLK_RIGHT:
-						ProcessButton(&keyboard.arrowRight, true);
-					break;
-					case SDLK_LEFT:
-						ProcessButton(&keyboard.arrowLeft, true);
-					break;
-					case SDLK_INSERT:
-						ProcessButton(&keyboard.insert, true);
-					break;
-					case SDLK_HOME:
-						ProcessButton(&keyboard.home, true);
-					break;
-					case SDLK_END:
-						ProcessButton(&keyboard.end, true);
-					break;
-					case SDLK_PAGEUP:
-						ProcessButton(&keyboard.pgUp, true);
-					break;
-					case SDLK_PAGEDOWN:
-						ProcessButton(&keyboard.pgDown, true);
-					break;
-					case SDLK_F1:
-						ProcessButton(&keyboard.f1, true);
-					break;
-					case SDLK_F2:
-						ProcessButton(&keyboard.f2, true);
-					break;
-					case SDLK_F3:
-						ProcessButton(&keyboard.f3, true);
-					break;
-					case SDLK_F4:
-						ProcessButton(&keyboard.f4, true);
-					break;
-					case SDLK_F5:
-						ProcessButton(&keyboard.f5, true);
-					break;
-					case SDLK_F6:
-						ProcessButton(&keyboard.f6, true);
-					break;
-					case SDLK_F7:
-						ProcessButton(&keyboard.f7, true);
-					break;
-					case SDLK_F8:
-						ProcessButton(&keyboard.f8, true);
-					break;
-					case SDLK_F9:
-						ProcessButton(&keyboard.f9, true);
-					break;
-					case SDLK_F10:
-						ProcessButton(&keyboard.f10, true);
-					break;
-					case SDLK_F11:
-						ProcessButton(&keyboard.f11, true);
-					break;
-					case SDLK_F12:
-						ProcessButton(&keyboard.f12, true);
-					break;
-					case SDLK_NUMLOCKCLEAR:
-						ProcessButton(&keyboard.numlock, true);
-					break;
-					case SDLK_CAPSLOCK:
-						ProcessButton(&keyboard.capsLock, true);
-					break;
-					case SDLK_SCROLLLOCK:
-						ProcessButton(&keyboard.scrLk, true);
-					break;
-					case SDLK_RSHIFT:
-						ProcessButton(&keyboard.rightShift, true);
-					break;
-					case SDLK_LSHIFT:
-						ProcessButton(&keyboard.leftShift, true);
-					break;
-					case SDLK_RCTRL:
-						ProcessButton(&keyboard.rightCtrl, true);
-					break;
-					case SDLK_LCTRL:
-						ProcessButton(&keyboard.leftCtrl, true);
-					break;
-					case SDLK_RALT:
-						ProcessButton(&keyboard.rightAlt, true);
-					break;
-					case SDLK_LALT:
-						ProcessButton(&keyboard.leftAlt, true);
-					break;
-					case SDLK_LGUI:
-						ProcessButton(&keyboard.windowsKey, true);
-					break;
-					case SDLK_RGUI:
-						ProcessButton(&keyboard.windowsKey, true);
-					break;
-					case SDLK_PRINTSCREEN:
-						ProcessButton(&keyboard.prtScrn, true);
-					break;
-				}
+				HandleKeyboard(event.key.keysym.sym, false);
+				break;
+			case SDL_KEYUP:
+				HandleKeyboard(event.key.keysym.sym, true);
 				break;
 			case SDL_JOYAXISMOTION: 
 				jNum = event.jaxis.which;
