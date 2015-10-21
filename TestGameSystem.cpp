@@ -31,38 +31,12 @@ void TestGameSystem::Init()
 
 	GameSystem::Init();
 	
-	// todo need process for this
-	// todo need texture struct with format, w and h
-	glGenTextures(1, &render.renderInfo.glTexture); 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture (GL_TEXTURE_2D, render.renderInfo.glTexture);
+	
 
-	dfFile textureFile = assMan.GetAsset(L"fart\\testTexture2.png");
-	SDL_RWops* textureWops = SDL_RWFromMem((void*)textureFile.contents, textureFile.size);
-	SDL_Surface *textureSurface = IMG_LoadTyped_RW(textureWops, 0, "PNG");
-	if(!textureSurface) {
-		const char* theFart = IMG_GetError();
-		dfLog((char*)IMG_GetError());
-		dfAssert(false); // could not create image asset
-	}
+	TextureInfo textureFile = assMan.GetTexture(L"fart\\testTexture2.png");
 
-	// gl texture params
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexImage2D (
-	  GL_TEXTURE_2D,
-	  0,
-	  GL_RGBA,
-	  256,
-	  192,
-	  0,
-	  GL_RGBA,
-	  GL_UNSIGNED_BYTE,
-	  textureSurface->pixels
-	);
+	render.renderInfo.glTexture = textureFile.glTexture;
+	
 }
 
 void TestGameSystem::Update()

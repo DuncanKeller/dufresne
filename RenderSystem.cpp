@@ -83,7 +83,24 @@ void RenderSystem::AddToRenderBox(RenderInfo r)
 
 void RenderSystem::SortRenderBox(int boxIndex)
 {
-	// todo implement
+	// todo
+	// Not sure if the render box will be big enough for it to really matter,
+	// but probably worth looking into using a faster sort algo
+	int j;
+	RenderInfo temp;
+		
+	for (int i = 0; i < renderBox[boxIndex].size(); i++)
+	{
+		j = i;
+		
+		while (j > 0 && renderBox[boxIndex][j].depth < renderBox[boxIndex][j-1].depth)
+		{
+			temp = renderBox[boxIndex][j];
+			renderBox[boxIndex][j] = renderBox[boxIndex][j-1];
+			renderBox[boxIndex][j-1] = temp;
+			j--;
+		}
+	}
 }
 
 // todo better way than just passing around big vector
@@ -118,7 +135,7 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 	}
 
 	// 2: sort renderboxes by similar shader program
-	for(int i = 0; i < numberOfGroups; i++)
+	for(int i = 0; i < renderBox.size(); i++)
 	{
 		SortRenderBox(i);
 	}

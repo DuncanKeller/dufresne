@@ -108,3 +108,13 @@ bool dfStrCmp(std::vector<wchar_t> str1, const char* str2)
 
 	return true;
 }
+
+char* dfVectorToCharStar(std::vector<wchar_t> vec)
+{
+	char* newStr = (char*)malloc(sizeof(char) * vec.size());
+	for(int i = 0; i < vec.size(); i++)
+	{
+		newStr[i] = vec[i];
+	}
+	return newStr;
+}

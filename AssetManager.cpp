@@ -37,6 +37,16 @@ dfFile AssetManager::GetAsset(const wchar_t* key)
 	return assetMap[GetHash(key)];
 }
 
+ShaderInfo AssetManager::GetShader(const wchar_t* key)
+{
+	return shaderMap[GetHash(key)];
+}
+
+TextureInfo AssetManager::GetTexture(const wchar_t* key)
+{
+	return textureMap[GetHash(key)];
+}
+
 void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
 {
 	// TODO array support
@@ -134,6 +144,53 @@ void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
 			}
 		}	
 	}
+}
+
+void AssetManager::InitTexture(TextureInfo &texture)
+{
+	unsigned int glTexture;
+
+	glGenTextures(1, &glTexture); 
+	//glActiveTexture(GL_TEXTURE0); todo do I need to do this here?
+	glBindTexture (GL_TEXTURE_2D, glTexture);
+
+	SDL_RWops* textureWops = SDL_RWFromMem((void*)texture.file.contents, texture.file.size);
+	const char* filetype = dfVectorToCharStar(texture.filetype);
+	SDL_Surface *textureSurface = IMG_LoadTyped_RW(textureWops, 0, filetype);
+	if(!textureSurface) {
+		const char* theFart = IMG_GetError();
+		dfLog((char*)IMG_GetError());
+		dfAssert(false); // could not create image asset
+	}
+
+	// gl texture params
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	
+	texture.width = textureSurface->w;
+	texture.height = textureSurface->h;
+	texture.glTexture = glTexture;
+
+	int glFormat = GL_RGB;
+
+	if(dfStrCmp(texture.filetype, "png"))
+		glFormat = GL_RGBA;
+
+	glTexImage2D (
+	  GL_TEXTURE_2D,
+	  0,
+	  glFormat,
+	  textureSurface->w,
+	  textureSurface->h,
+	  0,
+	  glFormat,
+	  GL_UNSIGNED_BYTE,
+	  textureSurface->pixels
+	);
+
+	// todo error checking for that command
 }
 
 std::vector<wchar_t>  AssetManager::GetFileExtension(const wchar_t* fullFilename)
@@ -285,9 +342,9 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 				
 				loadLocation += filesizeOUT;
 
-				// check file type for extra stuff
-				std::vector<wchar_t> fileType = GetFileExtension(filename);
-				if(dfStrCmp(fileType, "glsl"))
+				// check for certain file types that have extra data associated with them
+				std::vector<wchar_t> filetype = GetFileExtension(filename);
+				if(dfStrCmp(filetype, "glsl"))
 				{
 					ShaderInfo shader;
 					shader.vertFragType = 0;
@@ -296,7 +353,19 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 					InitShader(newAsset.contents, shader);
 
 					shaders.push_back(shader);
-					shaderMap[(wchar_t*)filename] = shader;
+					shaderMap[GetHash(filename)] = shader;
+				}
+				else if(dfStrCmp(filetype, "png") || dfStrCmp(filetype, "jpg") || dfStrCmp(filetype, "bmp"))
+				{
+					TextureInfo  texture;
+					texture.file = newAsset;
+					texture.name = (char*)filename;
+					texture.filetype = filetype;
+
+					InitTexture(texture);
+
+					textures.push_back(texture);
+					textureMap[GetHash(filename)] = texture;
 				}
 			}
 			else

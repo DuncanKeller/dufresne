@@ -168,8 +168,8 @@ void Renderer::SetDefaultRenderInfo()
 	// test for coords todo remove
 	testRect[0] = 0;
 	testRect[1] = 0;
-	testRect[2] = 50;
-	testRect[3] = 50;
+	testRect[2] = 150;
+	testRect[3] = 150;
 	// todo no hardcode resolution plz
 	testResolution[0] = 640.f;
 	testResolution[1] = 480.f;

@@ -48,3 +48,5 @@ int dfStrLen(const wchar_t*);
 bool dfStrCmp(char*, char*);
 bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
+
+char* dfVectorToCharStar(std::vector<wchar_t>);
