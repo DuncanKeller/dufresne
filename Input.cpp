@@ -1,5 +1,6 @@
 #include "Input.h"
 
+Input input;
 
 Input::Input(void)
 {
@@ -19,7 +20,6 @@ void Input::Init()
 		gamepads[i].connected = false;
 		gamepads[i].index = i;
 	}
-
 	
 	int numjoys = SDL_NumJoysticks();
 

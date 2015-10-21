@@ -10,6 +10,8 @@
 #include "MatMath.h"
 #include "SDL.h"
 
+#include "Input.h" // todo remove
+
 const int DF_MAX_UNIFORMS = 8;
 
 struct ShaderUniform

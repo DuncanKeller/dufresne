@@ -97,8 +97,8 @@ int CALLBACK WinMain(
 	assMan.LoadLoosePackage(path);
 	assMan.DebugTestWritePoolToFile();
 
-	Input inp = Input();
-	inp.Init();
+	input = Input();
+	input.Init();
 
 	RenderSystem renderer = RenderSystem();
 	renderer.Init();
@@ -106,27 +106,19 @@ int CALLBACK WinMain(
 	TestGameSystem test = TestGameSystem();
 	test.Init();
 
-	TestGameSystem test2 = TestGameSystem();
-	test2.Init();
-	test2.tf.SetScale(1.6f,1.6f,1);
-	test2.render.renderInfo.depth = 2;
 
-	TestGameSystem test3 = TestGameSystem();
-	test3.Init();
-	test3.tf.SetScale(-.2f,-.2f,1);
-	test3.render.renderInfo.depth = 12;
-	test3.tf.SetPos(0,.5,0);
 
 	std::vector<GameSystem*> testRenderList;
 	testRenderList.push_back(&test);
-	testRenderList.push_back(&test2);
-	testRenderList.push_back(&test3);
+	
 	
 	while(true)
 	{
-		inp.Update();
+		input.Update();
 
 		renderer.Update();
+
+		test.Update();
 
 		renderer.RenderLoop(&testRenderList);
 

@@ -206,9 +206,7 @@ public:
 	virtual void Update();
 };
 
+extern Input input;
+
 //todo
-// gamepad struct
-// keyboard storage
-// mouse
-// poll in update
-// basic accessor funcs
+// seems to act like text editor, with pauses when holding key... what's up wit dat?
