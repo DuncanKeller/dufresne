@@ -20,8 +20,8 @@ struct Gamepad
 	float leftTrigger;
 	float rightTrigger;
 
-	Vec2 leftStick;
-	Vec2 rightStick;
+	vec2 leftStick;
+	vec2 rightStick;
 	
 	ButtonState leftStickButton;
 	ButtonState rightStickButton;
@@ -176,7 +176,7 @@ struct Mouse
 	ButtonState middleButton;
 	ButtonState rightButton;
 	
-	Vec2 position;
+	vec2 position;
 	int mouseWheel;
 };
 

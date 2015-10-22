@@ -9,15 +9,21 @@ class Transform :
 public:
 	Transform(void);
 	virtual ~Transform(void);
-	Vec3 pos;
-	Vec3 rotation;
-	Vec3 scale;
+	vec3 pos;
+	vec3 rotation;
+	vec3 scale;
 
+	void SetPos(float x, float y);
+	void SetPos(vec2 p);
 	void SetPos(float x, float y, float z);
-	void SetPos(Vec3 p);
+	void SetPos(vec3 p);
 
+	void SetScale(float x, float y);
+	void SetScale(vec2 p);
 	void SetScale(float x, float y, float z);
-	void SetScale(Vec3 p);
+	void SetScale(vec3 p);
+
+	void SetRotation(float r);
 
 	void UpdateMatrix();
 

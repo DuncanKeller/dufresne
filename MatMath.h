@@ -40,7 +40,7 @@ public:
 	~MatMath(void);
 	static mat4 identity_mat4();
 	static mat4 zero_mat4 ();
-	static mat4 translate(const mat4& m, const Vec3& v);
+	static mat4 translate(const mat4& m, const vec3& v);
 	static float dot(float x1, float y1, float z1, float x2, float y2, float z2);
 };
 

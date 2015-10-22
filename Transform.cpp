@@ -14,6 +14,20 @@ Transform::~Transform(void)
 	dfComponent::~dfComponent();
 }
 
+void Transform::SetPos(float x, float y)
+{
+	pos.x = x;
+	pos.y = y;
+	UpdateMatrix();
+}
+	
+void Transform::SetPos(vec2 p)
+{
+	pos.x = p.x;
+	pos.y = p.y;
+	UpdateMatrix();
+}
+
 void Transform::SetPos(float x, float y, float z)
 {
 	pos.x = x;
@@ -22,7 +36,7 @@ void Transform::SetPos(float x, float y, float z)
 	UpdateMatrix();
 }
 
-void Transform::SetPos(Vec3 p)
+void Transform::SetPos(vec3 p)
 {
 	pos.x = p.x;
 	pos.y = p.y;
@@ -30,20 +44,35 @@ void Transform::SetPos(Vec3 p)
 	UpdateMatrix();
 }
 
-void Transform::SetScale(float x, float y, float z)
+void Transform::SetScale(float x, float y)
 {
 	scale.x = x;
 	scale.y = y;
 	UpdateMatrix();
 }
 
-void Transform::SetScale(Vec3 p)
+void Transform::SetScale(vec2 p)
 {
 	scale.x = p.x;
 	scale.y = p.y;
 	UpdateMatrix();
 }
 
+void Transform::SetScale(float x, float y, float z)
+{
+	scale.x = x;
+	scale.y = y;
+	scale.z = z;
+	UpdateMatrix();
+}
+
+void Transform::SetScale(vec3 p)
+{
+	scale.x = p.x;
+	scale.y = p.y;
+	scale.z = p.z;
+	UpdateMatrix();
+}
 
 void Transform::UpdateMatrix()
 {
@@ -67,26 +96,3 @@ void Transform::UpdateMatrix()
 	matrix.m[14] = pos.z;
 	matrix.m[15] = 1.f;
 }
-
-
-/*
-matrix.m[0] = scale.x;
-	matrix.m[1] = 0.f;
-	matrix.m[2] = 0.f;
-	matrix.m[3] = pos.x;
-
-	matrix.m[4] = 0.f;
-	matrix.m[5] = scale.y;
-	matrix.m[6] = 0.f;
-	matrix.m[7] = pos.y;
-
-	matrix.m[8] = 0.f;
-	matrix.m[9] = 0.f;
-	matrix.m[10] = 1.f;
-	matrix.m[11] = pos.z;
-
-	matrix.m[12] = 0.f;
-	matrix.m[13] = 0.f;
-	matrix.m[14] = 0.f;
-	matrix.m[15] = 1.f;
-	*/

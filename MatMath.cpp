@@ -110,7 +110,7 @@ mat4 mat4::operator* (const mat4& rhs) {
 }
 
 // matrix transformations
-mat4 MatMath::translate (const mat4& m, const Vec3& v) {
+mat4 MatMath::translate (const mat4& m, const vec3& v) {
 	mat4 m_t = MatMath::identity_mat4 ();
 	m_t.m[12] = v.x;
 	m_t.m[13] = v.y;

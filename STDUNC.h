@@ -16,26 +16,57 @@ typedef int64_t int64;
 
 #define Pi32 3.14159265359
 
-struct Rectangle
+struct vec2
 {
-	float left;
-	float right;
-	float top;
-	float bottom;
-};
+	vec2()
+	{
+		x = 0;
+		y = 0;
+	}
+	vec2(float posX, float posY)
+	{
+		x = posX;
+		y = posY;
+	}
 
-struct Vec2
-{
 	float x;
 	float y;
 };
 
-struct Vec3
+struct vec3
 {
+	vec3()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+	vec3(float posX, float posY, float posZ)
+	{
+		x = posX;
+		y = posY;
+		z = posZ;
+	}
+
 	float x;
 	float y;
 	float z;
 };
+
+struct Rect
+{
+	vec2 pos;
+	vec2 size;
+	vec2 center;
+
+	float left;
+	float right;
+	float top;
+	float bottom;
+	float width;
+	float height;
+};
+
 
 void dfAssert(bool);
 
@@ -50,3 +81,14 @@ bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
 
 char* dfVectorToCharStar(std::vector<wchar_t>);
+
+void UpdateRectMembers(Rect &rect);
+void RectSet(vec2 pos, vec2 size, Rect &rect);
+void RectSet(float x, float y, float w, float h, Rect &rect);
+void RectSetPos(vec2 pos, Rect &rect);
+void RectSetPos(float x, float y, Rect &rect);
+void RectMove(vec2 pos, Rect &rect);
+void RectMove(float x, float y, Rect &rect);
+void RectSize(vec2 size, Rect &rect);
+void RectSize(float w, float h, Rect &rect);
+// todo more rect funcs: overlapping, other stuff. check xna for all its useful stuff
