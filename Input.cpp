@@ -29,6 +29,13 @@ void Input::Init()
 		SDL_JoystickOpen(i);
 		gamepads[i].connected = true;
 	}
+	
+	for(int i = 0; i < MAX_KEYS_ON_KEYBOARD; i++)
+	{
+		keyboard.buttonArray[i].buttonDown = false;
+		keyboard.buttonArray[i].lastFrameDown = false;
+		keyboard.buttonArray[i].tapped = false;
+	}
 }
 
 void Input::ClearButttonState(ButtonState* btn)
@@ -91,6 +98,172 @@ void Input::ProcessButton(ButtonState* btn, bool buttonDown)
 	btn->buttonDown = buttonDown;
 	if(!btn->lastFrameDown)
 		btn->tapped = true;
+}
+
+void Input::Update()
+{
+	GameSystem::Update();
+	SDL_Event event;
+
+	int deadzone = 3000;
+
+	// todo clear keyboard and mouse
+	for(int i = 0; i < MAX_GAMEPADS; i++)
+	{
+		ClearGamepad(&gamepads[i]);
+	}
+
+	ClearKeyboard(&keyboard);
+	ClearMouse(&mouse);
+
+	int jNum = -1;
+	while( SDL_PollEvent( &event ) )
+	{
+		switch( event.type )
+		{
+			case SDL_JOYDEVICEADDED: // todo disconnect and reconnect shakey... needs testing
+				gamepads[event.jdevice.which].connected = true;
+			break;
+			case SDL_JOYDEVICEREMOVED:
+				gamepads[event.jdevice.which].connected = false;
+				GamepadDisconnected(&gamepads[event.jdevice.which]);
+			break;
+			case SDL_KEYDOWN:
+				HandleKeyboard(event.key.keysym.sym, true);
+				break;
+			case SDL_KEYUP:
+				HandleKeyboard(event.key.keysym.sym, false);
+				break;
+			case SDL_JOYAXISMOTION: 
+				jNum = event.jaxis.which;
+				if ( ( event.jaxis.value < -deadzone ) || (event.jaxis.value > deadzone ) ) 
+				{
+					if( event.jaxis.axis == 0)  // left xaaxis
+					{
+						gamepads[jNum].leftStick.x = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+					else if( event.jaxis.axis == 1) // left yaxis
+					{
+						gamepads[jNum].leftStick.y = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+					else if( event.jaxis.axis == 2) // right yaxis
+					{
+						gamepads[jNum].rightStick.x = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+					else if( event.jaxis.axis == 3) // right yaxis
+					{
+						gamepads[jNum].rightStick.y = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+					else if( event.jaxis.axis == 4) // left trig
+					{
+						gamepads[jNum].leftTrigger = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+					else if( event.jaxis.axis == 5) // right trig
+					{
+						gamepads[jNum].rightTrigger = event.jaxis.value / (float)MAX_JOY_AXIS;
+					}
+				}
+				break;
+			case SDL_JOYBUTTONDOWN: 
+			{
+				jNum = event.jbutton.which;
+				//if ( event.jbutton.button == 0 ) 
+				int buttNum = event.jbutton.button;
+				switch(buttNum)
+				{
+					case 10:
+						ProcessButton(&gamepads[jNum].a, true);
+						break;
+					case 11:
+						ProcessButton(&gamepads[jNum].b, true);
+						break;
+					case 12:
+						ProcessButton(&gamepads[jNum].x, true);
+						break;
+					case 13:
+						ProcessButton(&gamepads[jNum].y, true);
+						break;
+					case 0:
+						ProcessButton(&gamepads[jNum].dpadUp, true);
+						break;
+					case 1:
+						ProcessButton(&gamepads[jNum].dpadUp, true);
+						break;
+					case 2:
+						ProcessButton(&gamepads[jNum].dpadLeft, true);
+						break;
+					case 3:
+						ProcessButton(&gamepads[jNum].dpadRight, true);
+						break;
+					case 4:
+						ProcessButton(&gamepads[jNum].start, true);
+						break;
+					case 5:
+						ProcessButton(&gamepads[jNum].select, true);
+						break;
+					case 8:
+						ProcessButton(&gamepads[jNum].leftShoulder, true);
+						break;
+					case 9:
+						ProcessButton(&gamepads[jNum].rightShoulder, true);
+						break;
+					case 6:
+						ProcessButton(&gamepads[jNum].leftStickButton, true);
+						break;
+					case 7:
+						ProcessButton(&gamepads[jNum].rightStickButton, true);
+						break;
+				}
+			}
+			break;
+			case SDL_MOUSEBUTTONDOWN: 
+				switch(event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+						ProcessButton(&mouse.leftButton, true);
+						break;
+					case SDL_BUTTON_RIGHT:
+						ProcessButton(&mouse.rightButton, true);
+						break;
+					case SDL_BUTTON_MIDDLE:
+						ProcessButton(&mouse.middleButton, true);
+						break;
+				}
+			break;
+			case SDL_MOUSEMOTION:
+				mouse.position.x = event.motion.xrel;
+				mouse.position.y = event.motion.yrel;
+			break;
+
+		}
+	}
+
+	// set previous inputs
+	for(int i = 0; i < MAX_GAMEPADS; i++)
+	{
+		gamepads[jNum].a.lastFrameDown = gamepads[jNum].a.buttonDown;
+		gamepads[jNum].b.lastFrameDown = gamepads[jNum].b.buttonDown;
+		gamepads[jNum].x.lastFrameDown = gamepads[jNum].x.buttonDown;
+		gamepads[jNum].y.lastFrameDown = gamepads[jNum].y.buttonDown;
+		gamepads[jNum].start.lastFrameDown = gamepads[jNum].start.buttonDown;
+		gamepads[jNum].select.lastFrameDown = gamepads[jNum].select.buttonDown;
+		gamepads[jNum].leftShoulder.lastFrameDown = gamepads[jNum].leftShoulder.buttonDown;
+		gamepads[jNum].rightShoulder.lastFrameDown = gamepads[jNum].rightShoulder.buttonDown;
+		gamepads[jNum].leftStickButton.lastFrameDown = gamepads[jNum].leftStickButton.buttonDown;
+		gamepads[jNum].rightStickButton.lastFrameDown = gamepads[jNum].rightStickButton.buttonDown;
+		gamepads[jNum].dpadUp.lastFrameDown = gamepads[jNum].dpadUp.buttonDown;
+		gamepads[jNum].dpadDown.lastFrameDown = gamepads[jNum].dpadDown.buttonDown;
+		gamepads[jNum].dpadLeft.lastFrameDown = gamepads[jNum].dpadLeft.buttonDown;
+		gamepads[jNum].dpadRight.lastFrameDown = gamepads[jNum].dpadRight.buttonDown;
+	}
+	for(int i= 0; i < MAX_KEYS_ON_KEYBOARD; i++)
+	{
+		keyboard.buttonArray[i].lastFrameDown = keyboard.buttonArray[i].buttonDown;
+	}
+	mouse.leftButton.lastFrameDown = mouse.leftButton.buttonDown;
+	mouse.rightButton.lastFrameDown = mouse.rightButton.buttonDown;
+	mouse.middleButton.lastFrameDown = mouse.middleButton.buttonDown;
+
 }
 
 void Input::HandleKeyboard(SDL_Keycode keycode, bool pressed)
@@ -460,171 +633,6 @@ void Input::HandleKeyboard(SDL_Keycode keycode, bool pressed)
 	}
 }
 
-void Input::Update()
-{
-	GameSystem::Update();
-	SDL_Event event;
-
-	int deadzone = 3000;
-
-	// todo clear keyboard and mouse
-	for(int i = 0; i < MAX_GAMEPADS; i++)
-	{
-		ClearGamepad(&gamepads[i]);
-	}
-
-	ClearKeyboard(&keyboard);
-	ClearMouse(&mouse);
-
-	int jNum = -1;
-	while( SDL_PollEvent( &event ) )
-	{
-		switch( event.type )
-		{
-			case SDL_JOYDEVICEADDED: // todo disconnect and reconnect shakey... needs testing
-				gamepads[event.jdevice.which].connected = true;
-			break;
-			case SDL_JOYDEVICEREMOVED:
-				gamepads[event.jdevice.which].connected = false;
-				GamepadDisconnected(&gamepads[event.jdevice.which]);
-			break;
-			case SDL_KEYDOWN:
-				HandleKeyboard(event.key.keysym.sym, false);
-				break;
-			case SDL_KEYUP:
-				HandleKeyboard(event.key.keysym.sym, true);
-				break;
-			case SDL_JOYAXISMOTION: 
-				jNum = event.jaxis.which;
-				if ( ( event.jaxis.value < -deadzone ) || (event.jaxis.value > deadzone ) ) 
-				{
-					if( event.jaxis.axis == 0)  // left xaaxis
-					{
-						gamepads[jNum].leftStick.x = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-					else if( event.jaxis.axis == 1) // left yaxis
-					{
-						gamepads[jNum].leftStick.y = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-					else if( event.jaxis.axis == 2) // right yaxis
-					{
-						gamepads[jNum].rightStick.x = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-					else if( event.jaxis.axis == 3) // right yaxis
-					{
-						gamepads[jNum].rightStick.y = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-					else if( event.jaxis.axis == 4) // left trig
-					{
-						gamepads[jNum].leftTrigger = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-					else if( event.jaxis.axis == 5) // right trig
-					{
-						gamepads[jNum].rightTrigger = event.jaxis.value / (float)MAX_JOY_AXIS;
-					}
-				}
-				break;
-			case SDL_JOYBUTTONDOWN: 
-			{
-				jNum = event.jbutton.which;
-				//if ( event.jbutton.button == 0 ) 
-				int buttNum = event.jbutton.button;
-				switch(buttNum)
-				{
-					case 10:
-						ProcessButton(&gamepads[jNum].a, true);
-						break;
-					case 11:
-						ProcessButton(&gamepads[jNum].b, true);
-						break;
-					case 12:
-						ProcessButton(&gamepads[jNum].x, true);
-						break;
-					case 13:
-						ProcessButton(&gamepads[jNum].y, true);
-						break;
-					case 0:
-						ProcessButton(&gamepads[jNum].dpadUp, true);
-						break;
-					case 1:
-						ProcessButton(&gamepads[jNum].dpadUp, true);
-						break;
-					case 2:
-						ProcessButton(&gamepads[jNum].dpadLeft, true);
-						break;
-					case 3:
-						ProcessButton(&gamepads[jNum].dpadRight, true);
-						break;
-					case 4:
-						ProcessButton(&gamepads[jNum].start, true);
-						break;
-					case 5:
-						ProcessButton(&gamepads[jNum].select, true);
-						break;
-					case 8:
-						ProcessButton(&gamepads[jNum].leftShoulder, true);
-						break;
-					case 9:
-						ProcessButton(&gamepads[jNum].rightShoulder, true);
-						break;
-					case 6:
-						ProcessButton(&gamepads[jNum].leftStickButton, true);
-						break;
-					case 7:
-						ProcessButton(&gamepads[jNum].rightStickButton, true);
-						break;
-				}
-			}
-			break;
-			case SDL_MOUSEBUTTONDOWN: 
-				switch(event.button.button)
-				{
-					case SDL_BUTTON_LEFT:
-						ProcessButton(&mouse.leftButton, true);
-						break;
-					case SDL_BUTTON_RIGHT:
-						ProcessButton(&mouse.rightButton, true);
-						break;
-					case SDL_BUTTON_MIDDLE:
-						ProcessButton(&mouse.middleButton, true);
-						break;
-				}
-			break;
-			case SDL_MOUSEMOTION:
-				mouse.position.x = event.motion.xrel;
-				mouse.position.y = event.motion.yrel;
-			break;
-
-		}
-	}
-
-	// set previous inputs
-	for(int i = 0; i < MAX_GAMEPADS; i++)
-	{
-		gamepads[jNum].a.lastFrameDown = gamepads[jNum].a.buttonDown;
-		gamepads[jNum].b.lastFrameDown = gamepads[jNum].b.buttonDown;
-		gamepads[jNum].x.lastFrameDown = gamepads[jNum].x.buttonDown;
-		gamepads[jNum].y.lastFrameDown = gamepads[jNum].y.buttonDown;
-		gamepads[jNum].start.lastFrameDown = gamepads[jNum].start.buttonDown;
-		gamepads[jNum].select.lastFrameDown = gamepads[jNum].select.buttonDown;
-		gamepads[jNum].leftShoulder.lastFrameDown = gamepads[jNum].leftShoulder.buttonDown;
-		gamepads[jNum].rightShoulder.lastFrameDown = gamepads[jNum].rightShoulder.buttonDown;
-		gamepads[jNum].leftStickButton.lastFrameDown = gamepads[jNum].leftStickButton.buttonDown;
-		gamepads[jNum].rightStickButton.lastFrameDown = gamepads[jNum].rightStickButton.buttonDown;
-		gamepads[jNum].dpadUp.lastFrameDown = gamepads[jNum].dpadUp.buttonDown;
-		gamepads[jNum].dpadDown.lastFrameDown = gamepads[jNum].dpadDown.buttonDown;
-		gamepads[jNum].dpadLeft.lastFrameDown = gamepads[jNum].dpadLeft.buttonDown;
-		gamepads[jNum].dpadRight.lastFrameDown = gamepads[jNum].dpadRight.buttonDown;
-	}
-	for(int i= 0; i < MAX_KEYS_ON_KEYBOARD; i++)
-	{
-		keyboard.buttonArray[i].lastFrameDown = keyboard.buttonArray[i].buttonDown;
-	}
-	mouse.leftButton.lastFrameDown = mouse.leftButton.buttonDown;
-	mouse.rightButton.lastFrameDown = mouse.rightButton.buttonDown;
-	mouse.middleButton.lastFrameDown = mouse.middleButton.buttonDown;
-
-}
 
 // todo
 // poll for connect joytsticks and enable or disable them as needed
