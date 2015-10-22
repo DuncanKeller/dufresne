@@ -17,6 +17,8 @@
 #include "RenderSystem.h"
 #include "AssetManager.h"
 
+point2D ScreenResolution;
+
 void GameExit(int ReturnValue)
 {
 	exit( ReturnValue );
@@ -28,9 +30,10 @@ int CALLBACK WinMain(
 	  _In_ LPSTR     lpCmdLine,
 	  _In_ int       nCmdShow)
 {
-	int width = 0;
-	int height = 0;
 	int flags = 0;
+
+	ScreenResolution.x = 640.f;
+	ScreenResolution.y = 480.f;
 	
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -52,9 +55,6 @@ int CALLBACK WinMain(
 			 SDL_GetError( ) );
 		GameExit( 1 );
 	}
-	
-	width = 640;
-	height = 480;
 
 	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
 	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
@@ -68,7 +68,7 @@ int CALLBACK WinMain(
 	SDL_Window *screen = SDL_CreateWindow("Dufresne",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		width, height, flags);
+		ScreenResolution.x, ScreenResolution.y, flags);
 
 	flags = IMG_INIT_JPG | IMG_INIT_PNG;
 	int initted = IMG_Init(flags);

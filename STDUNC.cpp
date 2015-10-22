@@ -109,6 +109,29 @@ bool dfStrCmp(std::vector<wchar_t> str1, const char* str2)
 	return true;
 }
 
+const char* dfStrCat(const char* a, const char* b)
+{
+	int len1 = 0;
+	int len2 = 0;
+    const char * first = a;
+	const char * second = b;
+
+    while (*first++) 
+		len1++;
+    while (*second++) 
+		len2++;
+
+    char *result = new char[len1 + len2];
+
+    for (int i = 0; i < len1; i++) 
+		result[i] = a[i];
+    for (int i = len1; i < len1 + len2; i++) 
+		result[i] = b[i - len1];
+
+    result[len1+len2] = '\0';
+    return result;
+}
+
 char* dfVectorToCharStar(std::vector<wchar_t> vec)
 {
 	char* newStr = (char*)malloc(sizeof(char) * vec.size());

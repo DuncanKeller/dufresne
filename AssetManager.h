@@ -29,6 +29,7 @@ struct UniformInfo
 	dfBasicType type;
 };
 
+// todo move the ____info structs outside of assetmanager? Into dfBasic?
 struct ShaderInfo
 {
 	dfFile shaderFile;

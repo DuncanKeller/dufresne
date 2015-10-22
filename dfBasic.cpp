@@ -22,9 +22,17 @@ dfBasicType dfGetTypeFromString(std::vector<char> str)
 	{
 		return DF_vec4;
 	}
+	else if(dfStrCmp(str, "rect"))
+	{
+		return DF_rect;
+	}
 	else if(dfStrCmp(str, "mat4"))
 	{
 		return DF_mat4x4;
+	}
+	else if(dfStrCmp(str, "point2D"))
+	{
+		return DF_point2D;
 	}
 	else if(dfStrCmp(str, "sampler2D"))
 	{

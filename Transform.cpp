@@ -6,6 +6,9 @@ Transform::Transform(void)
 	pos.x = 0; pos.y = 0; pos.z = 0;
 	scale.x = 1; scale.y = 1; scale.z = 1;
 	rotation.x = 0; rotation.y = 0; rotation.z = 0;
+	rectangle.pos = vec2(0,0);
+	rectangle.size = vec2(50,50);
+	UpdateRectMembers(rectangle); // todo replace with CreateRect method. I don't like updaterectmemebers being called outside of stdunc
 }
 
 

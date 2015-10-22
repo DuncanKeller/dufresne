@@ -5,17 +5,13 @@ unsigned int Renderer::defaultShaderProgram = 0;
 
 Renderer::Renderer(void)
 {
+	visible = true;
+
 	renderInfo.depth = 0;
 	renderInfo.glShaderProgram = 0;
+	renderInfo.glTexture = 0;
 	// todo clear me out VVV
 	//renderInfo.mesh;
-	for(int i = 0; i < DF_MAX_UNIFORMS; i++) 
-	{
-		renderInfo.uniforms[i].arrSize = 0;
-		renderInfo.uniforms[i].name = 0;
-		renderInfo.uniforms[i].type = DF_null;
-		renderInfo.uniforms[i].valueInt = 0;
-	}
 
 	// only do once, all renderers can use this default shader
 	if(!defaultShaderAssigned)
@@ -23,8 +19,12 @@ Renderer::Renderer(void)
 		InitDefaultShader();
 		defaultShaderAssigned = true;
 	}
-}
+	
+	CreateDefaultMesh(&renderInfo.mesh);
+	renderInfo.glShaderProgram = defaultShaderProgram;
+	SetStandardUniforms();
 
+}
 
 Renderer::~Renderer(void)
 {
@@ -33,33 +33,32 @@ Renderer::~Renderer(void)
 
 void Renderer::Init()
 {
-
+	// set default render rectangle
+	renderRect = 0;
+	Transform* tf = gameSystem->GetComponent<Transform>();
+	if(tf)
+	{
+		renderRect = &tf->rectangle;
+		for(int i = 0; i < renderInfo.uniforms.size(); i++)
+		{
+			if(dfStrCmp("rect", renderInfo.uniforms[i].name))
+			{
+				renderInfo.uniforms[i].valueRect = renderRect;
+				break;
+			}
+		}
+	}
 }
 
 void Renderer::Update()
 {
-	// todo git ridda dis testing shit
-	if(input.keyboard.arrowUp.buttonDown)
-	{
-		testRect[1] += .01f;
-	}
-	if(input.keyboard.arrowDown.buttonDown)
-	{
-		testRect[1] -= .01f;
-	}
-	if(input.keyboard.arrowLeft.buttonDown)
-	{
-		testRect[0] -= .01f;
-	}
-	if(input.keyboard.arrowRight.buttonDown)
-	{
-		testRect[0] += .01f;
-	}
 }
 
-void Renderer::Render()
+void Renderer::SetTexture(TextureInfo t)
 {
-
+	renderInfo.glTexture = t.glTexture;
+	renderRect->width = t.width;
+	renderRect->height = t.height;
 }
 
 // todo move into more general scope
@@ -105,6 +104,9 @@ unsigned int Renderer::CompileShaderFromSrc(const char* shader, GLuint type)
 
 void Renderer::InitDefaultShader()
 {
+	// todo remove resolution from this and have it go through the same path as the AssetManager shaders
+	// so that they get the default uniforms
+
 	// create default shader program
 	defaultShaderProgram = glCreateProgram();
 
@@ -117,6 +119,7 @@ void Renderer::InitDefaultShader()
 	unsigned int fs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;out vec4 frag_color;void main () {vec4 texel = texture2D (basic_texture, texture_coordinates);frag_color = texel;}", GL_FRAGMENT_SHADER);
 
 
+	// todo duplication, find common place for this
 	GLint compileSuccess = GL_FALSE;
 	glGetShaderiv( vs, GL_COMPILE_STATUS, &compileSuccess );
     if( compileSuccess != GL_TRUE )
@@ -151,34 +154,41 @@ void Renderer::InitDefaultShader()
 
 }
 
-// todo automatic process for the stuff we always want?
-void Renderer::SetDefaultRenderInfo()
+void Renderer::SetStandardUniforms()
 {
-	renderInfo.depth = 10;
-	renderInfo.glTexture = 0;
-	CreateDefaultMesh(&renderInfo.mesh);
-	renderInfo.glShaderProgram = defaultShaderProgram;
-	//renderInfo.uniforms[0].type = DF_mat4x4;
-	//renderInfo.uniforms[0].name = "model";
-	//renderInfo.uniforms[0].valueFloat = &(renderInfo.matrix->m[0]);
-	renderInfo.uniforms[1].type = DF_sampler2D;
-	renderInfo.uniforms[1].name = "basic_texture";
-	renderInfo.uniforms[1].valueUInt = &renderInfo.glTexture;
+	// todo AddUniform function?
 
-	// test for coords todo remove
-	testRect[0] = 0;
-	testRect[1] = 0;
-	testRect[2] = 150;
-	testRect[3] = 150;
-	// todo no hardcode resolution plz
-	testResolution[0] = 640.f;
-	testResolution[1] = 480.f;
-	renderInfo.uniforms[0].type = DF_vec4;
-	renderInfo.uniforms[0].name = "rect";
-	renderInfo.uniforms[0].valueFloat = &(testRect[0]);
+	ShaderUniform uniformOne;
+	uniformOne.type = DF_point2D;
+	uniformOne.name = "resolution";
+	uniformOne.valueInt = &(ScreenResolution.arr[0]);
+	renderInfo.uniforms.push_back(uniformOne);
 
-	renderInfo.uniforms[2].type = DF_vec2;
-	renderInfo.uniforms[2].name = "resolution";
-	renderInfo.uniforms[2].valueFloat = &(testResolution[0]);
+	// todo add global time (and deltatime while I'm at it)
+	ShaderUniform uniformTwo;
+	uniformTwo.type = DF_float;
+	uniformTwo.name = "time";
+	//uniformTwo.valueInt = &(ScreenResolution.arr[0]);
+	renderInfo.uniforms.push_back(uniformTwo);
 
+	// todo global random
+	ShaderUniform uniformThree;
+	uniformThree.type = DF_float;
+	uniformThree.name = "rand";
+	//uniformThree.valueInt = &(ScreenResolution.arr[0]);
+	renderInfo.uniforms.push_back(uniformThree);
+
+	// todo global random
+	ShaderUniform uniformFour;
+	uniformFour.type = DF_rect;
+	uniformFour.name = "rect";
+	uniformFour.valueRect = 0; // todo have to assign this after init when we have a transform. Better way to do this?
+	renderInfo.uniforms.push_back(uniformFour);
+
+	// todo need a way to deal w/ multiple textures, no textures, etc
+	ShaderUniform uniformFive;
+	uniformFive.type = DF_sampler2D;
+	uniformFive.name = "basic_texture";
+	uniformFive.valueUInt =&renderInfo.glTexture;
+	renderInfo.uniforms.push_back(uniformFive);
 }

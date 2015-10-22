@@ -124,10 +124,8 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 	// 1: add all render-able objects into render box
 	for(int sIndex = 0; sIndex < gameSystems->size(); sIndex++)
 	{
-		
-
 		Renderer* renderer = (*gameSystems)[sIndex]->GetComponent<Renderer>();
-		if(renderer)
+		if(renderer && renderer->visible)
 		{
 			AddToRenderBox(renderer->renderInfo);
 			
@@ -155,48 +153,61 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 				glUseProgram(newShaderProg);
 			}
 			// update uniforms from list
-			for(int uIndex = 0; uIndex < DF_MAX_UNIFORMS; uIndex++) 
+			for(int uIndex = 0; uIndex < renderBox[i][n].uniforms.size(); uIndex++) 
 			{
 				// todo log warning if it can't find the matching uniform name
 				if(renderBox[i][n].uniforms[uIndex].valueInt != 0) // todo is it OK just to check int, instead of depending on type?
 				{
 					int uniformLoc = glGetUniformLocation (newShaderProg, renderBox[i][n].uniforms[uIndex].name);
-					// todo implement a buncha deez fuckers
-					switch(renderBox[i][n].uniforms[uIndex].type)
+					if(uniformLoc >= 0)
 					{
-					case DF_int:
-						glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
-						break;
-					case DF_float:
-						glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
-						break;
-					case DF_float_arr:
-						dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
-						glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
-						break;
-					case DF_mat4x4:
-						glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, renderBox[i][n].uniforms[uIndex].valueFloat);
-						break;
-					case DF_sampler2D:
-						// todo: fart, I forget how to use thisss
-						//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
-						glUniform1i (uniformLoc, 0);
-						break;
-					case DF_vec2:
-						glUniform2f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-							renderBox[i][n].uniforms[uIndex].valueFloat[1]);
-						break;
-					case DF_vec3:
-						glUniform3f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-							renderBox[i][n].uniforms[uIndex].valueFloat[1],
-							renderBox[i][n].uniforms[uIndex].valueFloat[2]);
-						break;
-					case DF_vec4:
-						glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-							renderBox[i][n].uniforms[uIndex].valueFloat[1],
-							renderBox[i][n].uniforms[uIndex].valueFloat[2],
-							renderBox[i][n].uniforms[uIndex].valueFloat[3]);
-						break;
+						// todo implement a buncha deez fuckers
+						switch(renderBox[i][n].uniforms[uIndex].type)
+						{
+						case DF_int:
+							glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
+							break;
+						case DF_float:
+							glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
+							break;
+						case DF_float_arr:
+							dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
+							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
+							break;
+						case DF_mat4x4:
+							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, renderBox[i][n].uniforms[uIndex].valueFloat);
+							break;
+						case DF_sampler2D:
+							// todo: fart, I forget how to use thisss
+							//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
+							glUniform1i (uniformLoc, 0);
+							break;
+						case DF_point2D:
+							glUniform2f(uniformLoc, (float)renderBox[i][n].uniforms[uIndex].valueInt[0],
+								(float)renderBox[i][n].uniforms[uIndex].valueInt[1]);
+							break;
+						case DF_vec2:
+							glUniform2f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+								renderBox[i][n].uniforms[uIndex].valueFloat[1]);
+							break;
+						case DF_vec3:
+							glUniform3f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+								renderBox[i][n].uniforms[uIndex].valueFloat[1],
+								renderBox[i][n].uniforms[uIndex].valueFloat[2]);
+							break;
+						case DF_vec4:
+							glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
+								renderBox[i][n].uniforms[uIndex].valueFloat[1],
+								renderBox[i][n].uniforms[uIndex].valueFloat[2],
+								renderBox[i][n].uniforms[uIndex].valueFloat[3]);
+							break;
+						case DF_rect:
+							glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueRect->arr[0],
+								renderBox[i][n].uniforms[uIndex].valueRect->arr[1],
+								renderBox[i][n].uniforms[uIndex].valueRect->arr[2],
+								renderBox[i][n].uniforms[uIndex].valueRect->arr[3]);
+							break;
+						}
 					}
 				}
 			}

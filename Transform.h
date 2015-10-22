@@ -7,11 +7,15 @@ class Transform :
 	public dfComponent
 {
 public:
+	// todo cleanup, remove pos and scale, just use rect? Keep rot, though.
+	// OR have matrix as a second option.
+	// hmmmm....
 	Transform(void);
 	virtual ~Transform(void);
 	vec3 pos;
 	vec3 rotation;
 	vec3 scale;
+	Rect rectangle;
 
 	void SetPos(float x, float y);
 	void SetPos(vec2 p);

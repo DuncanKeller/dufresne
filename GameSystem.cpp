@@ -33,6 +33,7 @@ void GameSystem::RegisterComponent(dfComponent* newComponent)
 {
 	if(numComponents < maxComponents - 1)
 	{
+		newComponent->gameSystem = this;
 		components[numComponents] = newComponent;
 		(*components[numComponents]).Init();
 		numComponents++;

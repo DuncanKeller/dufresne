@@ -1,4 +1,7 @@
 #pragma once
+
+class GameSystem;
+
 class dfComponent
 {
 public:
@@ -9,5 +12,6 @@ public:
 	virtual void Update();
 
 	char* name;
+	GameSystem* gameSystem;
 };
 

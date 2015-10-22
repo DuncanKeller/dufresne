@@ -10,9 +10,8 @@
 #include "MatMath.h"
 #include "SDL.h"
 
-#include "Input.h" // todo remove
-
-const int DF_MAX_UNIFORMS = 8;
+#include "AssetManager.h"
+#include "Transform.h"
 
 struct ShaderUniform
 {
@@ -25,6 +24,7 @@ struct ShaderUniform
 		int* valueInt;
 		float* valueFloat;
 		float* valueFloatArr[16];
+		Rect* valueRect;
 	};
 };
 
@@ -34,7 +34,7 @@ struct RenderInfo
 	unsigned int glShaderProgram;
 	unsigned int glTexture;
 	Mesh mesh;
-	ShaderUniform uniforms[DF_MAX_UNIFORMS]; // todo dynamic arr, maybe?
+	std::vector<ShaderUniform> uniforms; // todo dynamic arr, maybe?
 	mat4* matrix;
 };
 
@@ -49,24 +49,23 @@ public:
 
 	RenderInfo renderInfo;
 
-	void SetDefaultRenderInfo();
+	void SetStandardUniforms();
 	
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static void InitDefaultShader();
 	
+	void SetTexture(TextureInfo t);
 
-	void Render();
+	// todo: not sure if there is a better way to do this? 
+	//Auto assign rect to transform and re-assign if needed
+	bool visible;
+	Rect* renderRect;
 
 private:
 	static bool defaultShaderAssigned;
 	static unsigned int defaultShaderProgram;
 	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
-
-	
-	//test fields todo remove
-	float testRect[4];
-	float testResolution[2];
 	
 };
 

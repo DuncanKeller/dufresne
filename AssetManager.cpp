@@ -47,7 +47,7 @@ TextureInfo AssetManager::GetTexture(const wchar_t* key)
 	return textureMap[GetHash(key)];
 }
 
-void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
+void AssetManager::InitShader(char* src, ShaderInfo &shader)
 {
 	// TODO array support
 	const char* matchingVert = "!vert";
@@ -59,10 +59,15 @@ void AssetManager::InitShader(char* fullShaderSrc, ShaderInfo &shader)
 	int matchingIndex = 0;
 	int numMatches = 0;
 
+	// basic uniforms to always include
+	const char* basicUniforms = "uniform vec2 resolution;uniform float time;uniform float rand;uniform sampler2D basic_texture;";
+
 	bool gettingLine = false;
 	dfBasicType lastType;
 	bool doneReadingType = false;
 	std::vector<char> currentType;
+
+	const char* fullShaderSrc = dfStrCat(basicUniforms, src);
 
 	// todo cache strlen, shaders can be looong
 	for(int i = 0; i < dfStrLen(fullShaderSrc); i++)

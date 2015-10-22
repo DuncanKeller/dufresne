@@ -18,7 +18,6 @@ void TestGameSystem::Init()
 
 	render = Renderer();
 	render.InitDefaultShader();
-	render.SetDefaultRenderInfo();
 	render.renderInfo.matrix = &tf.matrix;
 
 	tf.matrix = MatMath::identity_mat4();

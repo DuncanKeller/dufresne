@@ -16,6 +16,30 @@ typedef int64_t int64;
 
 #define Pi32 3.14159265359
 
+struct point2D
+{
+	point2D()
+	{
+		x = 0;
+		y = 0;
+	}
+	point2D(int posX, int posY)
+	{
+		x = posX;
+		y = posY;
+	}
+
+	union
+	{
+		struct
+		{
+			int x;
+			int y;
+		};
+		int arr[2];
+	};
+};
+
 struct vec2
 {
 	vec2()
@@ -59,12 +83,20 @@ struct Rect
 	vec2 size;
 	vec2 center;
 
-	float left;
+	union
+	{
+		struct
+		{
+			float left;
+			float top;
+			float width;
+			float height;
+		};
+		float arr[4];
+	};
+	
 	float right;
-	float top;
 	float bottom;
-	float width;
-	float height;
 };
 
 
@@ -79,6 +111,8 @@ int dfStrLen(const wchar_t*);
 bool dfStrCmp(char*, char*);
 bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
+
+const char* dfStrCat(const char* a, const char* b);
 
 char* dfVectorToCharStar(std::vector<wchar_t>);
 
