@@ -3,6 +3,8 @@
 
 Transform::Transform(void)
 {
+	lastFramePosition = vec2::zero();
+	deltaPosition = vec2::zero();
 	pos.x = 0; pos.y = 0; pos.z = 0;
 	scale.x = 1; scale.y = 1; scale.z = 1;
 	rotation.x = 0; rotation.y = 0; rotation.z = 0;
@@ -15,6 +17,21 @@ Transform::Transform(void)
 Transform::~Transform(void)
 {
 	dfComponent::~dfComponent();
+}
+
+void Transform::Init()
+{
+	dfComponent::Init();
+}
+
+void Transform::Update()
+{
+	dfComponent::Update();
+
+	deltaPosition = vec2(
+		rectangle.pos.x - lastFramePosition.x,
+		rectangle.pos.y - lastFramePosition.y);
+	lastFramePosition = rectangle.pos;
 }
 
 void Transform::SetPos(float x, float y)
@@ -98,4 +115,14 @@ void Transform::UpdateMatrix()
 	matrix.m[13] = pos.y;
 	matrix.m[14] = pos.z;
 	matrix.m[15] = 1.f;
+}
+
+void Transform::MovePos(float x, float y)
+{
+	RectMove(x, y, rectangle);
+}
+
+void Transform::MovePos(vec2 p)
+{
+	RectMove(p, rectangle);
 }

@@ -12,6 +12,10 @@ public:
 	// hmmmm....
 	Transform(void);
 	virtual ~Transform(void);
+
+	virtual void Init();
+	virtual void Update();
+
 	vec3 pos;
 	vec3 rotation;
 	vec3 scale;
@@ -21,6 +25,8 @@ public:
 	void SetPos(vec2 p);
 	void SetPos(float x, float y, float z);
 	void SetPos(vec3 p);
+	void MovePos(float x, float y);
+	void MovePos(vec2 p);
 
 	void SetScale(float x, float y);
 	void SetScale(vec2 p);
@@ -32,4 +38,7 @@ public:
 	void UpdateMatrix();
 
 	mat4 matrix;
+
+	vec2 lastFramePosition;
+	vec2 deltaPosition;
 };

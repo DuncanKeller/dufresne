@@ -53,6 +53,11 @@ struct vec2
 		y = posY;
 	}
 
+	static vec2 zero()
+	{
+		return vec2(0.f,0.f);
+	}
+
 	float x;
 	float y;
 };
@@ -70,6 +75,11 @@ struct vec3
 		x = posX;
 		y = posY;
 		z = posZ;
+	}
+
+	static vec3 zero()
+	{
+		return vec3(0.f,0.f,0.f);
 	}
 
 	float x;
@@ -118,6 +128,8 @@ int dfStringToInt(char* str, int size);
 int dfStringToInt(std::vector<char> str);
 
 char* dfVectorToCharStar(std::vector<wchar_t>);
+
+float DotProd(vec2 a, vec2 b);
 
 void UpdateRectMembers(Rect &rect);
 void RectSet(vec2 pos, vec2 size, Rect &rect);

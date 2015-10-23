@@ -33,6 +33,8 @@ Renderer::~Renderer(void)
 
 void Renderer::Init()
 {
+	dfComponent::Init();
+
 	// set default render rectangle
 	renderRect = 0;
 	Transform* tf = gameSystem->GetComponent<Transform>();
@@ -48,10 +50,12 @@ void Renderer::Init()
 			}
 		}
 	}
+
 }
 
 void Renderer::Update()
 {
+	dfComponent::Update();
 }
 
 void Renderer::SetTexture(TextureInfo t)

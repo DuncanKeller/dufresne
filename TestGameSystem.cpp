@@ -27,6 +27,9 @@ void TestGameSystem::Init()
 	//render.renderInfo.uniforms[0].valueFloat = &(render.renderInfo.matrix->m[0]);
 
 	RegisterComponent(&render);
+	
+	bc = BoxCollider();
+	RegisterComponent(&bc);
 
 	GameSystem::Init();
 	
@@ -44,7 +47,19 @@ void TestGameSystem::Update()
 
 	if(input.keyboard.arrowUp.buttonDown)
 	{
-		RectMove(0, -0.001f, tf.rectangle);
+		RectMove(0, -0.01f, tf.rectangle);
+	}
+	if(input.keyboard.arrowDown.buttonDown)
+	{
+		RectMove(0, 0.01f, tf.rectangle);
+	}
+	if(input.keyboard.arrowLeft.buttonDown)
+	{
+		RectMove(-0.01f, 0, tf.rectangle);
+	}
+	if(input.keyboard.arrowRight.buttonDown)
+	{
+		RectMove( 0.01f, 0, tf.rectangle);
 	}
 }
 

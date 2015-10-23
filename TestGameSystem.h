@@ -9,6 +9,7 @@
 #include "AssetManager.h"
 #include "SDL_image.h"
 #include "Input.h"
+#include "BoxCollider.h"
 #include "STDUNC.h"
 
 class TestGameSystem :
@@ -23,5 +24,6 @@ public:
 	
 	Renderer render;
 	Transform tf;
+	BoxCollider bc;
 };
 

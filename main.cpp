@@ -16,6 +16,7 @@
 #include "TestGameSystem.h"
 #include "RenderSystem.h"
 #include "AssetManager.h"
+#include "BoxCollider.h"
 
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
@@ -24,6 +25,26 @@ float dfDeltaTime; // todo fill me
 void GameExit(int ReturnValue)
 {
 	exit( ReturnValue );
+}
+
+// todo move me outta here! (CollisionSystem class? overkill?)
+void DoCollision(std::vector<GameSystem*>* gameSystems)
+{
+	for(int ai = 0; ai < gameSystems->size(); ai++)
+	{
+		BoxCollider* colliderA = (*gameSystems)[ai]->GetComponent<BoxCollider>();
+		if(colliderA)
+		{
+			for(int bi = 0; bi < gameSystems->size(); bi++)
+			{
+				BoxCollider* colliderB = (*gameSystems)[bi]->GetComponent<BoxCollider>();
+				if(colliderB && colliderA != colliderB)
+				{
+					colliderA->BoxBoxCollision(*colliderA, *colliderB);
+				}
+			}
+		}
+	}
 }
 
 int CALLBACK WinMain(
@@ -107,11 +128,18 @@ int CALLBACK WinMain(
 
 	TestGameSystem test = TestGameSystem();
 	test.Init();
+	RectSize(50, 50, test.tf.rectangle);
+	test.GetComponent<BoxCollider>()->stationary = false;
+
+	TestGameSystem test2 = TestGameSystem();
+	test2.Init();
+	RectSetPos(150,150, test2.tf.rectangle);
 
 
 
 	std::vector<GameSystem*> testRenderList;
 	testRenderList.push_back(&test);
+	testRenderList.push_back(&test2);
 	
 	
 	while(true)
@@ -121,6 +149,8 @@ int CALLBACK WinMain(
 		renderer.Update();
 
 		test.Update();
+
+		DoCollision(&testRenderList);
 
 		renderer.RenderLoop(&testRenderList);
 

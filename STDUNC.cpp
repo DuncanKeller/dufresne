@@ -178,6 +178,10 @@ char* dfVectorToCharStar(std::vector<wchar_t> vec)
 	return newStr;
 }
 
+float DotProd(vec2 a, vec2 b)
+{
+	return a.x * b.x + a.y * b.y;
+}
 
 void UpdateRectMembers(Rect &rect)
 {
