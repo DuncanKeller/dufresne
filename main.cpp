@@ -18,6 +18,8 @@
 #include "AssetManager.h"
 
 point2D ScreenResolution;
+float dfTotalTime; // todo fill me
+float dfDeltaTime; // todo fill me
 
 void GameExit(int ReturnValue)
 {

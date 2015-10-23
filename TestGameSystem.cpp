@@ -34,14 +34,18 @@ void TestGameSystem::Init()
 
 	TextureInfo textureFile = assMan.GetTexture(L"fart\\testTexture2.png");
 
-	render.renderInfo.glTexture = textureFile.glTexture;
+	render.SetTexture(textureFile);
 	
 }
 
 void TestGameSystem::Update()
 {
-
 	GameSystem::Update();
+
+	if(input.keyboard.arrowUp.buttonDown)
+	{
+		RectMove(0, -0.001f, tf.rectangle);
+	}
 }
 
 // todo

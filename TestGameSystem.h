@@ -8,6 +8,8 @@
 #include "dfBasic.h"
 #include "AssetManager.h"
 #include "SDL_image.h"
+#include "Input.h"
+#include "STDUNC.h"
 
 class TestGameSystem :
 	public GameSystem

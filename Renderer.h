@@ -23,7 +23,6 @@ struct ShaderUniform
 		unsigned int* valueUInt;
 		int* valueInt;
 		float* valueFloat;
-		float* valueFloatArr[16];
 		Rect* valueRect;
 	};
 };

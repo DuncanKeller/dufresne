@@ -42,13 +42,10 @@ unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 
 void RenderSystem::InitRenderBox()
 {
-	int numberOfGroups = 20;
-	int sizeOfAGroup = 100;
-
-	renderBox.reserve(numberOfGroups);
-	for(int i = 0; i < numberOfGroups; i++)
+	renderBox.reserve(render_box_initial_number_of_layers);
+	for(int i = 0; i < render_box_initial_number_of_layers; i++)
 	{
-		renderBox[i].reserve(100);
+		renderBox[i].reserve(render_box_initial_layer_size);
 	}
 
 	// gl operations
@@ -59,10 +56,6 @@ void RenderSystem::InitRenderBox()
 
 void RenderSystem::AddToRenderBox(RenderInfo r)
 {
-	// todo move to a more global scope
-	int numberOfGroups = 20;
-	int sizeOfAGroup = 100;
-
 	// does not support negative depth values
 	dfAssert(r.depth >= 0);
 	int currentSize = (int)renderBox.size();
@@ -72,13 +65,12 @@ void RenderSystem::AddToRenderBox(RenderInfo r)
 		for(int i = 0; i < (r.depth+1) - currentSize; i++)
 		{
 			std::vector<RenderInfo> newBox;
-			newBox.reserve(sizeOfAGroup);
+			newBox.reserve(render_box_initial_layer_size);
 			renderBox.push_back(newBox);
 		}
 	}
 
 	renderBox[r.depth].push_back(r);
-
 }
 
 void RenderSystem::SortRenderBox(int boxIndex)
@@ -107,12 +99,6 @@ void RenderSystem::SortRenderBox(int boxIndex)
 // needs to handle scene hirarchy eventually
 void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems) 
 {
-	// todo move into broader scope
-	int numberOfGroups = 20;
-	int sizeOfAGroup = 100;
-
-	//glEnable(GL_CULL_FACE);  
-	//glCullFace(GL_BACK);  
 	// set gl state
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -138,7 +124,7 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 		SortRenderBox(i);
 	}
 
-	// 3 render all boxes
+	// 3: render all boxes
 	unsigned int currentShaderProgram = 0;
 	bool firstRender = true;
 
@@ -167,15 +153,23 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 						case DF_int:
 							glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
 							break;
+						case DF_unsigned_int_arr:
+							glUniform1uiv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
+								renderBox[i][n].uniforms[uIndex].valueUInt);
+							break;
 						case DF_float:
 							glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
 							break;
 						case DF_float_arr:
-							dfAssert(renderBox[i][n].uniforms[uIndex].arrSize == 16);
-							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, *renderBox[i][n].uniforms[uIndex].valueFloatArr);
+							glUniform1fv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
+								renderBox[i][n].uniforms[uIndex].valueFloat);
 							break;
 						case DF_mat4x4:
 							glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, renderBox[i][n].uniforms[uIndex].valueFloat);
+							break;
+						case DF_mat4x4_arr:
+							glUniformMatrix4fv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize, GL_FALSE, 
+								renderBox[i][n].uniforms[uIndex].valueFloat);
 							break;
 						case DF_sampler2D:
 							// todo: fart, I forget how to use thisss
@@ -201,6 +195,18 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 								renderBox[i][n].uniforms[uIndex].valueFloat[2],
 								renderBox[i][n].uniforms[uIndex].valueFloat[3]);
 							break;
+						case DF_vec2_arr:
+							glUniform2fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
+								&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
+							break;
+						case DF_vec3_arr:
+							glUniform3fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
+								&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
+							break;
+						case DF_vec4_arr:
+							glUniform4fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
+								&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
+							break;
 						case DF_rect:
 							glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueRect->arr[0],
 								renderBox[i][n].uniforms[uIndex].valueRect->arr[1],
@@ -223,7 +229,6 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 		}
 	}
 	
-
 	// end gl stuff
-	//glFlush(); 
+	glFlush(); 
 }

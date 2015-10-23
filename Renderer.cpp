@@ -57,8 +57,7 @@ void Renderer::Update()
 void Renderer::SetTexture(TextureInfo t)
 {
 	renderInfo.glTexture = t.glTexture;
-	renderRect->width = t.width;
-	renderRect->height = t.height;
+	RectSize(t.width, t.height, *renderRect);
 }
 
 // todo move into more general scope
@@ -110,14 +109,8 @@ void Renderer::InitDefaultShader()
 	// create default shader program
 	defaultShaderProgram = glCreateProgram();
 
-	
-	unsigned int vs = CompileShaderFromSrc("layout(location = 0) in vec3 vertex_position; layout(location = 2) in vec2 in_texture_coordinates; out vec2 texture_coordinates; uniform vec2 resolution; uniform vec4 rect; uniform sampler2D basic_texture; void main () { texture_coordinates = in_texture_coordinates; if(vertex_position.x < 0.0 && vertex_position.y < 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 0; } else if(vertex_position.x > 0.0 && vertex_position.y < 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 0; } else if(vertex_position.x < 0.0 && vertex_position.y > 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 1; } else if(vertex_position.x > 0.0 && vertex_position.y > 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 1; } gl_Position.z = 0.0; gl_Position.w = 1.0; } ", GL_VERTEX_SHADER);
-	//unsigned int fs = CompileShaderFromSrc(" in vec2 texture_coordinates; uniform sampler2D basic_texture; out vec4 frag_color; void main () { frag_color = vec4(texture_coordinates.x,texture_coordinates.y,1-texture_coordinates.x,1); }", GL_FRAGMENT_SHADER);
-
-
-	//unsigned int vs = CompileShaderFromSrc("layout(location = 0) in vec3 vertex_position;layout(location = 1) in vec2 in_texture_coordinates;out vec2 texture_coordinates;uniform mat4 model;uniform sampler2D basic_texture;void main () {texture_coordinates = in_texture_coordinates;gl_Position = model * vec4 (vertex_position, 1.0);}", GL_VERTEX_SHADER);
+	unsigned int vs = CompileShaderFromSrc("layout(location = 0) in vec3 vertex_position; layout(location = 2) in vec2 in_texture_coordinates; out vec2 texture_coordinates; uniform vec2 resolution; uniform vec4 rect; uniform sampler2D basic_texture; void main () { texture_coordinates = in_texture_coordinates; if(vertex_position.x < 0.0 && vertex_position.y < 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 0; } else if(vertex_position.x > 0.0 && vertex_position.y < 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 0; } else if(vertex_position.x < 0.0 && vertex_position.y > 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 1; } else if(vertex_position.x > 0.0 && vertex_position.y > 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 1; } gl_Position.y *= -1; gl_Position.z = 0.0; gl_Position.w = 1.0; }  ", GL_VERTEX_SHADER);
 	unsigned int fs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;out vec4 frag_color;void main () {vec4 texel = texture2D (basic_texture, texture_coordinates);frag_color = texel;}", GL_FRAGMENT_SHADER);
-
 
 	// todo duplication, find common place for this
 	GLint compileSuccess = GL_FALSE;
@@ -164,11 +157,10 @@ void Renderer::SetStandardUniforms()
 	uniformOne.valueInt = &(ScreenResolution.arr[0]);
 	renderInfo.uniforms.push_back(uniformOne);
 
-	// todo add global time (and deltatime while I'm at it)
 	ShaderUniform uniformTwo;
 	uniformTwo.type = DF_float;
 	uniformTwo.name = "time";
-	//uniformTwo.valueInt = &(ScreenResolution.arr[0]);
+	uniformTwo.valueFloat = &(dfTotalTime);
 	renderInfo.uniforms.push_back(uniformTwo);
 
 	// todo global random
@@ -178,7 +170,6 @@ void Renderer::SetStandardUniforms()
 	//uniformThree.valueInt = &(ScreenResolution.arr[0]);
 	renderInfo.uniforms.push_back(uniformThree);
 
-	// todo global random
 	ShaderUniform uniformFour;
 	uniformFour.type = DF_rect;
 	uniformFour.name = "rect";

@@ -66,6 +66,10 @@ void AssetManager::InitShader(char* src, ShaderInfo &shader)
 	dfBasicType lastType;
 	bool doneReadingType = false;
 	std::vector<char> currentType;
+	
+	bool isArray = false;
+	bool readingArray = false;
+	std::vector<char> arraySize;
 
 	const char* fullShaderSrc = dfStrCat(basicUniforms, src);
 
@@ -98,7 +102,8 @@ void AssetManager::InitShader(char* src, ShaderInfo &shader)
 				// match found, add line to list
 				gettingLine = true;
 				matchingIndex = 0;
-				UniformInfo newInfo;			
+				UniformInfo newInfo;	
+				newInfo.arraySize = 0;
 				shader.uniforms.push_back(newInfo);
 				continue;
 			}
@@ -121,6 +126,17 @@ void AssetManager::InitShader(char* src, ShaderInfo &shader)
 					currentType.clear();
 				}
 			}
+			else if(readingArray)
+			{
+				if(fullShaderSrc[i] == ']') // end of array
+				{
+					readingArray = false;
+				}
+				else
+				{
+					arraySize.push_back(fullShaderSrc[i]);
+				}
+			}
 			else  // read in shader name
 			{
 				if(fullShaderSrc[i] != ' ') // reading shader type
@@ -132,14 +148,27 @@ void AssetManager::InitShader(char* src, ShaderInfo &shader)
 						UniformInfo newInfo;
 						shader.uniforms.push_back(newInfo);
 					}
+					else if(fullShaderSrc[i] == '[') // start of array
+					{
+						readingArray = true;
+						isArray = true;
+					}
 					else if(fullShaderSrc[i] == ';')  // new name, end of line
 					{
 						shader.uniforms[numMatches].type = lastType;
+						if(isArray)
+						{
+							int size = dfStringToInt(arraySize);
+							shader.uniforms[numMatches].arraySize = size;
+						}
+
 						numMatches++; 
 
 						lastType = DF_null;
 						doneReadingType = false;
 						gettingLine = false;
+						isArray = false;
+						arraySize.clear();
 					}
 					else
 					{
@@ -171,8 +200,8 @@ void AssetManager::InitTexture(TextureInfo &texture)
 	// gl texture params
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	
 	texture.width = textureSurface->w;
 	texture.height = textureSurface->h;

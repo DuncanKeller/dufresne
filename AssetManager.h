@@ -15,38 +15,6 @@
 
 #include "dfBasic.h"
 
-// todo const char* goes out of scope and gets gronked
-// could be fixed if we go to a real string class, so too lazy to fix right now
-struct dfFile
-{
-	char* contents;
-	int size;
-};
-
-struct UniformInfo
-{
-	std::vector<char> name;
-	dfBasicType type;
-};
-
-// todo move the ____info structs outside of assetmanager? Into dfBasic?
-struct ShaderInfo
-{
-	dfFile shaderFile;
-	std::vector<UniformInfo> uniforms;
-	int vertFragType;
-};
-
-struct TextureInfo
-{
-	dfFile file;
-	char* name;
-	std::vector<wchar_t> filetype;
-	int width;
-	int height;
-	unsigned int glTexture;
-};
-
 class AssetManager :
 	public GameSystem
 {

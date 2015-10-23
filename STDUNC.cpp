@@ -132,6 +132,42 @@ const char* dfStrCat(const char* a, const char* b)
     return result;
 }
 
+int dfStringToInt(char* str, int size)
+{
+	int result = 0;
+	int place = 1;
+
+	for(int i = size - 1; i >= 0; i--)
+	{
+		char c = str[i];
+		int num = c - '0';
+		if(num < 0 || num > 9)
+			dfAssert(false); // parsed something bad
+
+		result += num * place;
+		place *= 10;
+	}
+	return result;
+}
+
+int dfStringToInt(std::vector<char> str)
+{
+	int result = 0;
+	int place = 1;
+	
+	for(int i = str.size() - 1; i >= 0; i--)
+	{
+		char c = str[i];
+		int num = c - '0';
+		if(num < 0 || num > 9)
+			dfAssert(false); // parsed something bad
+
+		result += num * place;
+		place *= 10;
+	}
+	return result;
+}
+
 char* dfVectorToCharStar(std::vector<wchar_t> vec)
 {
 	char* newStr = (char*)malloc(sizeof(char) * vec.size());
