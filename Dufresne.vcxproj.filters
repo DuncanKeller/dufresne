@@ -2,5 +2,95 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="STDUNC.cpp" />
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="MatMath.cpp" />
+    <ClCompile Include="Transform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="dfBasic.cpp" />
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSystem.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGameSystem.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="dfComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="glew.c">
+      <Filter>External</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="STDUNC.h" />
+    <ClInclude Include="AssetManager.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="MatMath.h" />
+    <ClInclude Include="Transform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="dfBasic.h" />
+    <ClInclude Include="RenderSystem.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="TestGameSystem.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="dfComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="wglew.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="glew.h">
+      <Filter>External</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Components">
+      <UniqueIdentifier>{115108f6-553e-4f6d-a225-531208215502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSystems">
+      <UniqueIdentifier>{b0ef9f7e-f3ca-4b01-b5ef-3143c9fcf051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{fa7c6f43-9e18-4309-a802-c27966902980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

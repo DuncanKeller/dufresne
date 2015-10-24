@@ -30,7 +30,7 @@ void BoxCollider::BoxBoxCollision(BoxCollider &a, BoxCollider &b)
 	Rect rb = b.tf->rectangle;
 	
 	// check if both are stationary, do nothing
-	if(a.stationary && b.stationary)
+	if(a.stationary)
 		return;
 
 	// basic overlap check
@@ -52,13 +52,21 @@ void BoxCollider::BoxBoxCollision(BoxCollider &a, BoxCollider &b)
 	float xAmntA = DotProd(a.tf->deltaPosition, vec2(1,0));
 	float yAmntA = DotProd(a.tf->deltaPosition, vec2(0,1));
 	
-	// todo add a case that will determine best direction to push out of
-	// if there is no movement vector
-	if(abs(xAmntA) > abs(yAmntA)) // move horizontally
-		responseDirA.x = xAmntA > 0 ? -1.f : 1.f;
-	else if(abs(yAmntA) > abs(xAmntA)) // move vertically
-		responseDirA.y = yAmntA > 0 ? -1.f : 1.f;
-	else if(false) {} // oh, player isn't holding a direction, guess we should choose the best direction
+	float moveDiff = abs(xAmntA) - abs(yAmntA);
+	
+	//if(abs(xAmntA) > abs(yAmntA)) // move horizontally
+	//	responseDirA.x = xAmntA > 0 ? -1.f : 1.f;
+	//else if(abs(yAmntA) > abs(xAmntA)) // move vertically
+	//	responseDirA.y = yAmntA > 0 ? -1.f : 1.f;
+
+	if(abs(overlapAmnt.x) < abs(overlapAmnt.y))
+	{
+		responseDirA.x = ra.center.x < rb.center.x ? -1 : 1;
+	}
+	else
+	{
+		responseDirA.y = ra.center.y < rb.center.y ? -1 : 1;
+	}
 
 	if(a.stationary)
 		responseDirA = vec2::zero();
