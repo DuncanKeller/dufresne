@@ -47,6 +47,11 @@ TextureInfo AssetManager::GetTexture(const wchar_t* key)
 	return textureMap[GetHash(key)];
 }
 
+std::string AssetManager::GetTextFile(const wchar_t* key)
+{
+	return textFileMap[GetHash(key)];
+}
+
 void AssetManager::InitShader(char* src, ShaderInfo &shader)
 {
 	// TODO array support
@@ -400,6 +405,14 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 
 					textures.push_back(texture);
 					textureMap[GetHash(filename)] = texture;
+				}
+				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt"))
+				{
+					std::string str = std::string(newAsset.contents);
+					textFiles.push_back(str);
+					textFileMap[GetHash(filename)] = str;
+					int hooba = str.length();
+					int farts = 4;
 				}
 			}
 			else

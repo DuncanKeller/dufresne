@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "SDL_image.h"
+#include "tinyjson.h"
 
 #include "dfBasic.h"
 #include "Input.h"
@@ -17,6 +18,7 @@
 #include "RenderSystem.h"
 #include "AssetManager.h"
 #include "BoxCollider.h"
+#include "TileMap.h"
 
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
@@ -54,6 +56,8 @@ int CALLBACK WinMain(
 	  _In_ int       nCmdShow)
 {
 	int flags = 0;
+
+	dfDeltaTime = 43.f;
 
 	ScreenResolution.x = 640.f;
 	ScreenResolution.y = 480.f;
@@ -113,6 +117,8 @@ int CALLBACK WinMain(
 		GameExit( 1 );
 	}
 	glEnable(GL_TEXTURE_2D);
+
+	tinyjson_init();
 		
 	assMan = AssetManager();
 	std::wstring path = L"fart\\";
@@ -135,6 +141,8 @@ int CALLBACK WinMain(
 	test2.Init();
 	RectSetPos(150,150, test2.tf.rectangle);
 
+	TileMap tmap = TileMap();
+	tmap.Init();
 
 
 	std::vector<GameSystem*> testRenderList;

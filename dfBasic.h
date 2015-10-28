@@ -49,9 +49,9 @@ struct TextureInfo
 	dfFile file;
 	char* name;
 	std::vector<wchar_t> filetype;
+	unsigned int glTexture;
 	int width;
 	int height;
-	unsigned int glTexture;
 };
 
 dfBasicType dfGetTypeFromString(std::vector<char> str);

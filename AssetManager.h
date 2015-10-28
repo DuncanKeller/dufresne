@@ -28,6 +28,7 @@ public:
 	dfFile GetAsset(const wchar_t*);
 	ShaderInfo GetShader(const wchar_t*);
 	TextureInfo GetTexture(const wchar_t*);
+	std::string GetTextFile(const wchar_t*);
 	
 	bool CalculateLoosePackageSize(std::wstring );
 	uint32 PlatformGetFileSize(const wchar_t*);
@@ -48,6 +49,8 @@ public:
 	std::map<double, ShaderInfo> shaderMap;
 	std::vector<TextureInfo> textures;
 	std::map<double, TextureInfo> textureMap;
+	std::vector<std::string> textFiles;
+	std::map<double, std::string> textFileMap;
 	char* assetPool;
 	std::map<double, dfFile> assetMap;
 	int poolsize;

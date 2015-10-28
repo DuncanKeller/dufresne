@@ -39,6 +39,13 @@
     <ClCompile Include="glew.c">
       <Filter>External</Filter>
     </ClCompile>
+    <ClCompile Include="tinyjson.c">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyjsonp.cpp">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -81,6 +88,13 @@
     <ClInclude Include="glew.h">
       <Filter>External</Filter>
     </ClInclude>
+    <ClInclude Include="tinyjson.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyjsonp.h">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

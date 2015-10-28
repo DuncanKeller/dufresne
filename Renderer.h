@@ -13,6 +13,24 @@
 #include "AssetManager.h"
 #include "Transform.h"
 
+// todo separate atlas and sprite into different structs / components / classes?
+struct SpriteInfo
+{
+	union
+	{
+		float arr[6];
+		struct
+		{
+			vec2 atlasPos;
+			vec2 spriteSize;
+			vec2 textureSize; // have to duplicate to store as float... todo has to be a better approach...
+		};
+	};
+	
+	float atlasMargin; // space on the edges 
+	float atlasSpacing; // space in between tiles
+};
+
 struct ShaderUniform
 {
 	dfBasicType type;
@@ -33,7 +51,7 @@ struct RenderInfo
 	unsigned int glShaderProgram;
 	unsigned int glTexture;
 	Mesh mesh;
-	std::vector<ShaderUniform> uniforms; // todo dynamic arr, maybe?
+	std::vector<ShaderUniform> uniforms; 
 	mat4* matrix;
 };
 
@@ -47,6 +65,8 @@ public:
 	virtual void Update();
 
 	RenderInfo renderInfo;
+	SpriteInfo spriteInfo;
+	TextureInfo* textureInfo;
 
 	void SetStandardUniforms();
 	
@@ -54,16 +74,25 @@ public:
 	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static void InitDefaultShader();
 	
-	void SetTexture(TextureInfo t);
+	void SetTexture(TextureInfo &t);
+
+	void InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing);
+	void SetAtlasLocation(int xIndex, int yIndex);
+	void SetAtlasLocation(float xPos, float Ypos);
 
 	// todo: not sure if there is a better way to do this? 
 	//Auto assign rect to transform and re-assign if needed
 	bool visible;
+	bool atlased;
 	Rect* renderRect;
+	
+	float testFloat;
+	int testInt;
 
 private:
 	static bool defaultShaderAssigned;
 	static unsigned int defaultShaderProgram;
+	static unsigned int defaultAtlasShaderProgram;
 	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 	
 };
