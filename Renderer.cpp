@@ -61,6 +61,8 @@ void Renderer::Init()
 		}
 	}
 
+	//SetStandardUniforms();
+
 }
 
 void Renderer::Update()
@@ -245,6 +247,7 @@ void Renderer::SetStandardUniforms()
 	uniformFour.type = DF_rect;
 	uniformFour.name = "rect";
 	uniformFour.valueRect = 0; // todo have to assign this after init when we have a transform. Better way to do this?
+	//uniformFour.valueRect = &gameSystem->GetComponent<Transform>()->rectangle;
 	renderInfo.uniforms.push_back(uniformFour);
 
 	// todo need a way to deal w/ multiple textures, no textures, etc
@@ -269,10 +272,7 @@ void Renderer::SetStandardUniforms()
 	ShaderUniform uniformEight;
 	uniformEight.type = DF_vec2;
 	uniformEight.name = "atlasSize";
-	//uniformEight.valueFloat = &(spriteInfo.arr[4]);
-	uniformEight.valueFloat = &(spriteInfo.atlasMargin);
+	uniformEight.valueFloat = &(spriteInfo.arr[4]);
 	renderInfo.uniforms.push_back(uniformEight);
 
-	testFloat = 199.f;
-	testInt = 44;
 }

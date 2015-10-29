@@ -138,8 +138,7 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 				firstRender = false;
 				glUseProgram(newShaderProg);
 			}
-			float boop ;
-								float toop ;
+
 			// update uniforms from list
 			for(int uIndex = 0; uIndex < renderBox[i][n].uniforms.size(); uIndex++) 
 			{
@@ -183,8 +182,6 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 								(float)renderBox[i][n].uniforms[uIndex].valueInt[1]);
 							break;
 						case DF_vec2:
-								 boop = renderBox[i][n].uniforms[uIndex].valueFloat[0];
-								 toop = renderBox[i][n].uniforms[uIndex].valueFloat[1];
 							glUniform2f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
 								renderBox[i][n].uniforms[uIndex].valueFloat[1]);
 							break;

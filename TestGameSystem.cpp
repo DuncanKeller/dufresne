@@ -13,10 +13,8 @@ TestGameSystem::~TestGameSystem(void)
 
 void TestGameSystem::Init()
 {
-	tf = Transform();
 	RegisterComponent(&tf);
 
-	render = Renderer();
 	render.InitDefaultShader();
 	render.renderInfo.matrix = &tf.matrix;
 
