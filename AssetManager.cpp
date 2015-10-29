@@ -197,7 +197,6 @@ void AssetManager::InitTexture(TextureInfo &texture)
 	const char* filetype = dfVectorToCharStar(texture.filetype);
 	SDL_Surface *textureSurface = IMG_LoadTyped_RW(textureWops, 0, filetype);
 	if(!textureSurface) {
-		const char* theFart = IMG_GetError();
 		dfLog((char*)IMG_GetError());
 		dfAssert(false); // could not create image asset
 	}
@@ -216,6 +215,9 @@ void AssetManager::InitTexture(TextureInfo &texture)
 
 	if(dfStrCmp(texture.filetype, "png"))
 		glFormat = GL_RGBA;
+	
+	 glFormat = GL_RGB; // todo: total fuckin hack, why does RGBA not work for some PNGs????
+
 
 	glTexImage2D (
 	  GL_TEXTURE_2D,
@@ -389,7 +391,7 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 					shader.vertFragType = 0;
 					shader.shaderFile = newAsset;
 
-					InitShader(newAsset.contents, shader);
+					InitShader(dfSubstr(newAsset.contents, newAsset.size), shader);
 
 					shaders.push_back(shader);
 					shaderMap[GetHash(filename)] = shader;
@@ -408,12 +410,11 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 				}
 				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt"))
 				{
-					std::string str = std::string(newAsset.contents);
-					textFiles.push_back(str);
-					textFileMap[GetHash(filename)] = str;
-					int hooba = str.length();
-					int farts = 4;
+					//std::string str = std::string(newAsset.contents);
+					//textFiles.push_back(str);
+					//textFileMap[GetHash(filename)] = str;
 				}
+				
 			}
 			else
 			{

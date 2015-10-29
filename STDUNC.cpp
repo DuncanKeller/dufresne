@@ -132,6 +132,17 @@ const char* dfStrCat(const char* a, const char* b)
     return result;
 }
 
+char* dfSubstr(char* a, int len)
+{
+	char* newStr = (char*)malloc(len+1);
+	for(int i = 0; i < len; i++)
+	{
+		newStr[i] = a[i];
+	}
+	newStr[len] = '\0';
+	return newStr;
+}
+
 int dfStringToInt(char* str, int size)
 {
 	int result = 0;

@@ -124,6 +124,8 @@ bool dfStrCmp(std::vector<wchar_t>, const char*);
 
 const char* dfStrCat(const char* a, const char* b);
 
+char* dfSubstr(char* a, int len);
+
 int dfStringToInt(char* str, int size);
 int dfStringToInt(std::vector<char> str);
 

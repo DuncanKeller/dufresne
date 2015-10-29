@@ -141,8 +141,8 @@ int CALLBACK WinMain(
 	test2.Init();
 	RectSetPos(150,150, test2.tf.rectangle);
 
-	TileMap tmap = TileMap();
-	tmap.Init();
+	//TileMap tmap = TileMap();
+	//tmap.Init();
 
 
 	std::vector<GameSystem*> testRenderList;

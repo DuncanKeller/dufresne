@@ -23,7 +23,6 @@ struct SpriteInfo
 		{
 			vec2 atlasPos;
 			vec2 spriteSize;
-			vec2 textureSize; // have to duplicate to store as float... todo has to be a better approach...
 		};
 	};
 	

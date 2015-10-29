@@ -33,7 +33,7 @@ void TestGameSystem::Init()
 	
 	
 
-	TextureInfo textureFile = assMan.GetTexture(L"fart\\testTexture2.png");
+	TextureInfo textureFile = assMan.GetTexture(L"fart\\testAtlas.png");
 
 	render.SetTexture(textureFile);
 	
