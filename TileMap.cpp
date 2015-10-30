@@ -51,10 +51,21 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 		Tileset set;
 		set.margin = tilesetObj.getChild("margin").asInt();
 		set.spacing = tilesetObj.getChild("spacing").asInt();
-		set.tileWidth = tilesetObj.getChild("tilewidth").asInt();
-		set.tileHeight = tilesetObj.getChild("tileheight").asInt();
+		set.tilePxWidth = tilesetObj.getChild("tilewidth").asInt();
+		set.tilePxHeight = tilesetObj.getChild("tileheight").asInt();
 		set.numTiles = tilesetObj.getChild("tilecount").asInt();
-		set.name = tilesetObj.getChild("name").asString();
+		set.name = tilesetObj.getChild("name").asString();		
+		int imgWidth =  tilesetObj.getChild("imagewidth").asInt();
+		int imgHeight =  tilesetObj.getChild("imageheight").asInt();
+		
+		std::string filename = tilesetObj.getChild("image").asString();
+		const char* cstrfilename = filename.c_str();
+		const wchar_t* wcharfilename = (wchar_t*)filename.c_str();
+		TextureInfo texture = assMan.GetTexture(L"fart\\testtiles.png"); // todo obviouslly not hardcode path...
+		set.texture = texture;
+
+		set.numTilesWidth = ((imgWidth - set.margin * 2) + set.spacing) / (set.tilePxWidth + set.spacing);
+		set.numTileHeight = ((imgHeight - set.margin * 2) + set.spacing) / (set.tilePxHeight + set.spacing);
 
 		tilesets.push_back(set);
 	}
@@ -80,7 +91,7 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 			JsonObject tileData = layerObj.getChild("data");
 			for(int tileIndex = 0; tileIndex < tileData.numChildren(); tileIndex++)
 			{
-				Tile t;
+				TileInfo t;
 				t.tilemapGUID = tileData.getChild(tileIndex).asInt() - 1;
 				t.xIndex = t.tilemapGUID % widthInTiles;
 				t.yIndex = t.tilemapGUID / widthInTiles;
@@ -122,5 +133,22 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 
 void TileMap::GenerateMapSystem()
 {
+	for(int layerIndex = 0; layerIndex < tileLayers.size(); layerIndex++)
+	{
+		TileLayer layer = tileLayers[layerIndex];
+		for(int tileIndex = 0; tileIndex < layer.tiles.size(); tileIndex++)
+		{
+			TileInfo t = layer.tiles[tileIndex];
+			tiles.push_back(new dfTile());
+			dfTile* tile = tiles[tiles.size() - 1];
 
+			Tileset set = tilesets[t.tilesetIndex];
+			// todo: use a configurable size for the tiles, not just pixel size of tile
+			tile->tf.SetPos(t.xIndex * set.tilePxWidth, t.yIndex * set.tilePxHeight);
+			RectSize(set.tilePxWidth, set.tilePxHeight, tile->render.renderRect);
+			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
+			tile->render.SetAtlasLocation(t.xIndex, t.yIndex);
+			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
+		}
+	}
 }

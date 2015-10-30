@@ -134,20 +134,24 @@ int CALLBACK WinMain(
 
 	TestGameSystem test = TestGameSystem();
 	test.Init();
-	RectSize(50, 50, test.tf.rectangle);
+	RectSize(50, 50, &test.tf.rectangle);
 	test.GetComponent<BoxCollider>()->stationary = false;
 
 	TestGameSystem test2 = TestGameSystem();
 	test2.Init();
-	RectSetPos(150,150, test2.tf.rectangle);
+	RectSetPos(150,150, &test2.tf.rectangle);
 
-	//TileMap tmap = TileMap();
-	//tmap.Init();
+	TileMap tmap = TileMap();
+	tmap.Init();
 
 
 	std::vector<GameSystem*> testRenderList;
 	testRenderList.push_back(&test);
 	testRenderList.push_back(&test2);
+	for(int i = 0; i < tmap.tiles.size(); i++)
+	{
+		testRenderList.push_back(tmap.tiles[i]);
+	}
 	
 	
 	while(true)
@@ -159,7 +163,7 @@ int CALLBACK WinMain(
 		test.Update();
 
 		DoCollision(&testRenderList);
-
+		
 		renderer.RenderLoop(&testRenderList);
 
 		SDL_GL_SwapWindow(screen);

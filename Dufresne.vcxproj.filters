@@ -45,7 +45,10 @@
     <ClCompile Include="tinyjsonp.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileMap.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="dfTile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -94,7 +97,10 @@
     <ClInclude Include="tinyjsonp.h">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileMap.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="dfTile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

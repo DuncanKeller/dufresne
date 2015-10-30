@@ -19,7 +19,7 @@ public:
 	void AddToRenderBox(RenderInfo);
 	void SortRenderBox(int);
 	void RenderLoop(std::vector<GameSystem*>* systemObjects);
-	
+
 	unsigned int CompileShader(ShaderInfo shader);
 
 	std::vector<std::vector<RenderInfo>> renderBox;

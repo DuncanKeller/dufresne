@@ -10,7 +10,7 @@ Transform::Transform(void)
 	rotation.x = 0; rotation.y = 0; rotation.z = 0;
 	rectangle.pos = vec2(0,0);
 	rectangle.size = vec2(50,50);
-	UpdateRectMembers(rectangle); // todo replace with CreateRect method. I don't like updaterectmemebers being called outside of stdunc
+	UpdateRectMembers(&rectangle); // todo replace with CreateRect method. I don't like updaterectmemebers being called outside of stdunc
 }
 
 
@@ -39,6 +39,8 @@ void Transform::SetPos(float x, float y)
 	pos.x = x;
 	pos.y = y;
 	UpdateMatrix();
+
+	RectSetPos(x, y, &rectangle);
 }
 	
 void Transform::SetPos(vec2 p)
@@ -119,10 +121,10 @@ void Transform::UpdateMatrix()
 
 void Transform::MovePos(float x, float y)
 {
-	RectMove(x, y, rectangle);
+	RectMove(x, y, &rectangle);
 }
 
 void Transform::MovePos(vec2 p)
 {
-	RectMove(p, rectangle);
+	RectMove(p, &rectangle);
 }

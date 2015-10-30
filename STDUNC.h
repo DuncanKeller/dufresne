@@ -133,13 +133,13 @@ char* dfVectorToCharStar(std::vector<wchar_t>);
 
 float DotProd(vec2 a, vec2 b);
 
-void UpdateRectMembers(Rect &rect);
-void RectSet(vec2 pos, vec2 size, Rect &rect);
-void RectSet(float x, float y, float w, float h, Rect &rect);
-void RectSetPos(vec2 pos, Rect &rect);
-void RectSetPos(float x, float y, Rect &rect);
-void RectMove(vec2 pos, Rect &rect);
-void RectMove(float x, float y, Rect &rect);
-void RectSize(vec2 size, Rect &rect);
-void RectSize(float w, float h, Rect &rect);
+void UpdateRectMembers(Rect* rect);
+void RectSet(vec2 pos, vec2 size, Rect* rect);
+void RectSet(float x, float y, float w, float h, Rect* rect);
+void RectSetPos(vec2 pos, Rect* rect);
+void RectSetPos(float x, float y, Rect* rect);
+void RectMove(vec2 pos, Rect* rect);
+void RectMove(float x, float y, Rect* rect);
+void RectSize(vec2 size, Rect* rect);
+void RectSize(float w, float h, Rect* rect);
 // todo more rect funcs: overlapping, other stuff. check xna for all its useful stuff

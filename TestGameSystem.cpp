@@ -15,12 +15,9 @@ void TestGameSystem::Init()
 {
 	RegisterComponent(&tf);
 
-	render.InitDefaultShader();
 	render.renderInfo.matrix = &tf.matrix;
 
-	tf.matrix = MatMath::identity_mat4();
-	tf.SetScale(.7f,-.7f,1.f);
-	
+
 	// was model matrix, now coords...
 	//render.renderInfo.uniforms[0].valueFloat = &(render.renderInfo.matrix->m[0]);
 
@@ -45,19 +42,19 @@ void TestGameSystem::Update()
 
 	if(input.keyboard.arrowUp.buttonDown)
 	{
-		RectMove(0, -0.01f, tf.rectangle);
+		RectMove(0, -0.01f, &tf.rectangle);
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
-		RectMove(0, 0.01f, tf.rectangle);
+		RectMove(0, 0.01f, &tf.rectangle);
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
-		RectMove(-0.01f, 0, tf.rectangle);
+		RectMove(-0.01f, 0, &tf.rectangle);
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
-		RectMove( 0.01f, 0, tf.rectangle);
+		RectMove( 0.01f, 0, &tf.rectangle);
 	}
 }
 

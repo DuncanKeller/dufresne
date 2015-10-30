@@ -31,7 +31,7 @@ Renderer::Renderer(void)
 	renderInfo.glShaderProgram = defaultAtlasShaderProgram;
 	SetStandardUniforms();
 
-	InitSprite(assMan.GetTexture(L"fart\\testAtlas.png"), 4, 4, 2, 1);
+	//InitSprite(assMan.GetTexture(L"fart\\testAtlas.png"), 4, 4, 2, 1);
 
 }
 
@@ -73,14 +73,14 @@ void Renderer::SetTexture(TextureInfo &t)
 {
 	renderInfo.glTexture = t.glTexture;
 	textureInfo = &t;
-	RectSize(t.width, t.height, *renderRect);
+	//RectSize(t.width, t.height, renderRect);
 }
 
 void Renderer::InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing)
 {
 	atlased = true;
 	textureInfo = &t;
-	renderInfo.glTexture = t.glTexture;
+	SetTexture(t);
 	spriteInfo.atlasMargin = margin;
 	spriteInfo.atlasSpacing = spacing;
 
@@ -90,7 +90,6 @@ void Renderer::InitSprite(TextureInfo &t, int rows, int colums, int margin, int 
 	float spriteHeight = nonMarginHeight / rows;
 	spriteInfo.spriteSize = vec2(spriteWidth / textureInfo->width, spriteHeight / textureInfo->height);
 
-	SetAtlasLocation(3, 2);
 }
 
 void Renderer::SetAtlasLocation(int xIndex, int yIndex)

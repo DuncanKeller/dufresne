@@ -3,6 +3,7 @@
 #include "dfBasic.h"
 #include "AssetManager.h"
 #include "tinyjsonp.h"
+#include "dfTile.h"
 
 struct TileProperty
 {
@@ -16,12 +17,14 @@ struct Tileset
 	std::string name;
 	int margin;
 	int spacing;
-	int tileWidth;
-	int tileHeight;
+	int tilePxWidth;
+	int tilePxHeight;
+	int numTilesWidth;
+	int numTileHeight;
 	int numTiles;
 };
 
-struct Tile
+struct TileInfo
 {
 	GameSystem *system;
 	int xIndex;
@@ -35,7 +38,7 @@ struct Tile
 struct TileLayer
 {
 	std::string name;
-	std::vector<Tile> tiles;
+	std::vector<TileInfo> tiles;
 	int widthInTiles;
 	int heightInTiles;
 	int xOffset;
@@ -60,5 +63,7 @@ public:
 	
 	std::vector<Tileset> tilesets;
 	std::vector<TileLayer> tileLayers;
+
+	std::vector<dfTile*> tiles;
 };
 

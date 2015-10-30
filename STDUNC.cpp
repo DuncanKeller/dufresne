@@ -194,67 +194,67 @@ float DotProd(vec2 a, vec2 b)
 	return a.x * b.x + a.y * b.y;
 }
 
-void UpdateRectMembers(Rect &rect)
+void UpdateRectMembers(Rect *rect)
 {
-	rect.width = rect.size.x;
-	rect.height = rect.size.y;
-	rect.top = rect.pos.y;
-	rect.bottom = rect.pos.y + rect.height;
-	rect.left = rect.pos.x;
-	rect.right = rect.pos.x + rect.width;
-	rect.center = vec2(
-		rect.pos.x + rect.width,
-		rect.pos.y + rect.height);
+	rect->width = rect->size.x;
+	rect->height = rect->size.y;
+	rect->top = rect->pos.y;
+	rect->bottom = rect->pos.y + rect->height;
+	rect->left = rect->pos.x;
+	rect->right = rect->pos.x + rect->width;
+	rect->center = vec2(
+		rect->pos.x + rect->width / 2.f,
+		rect->pos.y + rect->height / 2.f);
 }
 
-void RectSet(vec2 pos, vec2 size, Rect &rect)
+void RectSet(vec2 pos, vec2 size, Rect *rect)
 {
-	rect.pos = pos;
-	rect.size = size;
+	rect->pos = pos;
+	rect->size = size;
 	UpdateRectMembers(rect);
 }
 
-void RectSet(float x, float y, float w, float h, Rect &rect)
+void RectSet(float x, float y, float w, float h, Rect *rect)
 {
-	rect.pos = vec2(x, y);
-	rect.size = vec2(w, h);
+	rect->pos = vec2(x, y);
+	rect->size = vec2(w, h);
 	UpdateRectMembers(rect);
 }
 
-void RectSetPos(vec2 pos, Rect &rect)
+void RectSetPos(vec2 pos, Rect *rect)
 {
-	rect.pos = pos;
+	rect->pos = pos;
 	UpdateRectMembers(rect);
 }
 
-void RectSetPos(float x, float y, Rect &rect)
+void RectSetPos(float x, float y, Rect *rect)
 {
-	rect.pos = vec2(x, y);
+	rect->pos = vec2(x, y);
 	UpdateRectMembers(rect);
 }
 
-void RectMove(vec2 pos, Rect &rect)
+void RectMove(vec2 pos, Rect *rect)
 {
-	rect.pos.x += pos.x;
-	rect.pos.y += pos.y;
+	rect->pos.x += pos.x;
+	rect->pos.y += pos.y;
 	UpdateRectMembers(rect);
 }
 
-void RectMove(float x, float y, Rect &rect)
+void RectMove(float x, float y, Rect *rect)
 {
-	rect.pos.x +=x;
-	rect.pos.y += y;
+	rect->pos.x +=x;
+	rect->pos.y += y;
 	UpdateRectMembers(rect);
 }
 
-void RectSize(vec2 size, Rect &rect)
+void RectSize(vec2 size, Rect *rect)
 {
-	rect.size = size;
+	rect->size = size;
 	UpdateRectMembers(rect);
 }
 
-void RectSize(float w, float h, Rect &rect)
+void RectSize(float w, float h, Rect *rect)
 {
-	rect.size = vec2(w, h);
+	rect->size = vec2(w, h);
 	UpdateRectMembers(rect);
 }

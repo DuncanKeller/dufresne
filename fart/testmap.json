@@ -126,7 +126,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"testtiles.png",
+         "image":"fart\\testtiles.png",
          "imageheight":606,
          "imagewidth":606,
          "margin":4,

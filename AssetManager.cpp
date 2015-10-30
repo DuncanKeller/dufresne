@@ -410,9 +410,9 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 				}
 				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt"))
 				{
-					//std::string str = std::string(newAsset.contents);
-					//textFiles.push_back(str);
-					//textFileMap[GetHash(filename)] = str;
+					std::string str = std::string(newAsset.contents);
+					textFiles.push_back(str);
+					textFileMap[GetHash(filename)] = str;
 				}
 				
 			}
