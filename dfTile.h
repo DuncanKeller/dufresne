@@ -14,6 +14,7 @@ public:
 	virtual void Init();
 	virtual void Update();
 
+	virtual void InterpretProperty(const char* name, const char* value);
 	
 	Transform tf;
 	Renderer render;

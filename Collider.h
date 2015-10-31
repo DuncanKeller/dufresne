@@ -19,6 +19,7 @@ public:
 
 	bool stationary;
 	bool trigger;
+	bool enabled;
 
 	// todo add a pointer rectangle like Renderer does so that it can be changed by the user
 	// to not point to the transform if desired

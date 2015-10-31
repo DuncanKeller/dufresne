@@ -136,10 +136,8 @@ int CALLBACK WinMain(
 	test.Init();
 	RectSize(50, 50, &test.tf.rectangle);
 	test.GetComponent<BoxCollider>()->stationary = false;
+	test.render.renderInfo.depth = 50;
 
-	TestGameSystem test2 = TestGameSystem();
-	test2.Init();
-	RectSetPos(150,150, &test2.tf.rectangle);
 
 	TileMap tmap = TileMap();
 	tmap.Init();
@@ -147,7 +145,6 @@ int CALLBACK WinMain(
 
 	std::vector<GameSystem*> testRenderList;
 	testRenderList.push_back(&test);
-	testRenderList.push_back(&test2);
 	for(int i = 0; i < tmap.tiles.size(); i++)
 	{
 		testRenderList.push_back(tmap.tiles[i]);

@@ -58,7 +58,7 @@ int dfStrLen(const wchar_t* str)
 	}
 }
 
-bool dfStrCmp(char* str1, char* str2)
+bool dfStrCmp(const char* str1, const char* str2)
 {
 	int l1 = dfStrLen(str1);
 	int l2 = dfStrLen(str2);
@@ -177,6 +177,26 @@ int dfStringToInt(std::vector<char> str)
 		place *= 10;
 	}
 	return result;
+}
+
+bool dfStringToBool(const char* str)
+{
+	char c = str[0];
+	int num = c - '0';
+	if(num != 0 && num != 1)
+		dfAssert(false); // parsed something bad
+
+	return num == 1;
+}
+
+bool dfStringToBool(std::vector<char> str)
+{
+	char c = str[0];
+	int num = c - '0';
+	if(num != 0 && num != 1)
+		dfAssert(false); // parsed something bad
+
+	return num == 1;
 }
 
 char* dfVectorToCharStar(std::vector<wchar_t> vec)

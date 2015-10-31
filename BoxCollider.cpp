@@ -30,7 +30,7 @@ void BoxCollider::BoxBoxCollision(BoxCollider &a, BoxCollider &b)
 	Rect rb = b.tf->rectangle;
 	
 	// check if both are stationary, do nothing
-	if(a.stationary)
+	if(a.stationary || !a.enabled || !b.enabled)
 		return;
 
 	// basic overlap check

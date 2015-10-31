@@ -154,6 +154,16 @@ void TileMap::GenerateMapSystem()
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
 			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
 			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
+
+			// read all custom properties from tiles
+			for(int i = 0; i < t.properites.size(); i++)
+			{
+				tile->InterpretProperty(t.properites[i].name.c_str(), t.properites[i].value.c_str());
+			}
+			for(int i = 0; i < layer.properites.size(); i++)
+			{
+				tile->InterpretProperty(layer.properites[i].name.c_str(), layer.properites[i].value.c_str());
+			}
 		}
 	}
 }

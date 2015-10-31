@@ -6,6 +6,8 @@ dfTile::dfTile(void)
 	RegisterComponent(&tf);
 	RegisterComponent(&render);
 	RegisterComponent(&bc);
+	bc.stationary = true;
+	bc.enabled = false;
 }
 
 
@@ -24,4 +26,18 @@ void dfTile::Update()
 {
 	GameSystem::Update();
 
+}
+
+void dfTile::InterpretProperty(const char* name, const char* value)
+{
+	if(dfStrCmp(name, "collision"))
+	{
+		bool val = dfStringToBool(value);
+		bc.enabled = val;
+	}
+	else if(dfStrCmp(name, "visible"))
+	{
+		bool val = dfStringToBool(value);
+		render.visible = val;
+	}
 }

@@ -5,6 +5,7 @@ Collider::Collider(void)
 {
 	stationary = true;
 	trigger = false;
+	enabled = true;
 }
 
 

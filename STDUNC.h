@@ -118,7 +118,7 @@ int dfStrLen(char*);
 int dfStrLen(const char*);
 int dfStrLen(const wchar_t*);
 
-bool dfStrCmp(char*, char*);
+bool dfStrCmp(const char*, const char*);
 bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
 
@@ -128,6 +128,8 @@ char* dfSubstr(char* a, int len);
 
 int dfStringToInt(char* str, int size);
 int dfStringToInt(std::vector<char> str);
+bool dfStringToBool(const char* str);
+bool dfStringToBool(std::vector<char> str);
 
 char* dfVectorToCharStar(std::vector<wchar_t>);
 
