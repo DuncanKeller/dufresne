@@ -32,6 +32,8 @@ struct TileInfo
 	int layerIndex;
 	int tilesetIndex;
 	int tilemapGUID; // index of tile picture
+	int tilesetXIndex;
+	int tilesetYIndex;
 	std::vector<TileProperty> properites;
 };
 

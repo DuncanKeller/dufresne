@@ -93,24 +93,30 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 			{
 				TileInfo t;
 				t.tilemapGUID = tileData.getChild(tileIndex).asInt() - 1;
-				t.xIndex = t.tilemapGUID % widthInTiles;
-				t.yIndex = t.tilemapGUID / widthInTiles;
-				t.layerIndex = layerIndex;
-				t.system = this;
-				
-				// figure out the cooresponding tileset
-				int tileCounter = 0;
-				for(int tsIndex = 0; tsIndex < tilesets.size(); tsIndex++)
+				if(t.tilemapGUID != -1)
 				{
-					tileCounter += tilesets[tsIndex].numTiles;
-					if(t.tilemapGUID < tileCounter)
+					t.xIndex = tileIndex % widthInTiles;
+					t.yIndex = tileIndex / widthInTiles;
+					t.layerIndex = layerIndex;
+					t.system = this;
+				
+					// figure out the cooresponding tileset
+					int tileCounter = 0;
+					for(int tsIndex = 0; tsIndex < tilesets.size(); tsIndex++)
 					{
-						t.tilesetIndex = tsIndex;
-						break;
+						tileCounter += tilesets[tsIndex].numTiles;
+						if(t.tilemapGUID < tileCounter)
+						{
+							t.tilesetIndex = tsIndex;
+							break;
+						}
 					}
-				}
+				
+					t.tilesetXIndex = t.tilemapGUID % tilesets[t.tilesetIndex].numTilesWidth;
+					t.tilesetYIndex = t.tilemapGUID / tilesets[t.tilesetIndex].numTilesWidth;
 
-				layer.tiles.push_back(t);
+					layer.tiles.push_back(t);
+				}
 			}
 
 			// layer properties
@@ -128,7 +134,6 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 			tileLayers.push_back(layer);
 		}
 	}
-
 }
 
 void TileMap::GenerateMapSystem()
@@ -147,7 +152,7 @@ void TileMap::GenerateMapSystem()
 			tile->tf.SetPos(t.xIndex * set.tilePxWidth, t.yIndex * set.tilePxHeight);
 			RectSize(set.tilePxWidth, set.tilePxHeight, tile->render.renderRect);
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
-			tile->render.SetAtlasLocation(t.xIndex, t.yIndex);
+			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
 			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
 		}
 	}

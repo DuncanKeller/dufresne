@@ -73,7 +73,7 @@ void Renderer::SetTexture(TextureInfo &t)
 {
 	renderInfo.glTexture = t.glTexture;
 	textureInfo = &t;
-	//RectSize(t.width, t.height, renderRect);
+	RectSize(t.width, t.height, renderRect);
 }
 
 void Renderer::InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing)
@@ -89,7 +89,8 @@ void Renderer::InitSprite(TextureInfo &t, int rows, int colums, int margin, int 
 	int nonMarginHeight = t.height - (((rows - 1) * spacing) + (2 * margin));
 	float spriteHeight = nonMarginHeight / rows;
 	spriteInfo.spriteSize = vec2(spriteWidth / textureInfo->width, spriteHeight / textureInfo->height);
-
+	
+	RectSize((int)spriteWidth, (int)spriteHeight, renderRect);
 }
 
 void Renderer::SetAtlasLocation(int xIndex, int yIndex)
