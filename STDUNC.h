@@ -119,6 +119,7 @@ int dfStrLen(const char*);
 int dfStrLen(const wchar_t*);
 
 bool dfStrCmp(const char*, const char*);
+bool dfStrCmp(std::string, std::string);
 bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
 

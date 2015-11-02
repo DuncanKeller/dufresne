@@ -97,7 +97,7 @@ void RenderSystem::SortRenderBox(int boxIndex)
 
 // todo better way than just passing around big vector
 // needs to handle scene hirarchy eventually
-void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems) 
+void RenderSystem::RenderLoop(dfScene* scene) 
 {
 	// set gl state
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -108,13 +108,16 @@ void RenderSystem::RenderLoop(std::vector<GameSystem*>* gameSystems)
 	}
 	
 	// 1: add all render-able objects into render box
-	for(int sIndex = 0; sIndex < gameSystems->size(); sIndex++)
+	for(int sIndex = 0; sIndex < scene->currentNum; sIndex++)
 	{
-		Renderer* renderer = (*gameSystems)[sIndex]->GetComponent<Renderer>();
-		if(renderer && renderer->visible)
+		GameSystem* gs = scene->GetGameSystemByIndex(sIndex);
+		if(gs != NULL)
 		{
-			AddToRenderBox(renderer->renderInfo);
-			
+			Renderer* renderer = gs->GetComponent<Renderer>();
+			if(renderer && renderer->visible)
+			{
+				AddToRenderBox(renderer->renderInfo);
+			}
 		}
 	}
 

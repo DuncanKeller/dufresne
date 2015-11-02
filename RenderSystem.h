@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "AssetManager.h"
 #include "SDL.h"
+#include "dfScene.h"
 
 class RenderSystem :
 	public GameSystem
@@ -18,7 +19,7 @@ public:
 	void InitRenderBox();
 	void AddToRenderBox(RenderInfo);
 	void SortRenderBox(int);
-	void RenderLoop(std::vector<GameSystem*>* systemObjects);
+	void RenderLoop(dfScene* scene);
 
 	unsigned int CompileShader(ShaderInfo shader);
 

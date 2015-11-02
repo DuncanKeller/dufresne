@@ -48,7 +48,13 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>GameSystems</Filter>
     </ClCompile>
-    <ClCompile Include="dfTile.cpp" />
+    <ClCompile Include="dfScene.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="dfTile.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -100,7 +106,13 @@
     <ClInclude Include="TileMap.h">
       <Filter>GameSystems</Filter>
     </ClInclude>
-    <ClInclude Include="dfTile.h" />
+    <ClInclude Include="dfScene.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="dfTile.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

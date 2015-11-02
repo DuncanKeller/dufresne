@@ -4,6 +4,7 @@
 #include "AssetManager.h"
 #include "tinyjsonp.h"
 #include "dfTile.h"
+#include "SceneManager.h"
 
 struct TileProperty
 {

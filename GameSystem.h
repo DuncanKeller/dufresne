@@ -27,8 +27,8 @@ public:
 		T* classInstance = NULL; 
 		for(int i = 0; i < numComponents; i++)
 		{
+			// todo: if this dynamic cast fails, it's really hard to debug. Have it check first
 			classInstance = dynamic_cast<T*>(components[i]);
-			//classInstance = (T*)(components[i]);
 			if(classInstance)
 			{
 				return classInstance;

@@ -144,8 +144,9 @@ void TileMap::GenerateMapSystem()
 		for(int tileIndex = 0; tileIndex < layer.tiles.size(); tileIndex++)
 		{
 			TileInfo t = layer.tiles[tileIndex];
-			tiles.push_back(new dfTile());
-			dfTile* tile = tiles[tiles.size() - 1];
+			
+			dfTile* tile = sceneMan.CreateSceneObject<dfTile>();
+			tiles.push_back(tile);
 
 			Tileset set = tilesets[t.tilesetIndex];
 			// todo: use a configurable size for the tiles, not just pixel size of tile

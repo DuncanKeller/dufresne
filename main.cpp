@@ -14,6 +14,7 @@
 
 #include "dfBasic.h"
 #include "Input.h"
+#include "SceneManager.h"
 #include "TestGameSystem.h"
 #include "RenderSystem.h"
 #include "AssetManager.h"
@@ -126,42 +127,30 @@ int CALLBACK WinMain(
 	assMan.LoadLoosePackage(path);
 	assMan.DebugTestWritePoolToFile();
 
+
+	sceneMan.Init();
+
 	input = Input();
 	input.Init();
 
-	RenderSystem renderer = RenderSystem();
-	renderer.Init();
-
-	TestGameSystem test = TestGameSystem();
-	test.Init();
-	RectSize(50, 50, &test.tf.rectangle);
-	test.GetComponent<BoxCollider>()->stationary = false;
-	test.render.renderInfo.depth = 50;
-
+	TestGameSystem* test = sceneMan.CreateSceneObject<TestGameSystem>();
+	test->Init();
+	RectSize(50, 50, &test->tf.rectangle);
+	test->GetComponent<BoxCollider>()->stationary = false;
+	test->render.renderInfo.depth = 50;
 
 	TileMap tmap = TileMap();
 	tmap.Init();
-
-
-	std::vector<GameSystem*> testRenderList;
-	testRenderList.push_back(&test);
-	for(int i = 0; i < tmap.tiles.size(); i++)
-	{
-		testRenderList.push_back(tmap.tiles[i]);
-	}
+	//sceneMan.CreateObject(&tmap);
 	
 	
 	while(true)
 	{
 		input.Update();
 
-		renderer.Update();
+		//DoCollision(&testRenderList);
 
-		test.Update();
-
-		DoCollision(&testRenderList);
-		
-		renderer.RenderLoop(&testRenderList);
+		sceneMan.Update();
 
 		SDL_GL_SwapWindow(screen);
 	}

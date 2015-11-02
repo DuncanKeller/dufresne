@@ -10,6 +10,7 @@ public:
 	// todo cleanup, remove pos and scale, just use rect? Keep rot, though.
 	// OR have matrix as a second option.
 	// hmmmm....
+	// ALSO todo: add parent functionality
 	Transform(void);
 	virtual ~Transform(void);
 

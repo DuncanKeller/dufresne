@@ -75,6 +75,23 @@ bool dfStrCmp(const char* str1, const char* str2)
 	return true;
 }
 
+bool dfStrCmp(std::string str1, std::string str2)
+{
+	int l1 = str1.length();
+	int l2 = str2.length();
+
+	if(l1 != l2)
+		return false;
+
+	for(int i = 0; i < l1; i++)
+	{
+		if(str1[i] != str2[i])
+			return false;
+	}
+
+	return true;
+}
+
 bool dfStrCmp(std::vector<char> str1, const char* str2)
 {
 	int l1 = str1.size();
