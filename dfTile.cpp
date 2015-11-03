@@ -40,4 +40,9 @@ void dfTile::InterpretProperty(const char* name, const char* value)
 		bool val = dfStringToBool(value);
 		render.visible = val;
 	}
+	else if(dfStrCmp(name, "layer"))
+	{
+		int val = dfStringToInt(value, dfStrLen(value));
+		render.renderInfo.depth = val;
+	}
 }

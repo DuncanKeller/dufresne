@@ -30,9 +30,9 @@ void TestGameSystem::Init()
 	
 	
 
-	TextureInfo textureFile = assMan.GetTexture(L"fart\\testAtlas.png");
+	TextureInfo textureFile = assMan.GetTexture(L"fart\\dude.png");
 	
-	render.InitSprite(textureFile,3,3,2,1);
+	render.SetTexture(textureFile);
 	
 }
 
@@ -42,19 +42,19 @@ void TestGameSystem::Update()
 
 	if(input.keyboard.arrowUp.buttonDown)
 	{
-		RectMove(0, -2.1f, &tf.rectangle);
+		RectMove(0, -10.1f, &tf.rectangle);
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
-		RectMove(0, 2.1f, &tf.rectangle);
+		RectMove(0, 10.1f, &tf.rectangle);
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
-		RectMove(-2.1f, 0, &tf.rectangle);
+		RectMove(-10.1f, 0, &tf.rectangle);
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
-		RectMove( 2.1f, 0, &tf.rectangle);
+		RectMove( 10.1f, 0, &tf.rectangle);
 	}
 }
 

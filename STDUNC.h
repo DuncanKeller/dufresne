@@ -127,7 +127,7 @@ const char* dfStrCat(const char* a, const char* b);
 
 char* dfSubstr(char* a, int len);
 
-int dfStringToInt(char* str, int size);
+int dfStringToInt(const char* str, int size);
 int dfStringToInt(std::vector<char> str);
 bool dfStringToBool(const char* str);
 bool dfStringToBool(std::vector<char> str);

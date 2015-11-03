@@ -1,13 +1,11 @@
 in vec2 texture_coordinates;
 uniform sampler2D basic_texture;
-uniform vec2 atlasPos;
-uniform vec2 spriteSize;
 out vec4 frag_color;
-
 
 void main () 
 {
-	vec2 realCoord = atlasPos + (spriteSize  * texture_coordinates);
-	vec4 texel = texture2D (basic_texture, realCoord);
+	vec4 texel = texture2D (basic_texture, texture_coordinates);
 	frag_color = texel;
+	frag_color.a = 0;
 }
+	

@@ -15,7 +15,7 @@ void TileMap::Init()
 {
 	GameSystem::Init();
 
-	LoadTilemap(L"fart\\testmap.json");
+	LoadTilemap(L"fart\\tilemap1.json");
 	GenerateMapSystem();
 }
 
@@ -71,7 +71,6 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 	}
 
 	// layers
-	// todo object layers parsing
 	JsonObject layers = jsonObj.getChild("layers");
 	for(int layerIndex = 0; layerIndex < layers.numChildren(); layerIndex++)
 	{
@@ -88,6 +87,7 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 			layer.name = layerObj.getChild("name").asString();
 			layer.opacity = layerObj.getChild("opacity").asFloat();
 
+			// tile layers
 			JsonObject tileData = layerObj.getChild("data");
 			for(int tileIndex = 0; tileIndex < tileData.numChildren(); tileIndex++)
 			{
@@ -117,6 +117,61 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 
 					layer.tiles.push_back(t);
 				}
+			}
+
+			// ojbect layers
+			JsonObject objectLayerData = layerObj.getChild("objects");
+			for(int objIndex = 0; objIndex < objectLayerData.numChildren(); objIndex++)
+			{
+				JsonObject objectData = objectLayerData.getChild(objIndex);
+				ObjectInfo obj;
+				obj.layerIndex = layerIndex;
+				obj.system = this;
+
+				obj.xPosition = objectData.getChild("x").asFloat();
+				obj.yPosition = objectData.getChild("y").asFloat();
+				obj.rotation = objectData.getChild("rotation").asFloat();
+				
+
+				obj.tilemapGUID = objectData.getChild("gid").asInt() - 1;
+				if(obj.tilemapGUID != -1) // uses an image on the tilemap
+				{
+					// figure out the cooresponding tileset
+					int tileCounter = 0;
+					for(int tsIndex = 0; tsIndex < tilesets.size(); tsIndex++)
+					{
+						tileCounter += tilesets[tsIndex].numTiles;
+						if(obj.tilemapGUID < tileCounter)
+						{
+							obj.tilesetIndex = tsIndex;
+							break;
+						}
+					}
+				
+					obj.tilesetXIndex = obj.tilemapGUID % tilesets[obj.tilesetIndex].numTilesWidth;
+					obj.tilesetYIndex = obj.tilemapGUID / tilesets[obj.tilesetIndex].numTilesWidth;
+					obj.widthPx = tilesets[obj.tilesetIndex].tilePxWidth;
+					obj.heightPx = tilesets[obj.tilesetIndex].tilePxHeight;
+				}
+				else // no tilemap image
+				{
+					obj.tilesetIndex = -1;
+					obj.widthPx = objectData.getChild("width").asFloat();
+					obj.heightPx = objectData.getChild("height").asFloat();
+				}
+
+				// object properties
+				JsonObject props = objectData.getChild("properties");
+				for(int pIndex = 0; pIndex < props.numChildren(); pIndex++)
+				{
+					// todo store property as correct type (int or bool) if it can parse it
+					JsonKeyValue propObj = props.getObjectChild(pIndex);
+					TileProperty objProp;
+					objProp.name = propObj.key;
+					objProp.value = propObj.value.asString();
+					obj.properites.push_back(objProp);
+				}
+				layer.objects.push_back(obj);
 			}
 
 			// layer properties
@@ -160,6 +215,39 @@ void TileMap::GenerateMapSystem()
 			for(int i = 0; i < t.properites.size(); i++)
 			{
 				tile->InterpretProperty(t.properites[i].name.c_str(), t.properites[i].value.c_str());
+			}
+			for(int i = 0; i < layer.properites.size(); i++)
+			{
+				tile->InterpretProperty(layer.properites[i].name.c_str(), layer.properites[i].value.c_str());
+			}
+		}
+
+		for(int objIndex = 0; objIndex < layer.objects.size(); objIndex++)
+		{
+			ObjectInfo obj = layer.objects[objIndex];
+
+			dfTile* tile = sceneMan.CreateSceneObject<dfTile>();
+			tiles.push_back(tile);
+
+			Tileset set = tilesets[obj.tilesetIndex];
+			tile->tf.SetPos(obj.xPosition, obj.yPosition); // todo configurable size that matches tilemap size above
+			RectSize(obj.widthPx, obj.heightPx, tile->render.renderRect);
+
+			if(obj.tilemapGUID >= 0)
+			{
+				tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
+				tile->render.SetAtlasLocation(obj.tilesetXIndex, obj.tilesetYIndex);
+			}
+			else
+			{
+				tile->render.SetTexture(set.texture);
+			}
+			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
+
+			// read all custom properties from tiles
+			for(int i = 0; i < obj.properites.size(); i++)
+			{
+				tile->InterpretProperty(obj.properites[i].name.c_str(), obj.properites[i].value.c_str());
 			}
 			for(int i = 0; i < layer.properites.size(); i++)
 			{

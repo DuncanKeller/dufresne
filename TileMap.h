@@ -38,10 +38,27 @@ struct TileInfo
 	std::vector<TileProperty> properites;
 };
 
+struct ObjectInfo
+{
+	GameSystem *system;
+	float xPosition;
+	float yPosition;
+	float layerIndex;
+	int tilesetIndex;
+	int tilemapGUID; // index of tile picture
+	float rotation;
+	int tilesetXIndex;
+	int tilesetYIndex;
+	std::vector<TileProperty> properites;
+	float widthPx;
+	float heightPx;
+};
+
 struct TileLayer
 {
 	std::string name;
 	std::vector<TileInfo> tiles;
+	std::vector<ObjectInfo> objects;
 	int widthInTiles;
 	int heightInTiles;
 	int xOffset;

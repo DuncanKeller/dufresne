@@ -14,7 +14,10 @@ RenderSystem::~RenderSystem(void)
 void RenderSystem::Init()
 {
 	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-	
+	// gl operations
+	glEnable (GL_BLEND);
+	glDepthMask (GL_FALSE);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void RenderSystem::Update()
@@ -47,10 +50,6 @@ void RenderSystem::InitRenderBox()
 	{
 		renderBox[i].reserve(render_box_initial_layer_size);
 	}
-
-	// gl operations
-	glEnable (GL_BLEND);
-	glDepthMask (GL_FALSE);
 }
 
 
@@ -141,6 +140,14 @@ void RenderSystem::RenderLoop(dfScene* scene)
 				firstRender = false;
 				glUseProgram(newShaderProg);
 			}
+			else
+			{
+				if(currentShaderProgram != newShaderProg)
+				{
+					currentShaderProgram = newShaderProg;
+					glUseProgram(newShaderProg);
+				}
+			}
 
 			// update uniforms from list
 			for(int uIndex = 0; uIndex < renderBox[i][n].uniforms.size(); uIndex++) 
@@ -221,7 +228,6 @@ void RenderSystem::RenderLoop(dfScene* scene)
 					}
 				}
 			}
-
 
 			unsigned int newTexture = renderBox[i][n].glTexture;
 			glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...

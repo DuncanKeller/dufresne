@@ -201,6 +201,7 @@ void AssetManager::InitTexture(TextureInfo &texture)
 		dfAssert(false); // could not create image asset
 	}
 
+
 	// gl texture params
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -216,7 +217,7 @@ void AssetManager::InitTexture(TextureInfo &texture)
 	if(dfStrCmp(texture.filetype, "png"))
 		glFormat = GL_RGBA;
 	
-	 glFormat = GL_RGB; // todo: total fuckin hack, why does RGBA not work for some PNGs????
+	 //glFormat = GL_RGB; // todo: total fuckin hack, why does RGBA not work for some PNGs????
 
 
 	glTexImage2D (

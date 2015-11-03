@@ -31,6 +31,7 @@ void SceneManager::Update()
 	if(currentScene != NULL)
 	{
 		currentScene->Update();
+		currentScene->DoCollision();
 	}
 
 	renderer.Update();

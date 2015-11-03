@@ -60,3 +60,28 @@ void dfScene::RemoveSceneObject(GameSystem* sceneObj)
 		}
 	}
 }
+
+void dfScene::DoCollision()
+{
+	for(int ai = 0; ai < currentNum; ai++)
+	{
+		if(sceneObjects[ai])
+		{
+			BoxCollider* colliderA = sceneObjects[ai]->GetComponent<BoxCollider>();
+			if(colliderA)
+			{
+				for(int bi = 0; bi < currentNum; bi++)
+				{
+					if(sceneObjects[bi])
+					{
+						BoxCollider* colliderB = sceneObjects[bi]->GetComponent<BoxCollider>();
+						if(colliderB && colliderA != colliderB)
+						{
+							colliderA->BoxBoxCollision(*colliderA, *colliderB);
+						}
+					}
+				}
+			}
+		}
+	}
+}

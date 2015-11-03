@@ -160,7 +160,7 @@ char* dfSubstr(char* a, int len)
 	return newStr;
 }
 
-int dfStringToInt(char* str, int size)
+int dfStringToInt(const char* str, int size)
 {
 	int result = 0;
 	int place = 1;

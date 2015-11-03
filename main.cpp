@@ -30,26 +30,6 @@ void GameExit(int ReturnValue)
 	exit( ReturnValue );
 }
 
-// todo move me outta here! (CollisionSystem class? overkill?)
-void DoCollision(std::vector<GameSystem*>* gameSystems)
-{
-	for(int ai = 0; ai < gameSystems->size(); ai++)
-	{
-		BoxCollider* colliderA = (*gameSystems)[ai]->GetComponent<BoxCollider>();
-		if(colliderA)
-		{
-			for(int bi = 0; bi < gameSystems->size(); bi++)
-			{
-				BoxCollider* colliderB = (*gameSystems)[bi]->GetComponent<BoxCollider>();
-				if(colliderB && colliderA != colliderB)
-				{
-					colliderA->BoxBoxCollision(*colliderA, *colliderB);
-				}
-			}
-		}
-	}
-}
-
 int CALLBACK WinMain(
 	  _In_ HINSTANCE hInstance,
 	  _In_ HINSTANCE hPrevInstance,
@@ -135,9 +115,10 @@ int CALLBACK WinMain(
 
 	TestGameSystem* test = sceneMan.CreateSceneObject<TestGameSystem>();
 	test->Init();
-	RectSize(50, 50, &test->tf.rectangle);
+	//RectSize(50, 50, &test->tf.rectangle);
 	test->GetComponent<BoxCollider>()->stationary = false;
 	test->render.renderInfo.depth = 50;
+	test->tf.SetPos(50.f, 150.f);
 
 	TileMap tmap = TileMap();
 	tmap.Init();
@@ -147,8 +128,6 @@ int CALLBACK WinMain(
 	while(true)
 	{
 		input.Update();
-
-		//DoCollision(&testRenderList);
 
 		sceneMan.Update();
 

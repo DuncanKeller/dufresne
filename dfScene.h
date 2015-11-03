@@ -1,6 +1,7 @@
 #pragma once
 #include "gamesystem.h"
 #include <vector>
+#include "BoxCollider.h"
 
 static const int MAX_OBJS_PER_SCENE = 99999;
 
@@ -22,6 +23,8 @@ public:
 
 	GameSystem* GetGameSystemByIndex(int i);
 	void RemoveSceneObject(GameSystem* sceneObj);
+
+	void DoCollision();
 
 	template<class T> T* CreateSceneObject()
 	{
