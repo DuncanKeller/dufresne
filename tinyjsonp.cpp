@@ -113,6 +113,9 @@ JsonObject::~JsonObject() {
 }
 
 bool JsonObject::parse(const char* json, int length, JsonObject* object) {
+	if(length == 0)
+		return false;
+	
 	if (length && json[0] != '{')
 		return false;
 

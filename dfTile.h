@@ -16,8 +16,10 @@ public:
 
 	virtual void InterpretProperty(const char* name, const char* value);
 	
+	virtual void AddCollision(Collider*);
+
 	Transform tf;
 	Renderer render;
-	BoxCollider bc;
+	std::vector<Collider*> colliders;
 };
 

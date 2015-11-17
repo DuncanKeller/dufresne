@@ -75,6 +75,23 @@ bool dfStrCmp(const char* str1, const char* str2)
 	return true;
 }
 
+bool dfStrCmp(const wchar_t* str1, const wchar_t* str2)
+{
+	int l1 = dfStrLen(str1);
+	int l2 = dfStrLen(str2);
+
+	if(l1 != l2)
+		return false;
+
+	for(int i = 0; i < l1; i++)
+	{
+		if(str1[i] != str2[i])
+			return false;
+	}
+
+	return true;
+}
+
 bool dfStrCmp(std::string str1, std::string str2)
 {
 	int l1 = str1.length();
@@ -125,6 +142,7 @@ bool dfStrCmp(std::vector<wchar_t> str1, const char* str2)
 
 	return true;
 }
+
 
 const char* dfStrCat(const char* a, const char* b)
 {

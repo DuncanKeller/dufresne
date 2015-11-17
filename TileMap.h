@@ -5,11 +5,18 @@
 #include "tinyjsonp.h"
 #include "dfTile.h"
 #include "SceneManager.h"
+#include "STDUNC.h"
 
 struct TileProperty
 {
 	std::string name;
 	std::string value;
+};
+
+struct CollisionVolumeInfo
+{
+	bool square;
+	std::vector<vec2> coords;
 };
 
 struct Tileset
@@ -23,6 +30,9 @@ struct Tileset
 	int numTilesWidth;
 	int numTileHeight;
 	int numTiles;
+	std::vector<TileProperty> properites;
+	bool hasCollisionAtlas;
+	std::vector<std::vector<CollisionVolumeInfo>> collisionAtlas;
 };
 
 struct TileInfo
@@ -80,7 +90,9 @@ public:
 
 	void LoadTilemap(wchar_t* mapname);
 	void GenerateMapSystem();
-	
+	void InterpretProperty(Tileset* tileset, const wchar_t* name, const wchar_t* value);
+	void ParseCollisionAtlas(Tileset* tileset, const wchar_t* value);
+
 	std::vector<Tileset> tilesets;
 	std::vector<TileLayer> tileLayers;
 

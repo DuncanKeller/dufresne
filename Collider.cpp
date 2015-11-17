@@ -25,3 +25,8 @@ void Collider::Update()
 {
 	dfComponent::Update();
 }
+
+void Collider::SetEnabled(bool val)
+{
+	enabled = val;
+}

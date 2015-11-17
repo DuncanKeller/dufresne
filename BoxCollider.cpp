@@ -3,6 +3,7 @@
 
 BoxCollider::BoxCollider(void)
 {
+	collisionRect = NULL;
 }
 
 
@@ -13,6 +14,8 @@ BoxCollider::~BoxCollider(void)
 void BoxCollider::Init()
 {
 	Collider::Init();
+	
+	collisionRect = &gameSystem->GetComponent<Transform>()->rectangle;
 }
 
 void BoxCollider::Update()
@@ -26,11 +29,17 @@ void BoxCollider::BoxBoxCollision(BoxCollider &a, BoxCollider &b)
 	vec2 responseDirA;
 	vec2 responseDirB;
 
-	Rect ra = a.tf->rectangle;
-	Rect rb = b.tf->rectangle;
+	if(a.collisionRect == NULL || b.collisionRect == NULL)
+		return;
+
+	Rect ra = *a.collisionRect;
+	Rect rb = *b.collisionRect;
+
+	if(a.stationary)
+		return;
 	
-	// check if both are stationary, do nothing
-	if(a.stationary || !a.enabled || !b.enabled)
+	// check if disabled, do nothing
+	if( !a.enabled || !b.enabled)
 		return;
 
 	// basic overlap check

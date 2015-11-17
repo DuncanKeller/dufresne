@@ -67,6 +67,20 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 		set.numTilesWidth = ((imgWidth - set.margin * 2) + set.spacing) / (set.tilePxWidth + set.spacing);
 		set.numTileHeight = ((imgHeight - set.margin * 2) + set.spacing) / (set.tilePxHeight + set.spacing);
 
+		set.hasCollisionAtlas = false;
+
+		// tileset properties
+		JsonObject props = tilesetObj.getChild("properties");
+		for(int pIndex = 0; pIndex < props.numChildren(); pIndex++)
+		{
+			// todo store property as correct type (int or bool) if it can parse it
+			JsonKeyValue propObj = props.getObjectChild(pIndex);
+			TileProperty objProp;
+			objProp.name = propObj.key;
+			objProp.value = propObj.value.asString();
+			set.properites.push_back(objProp);
+		}
+
 		tilesets.push_back(set);
 	}
 
@@ -191,8 +205,72 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 	}
 }
 
+void TileMap::InterpretProperty(Tileset* tileset, const wchar_t* name, const wchar_t* value)
+{
+	if(dfStrCmp(name, L"collision-atlas"))
+	{
+		ParseCollisionAtlas(tileset, value);
+	}
+}
+
+void TileMap::ParseCollisionAtlas(Tileset* tileset, const wchar_t* filename)
+{
+	JsonObject jsonObj = JsonObject();
+	std::string str = assMan.GetTextFile((const wchar_t*)filename);
+
+	// todo weird bug, not having some spaces at the end tries to parse garbage... whyyyy...
+	// workaround is to use the string content, but the file size, which has the correct cap.
+	if(!jsonObj.parse(str.c_str(), assMan.GetAsset((const wchar_t*)filename).size, &jsonObj))
+	{
+		dfAssert(false);
+		// json load failed...
+	}
+
+	JsonObject collisionTiles = jsonObj.getChild("tiles");
+	for(int i = 0; i < collisionTiles.numChildren(); i++)
+	{
+		std::vector<CollisionVolumeInfo> volumes;
+
+		JsonObject cTile = collisionTiles.getChild(i);
+		JsonObject volumesObj = cTile.getChild("volumes");
+		for(int volumeIndex = 0; volumeIndex < volumesObj.numChildren(); volumeIndex++)
+		{
+			CollisionVolumeInfo cvolumeInfo;
+			JsonObject volume = volumesObj.getChild(volumeIndex);
+			JsonObject verts = volume.getChild("verts");
+			for(int vertIndex = 0; vertIndex< verts.numChildren(); vertIndex++)
+			{
+				JsonObject vert = verts.getChild(vertIndex);
+				int x = vert.getChild("x").asInt();
+				int y = vert.getChild("y").asInt();
+				cvolumeInfo.coords.push_back(vec2(x, y));
+			}
+			cvolumeInfo.square = volume.getChild("rectangle").asBool();
+			volumes.push_back(cvolumeInfo);
+		}
+		
+		tileset->collisionAtlas.push_back(volumes);
+	}
+
+	if(collisionTiles.numChildren() > 0)
+	{
+		tileset->hasCollisionAtlas = true;
+	}
+}
+
 void TileMap::GenerateMapSystem()
 {
+	// handle custom properties for tilesets
+	for(int i = 0; i < tilesets.size(); i++)
+	{
+		for(int pIndex = 0; pIndex < tilesets[i].properites.size(); pIndex++)
+		{
+			std::wstring nameStr = std::wstring(tilesets[i].properites[pIndex].name.begin(), tilesets[i].properites[pIndex].name.end());
+			std::wstring valStr = std::wstring(tilesets[i].properites[pIndex].value.begin(), tilesets[i].properites[pIndex].value.end());
+			InterpretProperty(&tilesets[i], nameStr.c_str(), valStr.c_str());
+		}
+	}
+
 	for(int layerIndex = 0; layerIndex < tileLayers.size(); layerIndex++)
 	{
 		TileLayer layer = tileLayers[layerIndex];
@@ -210,6 +288,27 @@ void TileMap::GenerateMapSystem()
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
 			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
 			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
+
+			if(set.hasCollisionAtlas)
+			{
+				for(int cIndex = 0; cIndex < set.collisionAtlas[t.tilesetIndex].size(); cIndex++)
+				{
+					// todo support non-square
+					CollisionVolumeInfo volume = set.collisionAtlas[t.tilesetIndex][cIndex];
+					if(volume.square)
+					{
+						BoxCollider* bc = new BoxCollider();
+						Rect* r = new Rect();
+						RectSet(volume.coords[0].x + tile->tf.rectangle.pos.x, 
+							volume.coords[0].y + tile->tf.rectangle.pos.y,
+							volume.coords[3].x - volume.coords[0].x,
+							volume.coords[3].y - volume.coords[0].y, r);
+						bc->collisionRect = r;
+						bc->SetEnabled(true);
+						tile->RegisterComponent(bc);
+					}
+				}
+			}
 
 			// read all custom properties from tiles
 			for(int i = 0; i < t.properites.size(); i++)

@@ -122,6 +122,7 @@ bool dfStrCmp(const char*, const char*);
 bool dfStrCmp(std::string, std::string);
 bool dfStrCmp(std::vector<char>, const char*);
 bool dfStrCmp(std::vector<wchar_t>, const char*);
+bool dfStrCmp(const wchar_t*, const wchar_t*);
 
 const char* dfStrCat(const char* a, const char* b);
 

@@ -44,15 +44,15 @@ public:
 
 	// todo this filename hash is pretty half baked, need a better solution, or at least a better hash
 	// todo apply same treatment of hash to the shader pool.
-	double GetHash(const wchar_t* filename);
+	long GetHash(const wchar_t* filename);
 	std::vector<ShaderInfo> shaders;
-	std::map<double, ShaderInfo> shaderMap;
+	std::map<long, ShaderInfo> shaderMap;
 	std::vector<TextureInfo> textures;
-	std::map<double, TextureInfo> textureMap;
+	std::map<long, TextureInfo> textureMap;
 	std::vector<std::string> textFiles;
-	std::map<double, std::string> textFileMap;
+	std::map<long, std::string> textFileMap;
 	char* assetPool;
-	std::map<double, dfFile> assetMap;
+	std::map<long, dfFile> assetMap;
 	int poolsize;
 
 };

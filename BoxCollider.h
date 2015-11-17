@@ -13,5 +13,7 @@ public:
 	virtual void Update();
 
 	void BoxBoxCollision(BoxCollider &a, BoxCollider &b);
+
+	Rect* collisionRect;
 };
 

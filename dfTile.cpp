@@ -5,9 +5,6 @@ dfTile::dfTile(void)
 {
 	RegisterComponent(&tf);
 	RegisterComponent(&render);
-	RegisterComponent(&bc);
-	bc.stationary = true;
-	bc.enabled = false;
 }
 
 
@@ -28,12 +25,24 @@ void dfTile::Update()
 
 }
 
+void dfTile::AddCollision(Collider* cd)
+{
+	colliders.push_back(cd);
+	RegisterComponent(cd);
+	cd->SetEnabled(false);
+}
+
 void dfTile::InterpretProperty(const char* name, const char* value)
 {
 	if(dfStrCmp(name, "collision"))
 	{
 		bool val = dfStringToBool(value);
-		bc.enabled = val;
+		if(val)
+		{
+			BoxCollider* bc = new BoxCollider();
+			AddCollision(bc);
+			bc->collisionRect = &tf.rectangle;
+		}
 	}
 	else if(dfStrCmp(name, "visible"))
 	{

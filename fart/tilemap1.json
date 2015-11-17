@@ -18,7 +18,7 @@
          "opacity":1,
          "properties":
             {
-             "collision":"1"
+
             },
          "type":"tilelayer",
          "visible":true,
@@ -33,7 +33,7 @@
          "opacity":1,
          "properties":
             {
-             "collision":"1"
+
             },
          "type":"tilelayer",
          "visible":true,
@@ -85,7 +85,8 @@
          "name":"tileset",
          "properties":
             {
-
+				"farttest":4
+				"collision-atlas":"fart\test-collision.json"
             },
          "spacing":1,
          "tilecount":16,

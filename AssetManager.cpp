@@ -22,9 +22,9 @@ void AssetManager::InitAssetPool(int size)
 	poolsize = size;
 }
 
-double AssetManager::GetHash(const wchar_t* filename)
+long AssetManager::GetHash(const wchar_t* filename)
 {
-	double hash = 0;
+	long hash = 0;
 	for(int i = 0; i < dfStrLen(filename); i++)
 	{
 		hash += i * filename[i];
