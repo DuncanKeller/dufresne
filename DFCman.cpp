@@ -10,7 +10,7 @@ void AddComponentToMap(dfComponent* dfc)
 	if(comp)
 	{
 		dfComponent* prev = 0;
-		while(comp == 0)
+		while(comp != 0)
 		{
 			prev = comp;
 			comp = comp->nextInList;
