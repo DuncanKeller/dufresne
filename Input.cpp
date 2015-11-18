@@ -13,7 +13,7 @@ Input::~Input(void)
 
 void Input::Init()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 	for(int i = 0; i < MAX_GAMEPADS; i++)
 	{
@@ -102,7 +102,7 @@ void Input::ProcessButton(ButtonState* btn, bool buttonDown)
 
 void Input::Update()
 {
-	GameSystem::Update();
+	Entity::Update();
 	SDL_Event event;
 
 	int deadzone = 3000;

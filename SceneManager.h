@@ -1,10 +1,10 @@
 #pragma once
-#include "gamesystem.h"
+#include "Entity.h"
 #include "dfScene.h"
 #include "RenderSystem.h"
 
 class SceneManager :
-	public GameSystem
+	public Entity
 {
 public:
 	SceneManager(void);
@@ -22,7 +22,7 @@ public:
 
 	RenderSystem renderer;
 
-	void RemoveSceneObject(GameSystem* system);
+	void RemoveSceneObject(Entity* system);
 
 	template<class T> T* CreateSceneObject()
 	{

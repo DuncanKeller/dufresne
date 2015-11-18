@@ -13,7 +13,7 @@ TileMap::~TileMap(void)
 
 void TileMap::Init()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 	LoadTilemap(L"fart\\tilemap1.json");
 	GenerateMapSystem();
@@ -21,7 +21,7 @@ void TileMap::Init()
 
 void TileMap::Update()
 {
-	GameSystem::Update();
+	Entity::Update();
 }
 
 

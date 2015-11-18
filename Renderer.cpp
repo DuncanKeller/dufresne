@@ -43,7 +43,7 @@ void Renderer::Init()
 
 	// set default render rectangle
 	renderRect = 0;
-	Transform* tf = gameSystem->GetComponent<Transform>();
+	Transform* tf = Entity->GetComponent<Transform>();
 	if(tf)
 	{
 		renderRect = &tf->rectangle;
@@ -244,7 +244,7 @@ void Renderer::SetStandardUniforms()
 	uniformFour.type = DF_rect;
 	uniformFour.name = "rect";
 	uniformFour.valueRect = 0; // todo have to assign this after init when we have a transform. Better way to do this?
-	//uniformFour.valueRect = &gameSystem->GetComponent<Transform>()->rectangle;
+	//uniformFour.valueRect = &Entity->GetComponent<Transform>()->rectangle;
 	renderInfo.uniforms.push_back(uniformFour);
 
 	// todo need a way to deal w/ multiple textures, no textures, etc

@@ -18,7 +18,7 @@ void Collider::Init()
 	dfComponent::Init();
 	
 	// set default render rectangle
-	tf = gameSystem->GetComponent<Transform>();
+	tf = Entity->GetComponent<Transform>();
 }
 
 void Collider::Update()

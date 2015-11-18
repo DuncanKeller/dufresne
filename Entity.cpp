@@ -1,7 +1,7 @@
-#include "GameSystem.h"
+#include "Entity.h"
 
 
-GameSystem::GameSystem(void)
+Entity::Entity(void)
 {
 	numComponents = 0;
 	for(int i = 0; i < numComponents; i++)
@@ -11,16 +11,16 @@ GameSystem::GameSystem(void)
 }
 
 
-GameSystem::~GameSystem(void)
+Entity::~Entity(void)
 {
 }
 
-void GameSystem::Init()
+void Entity::Init()
 {
 	
 }
 
-void GameSystem::Update()
+void Entity::Update()
 {
 	dfAssert(numComponents < maxComponents);
 	for(int i = 0; i < numComponents; i++)
@@ -29,11 +29,12 @@ void GameSystem::Update()
 	}
 }
 
-void GameSystem::RegisterComponent(dfComponent* newComponent)
+void Entity::RegisterComponent(dfComponent* newComponent)
 {
 	if(numComponents < maxComponents - 1)
 	{
-		newComponent->gameSystem = this;
+		AddComponentToMap(newComponent);
+		newComponent->Entity = this;
 		components[numComponents] = newComponent;
 		(*components[numComponents]).Init();
 		numComponents++;
@@ -44,7 +45,7 @@ void GameSystem::RegisterComponent(dfComponent* newComponent)
 	}
 }
 
-dfComponent* GameSystem::GetComponentByName(char* name)
+dfComponent* Entity::GetComponentByName(char* name)
 {
 	for(int i = 0; i < numComponents; i++)
 	{

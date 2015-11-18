@@ -18,7 +18,7 @@ dfScene::~dfScene(void)
 
 void dfScene::Init()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 	for(int i = 0; i < currentNum; i++)
 	{
@@ -31,7 +31,7 @@ void dfScene::Init()
 
 void dfScene::Update()
 {
-	GameSystem::Update();
+	Entity::Update();
 
 	for(int i = 0; i < currentNum; i++)
 	{
@@ -42,12 +42,12 @@ void dfScene::Update()
 	}
 }
 
-GameSystem* dfScene::GetGameSystemByIndex(int i)
+Entity* dfScene::GetEntityByIndex(int i)
 {
 	return sceneObjects[i];
 }
 
-void dfScene::RemoveSceneObject(GameSystem* sceneObj)
+void dfScene::RemoveSceneObject(Entity* sceneObj)
 {
 	for(int i = 0; i < currentNum; i++)
 	{

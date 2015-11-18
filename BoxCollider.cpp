@@ -15,7 +15,7 @@ void BoxCollider::Init()
 {
 	Collider::Init();
 	
-	collisionRect = &gameSystem->GetComponent<Transform>()->rectangle;
+	collisionRect = &Entity->GetComponent<Transform>()->rectangle;
 }
 
 void BoxCollider::Update()

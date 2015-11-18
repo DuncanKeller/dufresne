@@ -1,5 +1,5 @@
 #pragma once
-#include "gamesystem.h"
+#include "Entity.h"
 #include "Renderer.h"
 #include "Transform.h"
 #include "MatMath.h"
@@ -12,12 +12,12 @@
 #include "BoxCollider.h"
 #include "STDUNC.h"
 
-class TestGameSystem :
-	public GameSystem
+class TestEntity :
+	public Entity
 {
 public:
-	TestGameSystem(void);
-	virtual ~TestGameSystem(void);
+	TestEntity(void);
+	virtual ~TestEntity(void);
 	virtual void Init();
 	virtual void Update();
 

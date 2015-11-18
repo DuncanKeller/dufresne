@@ -2,12 +2,13 @@
 
 #include "DFComponent.h"
 #include "STDUNC.h"
+#include "DFCman.h"
 
-class GameSystem
+class Entity
 {
 public:
-	GameSystem(void);
-	virtual ~GameSystem(void);
+	Entity(void);
+	virtual ~Entity(void);
 
 	virtual void Init();
 	virtual void Update();

@@ -113,7 +113,7 @@ int CALLBACK WinMain(
 	input = Input();
 	input.Init();
 
-	TestGameSystem* test = sceneMan.CreateSceneObject<TestGameSystem>();
+	TestEntity* test = sceneMan.CreateSceneObject<TestEntity>();
 	test->Init();
 	//RectSize(50, 50, &test->tf.rectangle);
 	test->GetComponent<BoxCollider>()->stationary = false;

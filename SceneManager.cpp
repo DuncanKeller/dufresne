@@ -19,14 +19,14 @@ SceneManager::~SceneManager(void)
 
 void SceneManager::Init()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 	renderer.Init();
 }
 
 void SceneManager::Update()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 	if(currentScene != NULL)
 	{
@@ -58,7 +58,7 @@ void SceneManager::LoadScene(std::string name)
 	dfLog("No scene exists with that name"); // todo make dfLogWarning
 }
 
-void SceneManager::RemoveSceneObject(GameSystem* system)
+void SceneManager::RemoveSceneObject(Entity* system)
 {
 	if(currentScene)
 	{

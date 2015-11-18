@@ -109,7 +109,7 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	// 1: add all render-able objects into render box
 	for(int sIndex = 0; sIndex < scene->currentNum; sIndex++)
 	{
-		GameSystem* gs = scene->GetGameSystemByIndex(sIndex);
+		Entity* gs = scene->GetEntityByIndex(sIndex);
 		if(gs != NULL)
 		{
 			Renderer* renderer = gs->GetComponent<Renderer>();

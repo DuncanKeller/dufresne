@@ -1,6 +1,6 @@
 #pragma once
 
-class GameSystem;
+class Entity;
 
 class dfComponent
 {
@@ -12,6 +12,8 @@ public:
 	virtual void Update();
 
 	char* name;
-	GameSystem* gameSystem;
+	Entity* Entity;
+
+	dfComponent* nextInList;
 };
 

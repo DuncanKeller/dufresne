@@ -1,5 +1,5 @@
 #pragma once
-#include "gamesystem.h"
+#include "Entity.h"
 #include "dfBasic.h"
 #include "AssetManager.h"
 #include "tinyjsonp.h"
@@ -37,7 +37,7 @@ struct Tileset
 
 struct TileInfo
 {
-	GameSystem *system;
+	Entity *system;
 	int xIndex;
 	int yIndex;
 	int layerIndex;
@@ -50,7 +50,7 @@ struct TileInfo
 
 struct ObjectInfo
 {
-	GameSystem *system;
+	Entity *system;
 	float xPosition;
 	float yPosition;
 	float layerIndex;
@@ -80,7 +80,7 @@ struct TileLayer
 
 
 class TileMap :
-	public GameSystem
+	public Entity
 {
 public:
 	TileMap(void);

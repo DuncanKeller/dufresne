@@ -15,13 +15,13 @@ dfTile::~dfTile(void)
 
 void dfTile::Init()
 {
-	GameSystem::Init();
+	Entity::Init();
 
 }
 
 void dfTile::Update()
 {
-	GameSystem::Update();
+	Entity::Update();
 
 }
 

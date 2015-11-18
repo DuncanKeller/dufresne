@@ -1,12 +1,12 @@
 #pragma once
-#include "gamesystem.h"
+#include "Entity.h"
 #include <vector>
 #include "BoxCollider.h"
 
 static const int MAX_OBJS_PER_SCENE = 99999;
 
 class dfScene :
-	public GameSystem
+	public Entity
 {
 public:
 	dfScene(void);
@@ -19,10 +19,10 @@ public:
 	std::string name;
 	int currentNum;
 	std::vector<int> freeSpots;
-	GameSystem* sceneObjects[MAX_OBJS_PER_SCENE];
+	Entity* sceneObjects[MAX_OBJS_PER_SCENE];
 
-	GameSystem* GetGameSystemByIndex(int i);
-	void RemoveSceneObject(GameSystem* sceneObj);
+	Entity* GetEntityByIndex(int i);
+	void RemoveSceneObject(Entity* sceneObj);
 
 	void DoCollision();
 

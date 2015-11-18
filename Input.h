@@ -180,9 +180,9 @@ struct Mouse
 	int mouseWheel;
 };
 
-#include "gamesystem.h"
+#include "Entity.h"
 class Input :
-	public GameSystem
+	public Entity
 {
 public:
 	static const int MAX_JOY_AXIS = 32767;

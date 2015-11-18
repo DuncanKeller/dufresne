@@ -1,11 +1,11 @@
 #pragma once
-#include "gamesystem.h"
+#include "Entity.h"
 #include "Transform.h"
 #include "Renderer.h"
 #include "BoxCollider.h"
 
 class dfTile :
-	public GameSystem
+	public Entity
 {
 public:
 	dfTile(void);

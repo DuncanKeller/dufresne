@@ -1,17 +1,17 @@
 #include "TestGameSystem.h"
 
 
-TestGameSystem::TestGameSystem(void)
+TestEntity::TestEntity(void)
 {
 }
 
 
-TestGameSystem::~TestGameSystem(void)
+TestEntity::~TestEntity(void)
 {
 }
 
 
-void TestGameSystem::Init()
+void TestEntity::Init()
 {
 	RegisterComponent(&tf);
 
@@ -26,7 +26,7 @@ void TestGameSystem::Init()
 	bc = BoxCollider();
 	RegisterComponent(&bc);
 
-	GameSystem::Init();
+	Entity::Init();
 	
 	
 
@@ -36,9 +36,9 @@ void TestGameSystem::Init()
 	
 }
 
-void TestGameSystem::Update()
+void TestEntity::Update()
 {
-	GameSystem::Update();
+	Entity::Update();
 
 	if(input.keyboard.arrowUp.buttonDown)
 	{
