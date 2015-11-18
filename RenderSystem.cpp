@@ -107,17 +107,15 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	}
 	
 	// 1: add all render-able objects into render box
-	for(int sIndex = 0; sIndex < scene->currentNum; sIndex++)
+	const char* huck = typeid(Renderer).raw_name();
+	const char* ffff =  (typeid(BoxCollider).raw_name());
+	
+	std::type_index infer = typeid(Renderer);
+	Renderer* currRen = (Renderer*)dfComponentMap[typeid(Renderer)];
+	while(currRen != 0)
 	{
-		Entity* gs = scene->GetEntityByIndex(sIndex);
-		if(gs != NULL)
-		{
-			Renderer* renderer = gs->GetComponent<Renderer>();
-			if(renderer && renderer->visible)
-			{
-				AddToRenderBox(renderer->renderInfo);
-			}
-		}
+		AddToRenderBox(currRen->renderInfo);
+		currRen = (Renderer*)currRen->nextInList;
 	}
 
 	// 2: sort renderboxes by similar shader program

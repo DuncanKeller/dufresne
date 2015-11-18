@@ -6,6 +6,7 @@
 #include "AssetManager.h"
 #include "SDL.h"
 #include "dfScene.h"
+#include "DFCman.h"
 
 class RenderSystem :
 	public Entity

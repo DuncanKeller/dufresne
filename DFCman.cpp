@@ -1,11 +1,9 @@
 #include "DFCman.h"
 
-//std::map< std::type_index , dfComponent* > dfComponentMap;
-
-
 void AddComponentToMap(dfComponent* dfc)
 {
-	dfComponent* comp = dfComponentMap[typeid(dfc)];
+	std::type_index infer = typeid(*dfc);
+	dfComponent* comp = dfComponentMap[typeid(*dfc)];
 
 	if(comp)
 	{
@@ -20,7 +18,7 @@ void AddComponentToMap(dfComponent* dfc)
 	}
 	else
 	{
-		dfComponentMap[typeid(dfc)] = dfc;
+		dfComponentMap[typeid(*dfc)] = dfc;
 		dfc->nextInList = 0;
 	}
 }

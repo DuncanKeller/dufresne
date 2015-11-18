@@ -5,6 +5,6 @@
 #include <typeindex>
 
 //template < typename T >
-static std::map< std::type_index , dfComponent* > dfComponentMap;
+extern std::map< std::type_index , dfComponent* > dfComponentMap;
 
 void AddComponentToMap(dfComponent* dfc);

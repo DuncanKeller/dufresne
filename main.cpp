@@ -25,6 +25,9 @@ point2D ScreenResolution;
 float dfTotalTime; // todo fill me
 float dfDeltaTime; // todo fill me
 
+// extern
+std::map< std::type_index , dfComponent* > dfComponentMap;
+
 void GameExit(int ReturnValue)
 {
 	exit( ReturnValue );
