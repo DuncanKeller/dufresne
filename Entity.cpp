@@ -34,7 +34,7 @@ void Entity::RegisterComponent(dfComponent* newComponent)
 	if(numComponents < maxComponents - 1)
 	{
 		AddComponentToMap(newComponent);
-		newComponent->Entity = this;
+		newComponent->entity = this;
 		components[numComponents] = newComponent;
 		(*components[numComponents]).Init();
 		numComponents++;

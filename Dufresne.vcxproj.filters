@@ -58,6 +58,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>GameSystems</Filter>
     </ClCompile>
+    <ClCompile Include="GameSystem.cpp">
+      <Filter>GameSystems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="DFCman.h" />
     <ClInclude Include="Entity.h">
+      <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSystem.h">
       <Filter>GameSystems</Filter>
     </ClInclude>
   </ItemGroup>

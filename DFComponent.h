@@ -12,7 +12,7 @@ public:
 	virtual void Update();
 
 	char* name;
-	Entity* Entity;
+	Entity* entity;
 
 	dfComponent* nextInList;
 };

@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "GameSystem.h"
 #include "dfComponent.h"
 #include "Renderer.h"
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include "DFCman.h"
 
 class RenderSystem :
-	public Entity
+	public GameSystem
 {
 public:
 	RenderSystem(void);

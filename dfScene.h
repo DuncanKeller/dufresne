@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include <vector>
 #include "BoxCollider.h"
+#include "DFCman.h"
 
 static const int MAX_OBJS_PER_SCENE = 99999;
 

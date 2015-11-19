@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Entity.h"
 
 bool Renderer::defaultShaderAssigned = false;
 unsigned int Renderer::defaultShaderProgram = 0;
@@ -43,7 +44,8 @@ void Renderer::Init()
 
 	// set default render rectangle
 	renderRect = 0;
-	Transform* tf = Entity->GetComponent<Transform>();
+	//Transform* tf = entity->GetComponent<Transform>();
+	Transform* tf;
 	if(tf)
 	{
 		renderRect = &tf->rectangle;

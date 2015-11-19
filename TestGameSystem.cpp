@@ -42,19 +42,19 @@ void TestEntity::Update()
 
 	if(input.keyboard.arrowUp.buttonDown)
 	{
-		RectMove(0, -10.1f, &tf.rectangle);
+		RectMove(0, -5.1f, &tf.rectangle);
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
-		RectMove(0, 10.1f, &tf.rectangle);
+		RectMove(0, 5, &tf.rectangle);
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
-		RectMove(-10.1f, 0, &tf.rectangle);
+		RectMove(-5, 0, &tf.rectangle);
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
-		RectMove( 10.1f, 0, &tf.rectangle);
+		RectMove( 5, 0, &tf.rectangle);
 	}
 }
 

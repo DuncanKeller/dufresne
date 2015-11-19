@@ -1,5 +1,5 @@
 #include "Collider.h"
-
+#include "Entity.h"
 
 Collider::Collider(void)
 {
@@ -18,7 +18,7 @@ void Collider::Init()
 	dfComponent::Init();
 	
 	// set default render rectangle
-	tf = Entity->GetComponent<Transform>();
+	tf = entity->GetComponent<Transform>();
 }
 
 void Collider::Update()

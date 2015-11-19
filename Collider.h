@@ -7,6 +7,7 @@
 #include "AssetManager.h"
 #include "Transform.h"
 
+
 class Collider :
 	public dfComponent
 {

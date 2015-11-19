@@ -19,14 +19,14 @@ SceneManager::~SceneManager(void)
 
 void SceneManager::Init()
 {
-	Entity::Init();
+	GameSystem::Init();
 
 	renderer.Init();
 }
 
 void SceneManager::Update()
 {
-	Entity::Init();
+	GameSystem::Update();
 
 	if(currentScene != NULL)
 	{

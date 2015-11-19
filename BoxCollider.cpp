@@ -1,4 +1,5 @@
 #include "BoxCollider.h"
+#include "Entity.h"
 
 
 BoxCollider::BoxCollider(void)
@@ -15,7 +16,7 @@ void BoxCollider::Init()
 {
 	Collider::Init();
 	
-	collisionRect = &Entity->GetComponent<Transform>()->rectangle;
+	//collisionRect = &entity->GetComponent<Transform>()->rectangle;
 }
 
 void BoxCollider::Update()

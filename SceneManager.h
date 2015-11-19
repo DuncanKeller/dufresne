@@ -1,10 +1,10 @@
 #pragma once
-#include "Entity.h"
+#include "GameSystem.h"
 #include "dfScene.h"
 #include "RenderSystem.h"
 
 class SceneManager :
-	public Entity
+	public GameSystem
 {
 public:
 	SceneManager(void);

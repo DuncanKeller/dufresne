@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "GameSystem.h"
 #include <Windows.h>
 #include <map>
 
@@ -16,7 +16,7 @@
 #include "dfBasic.h"
 
 class AssetManager :
-	public Entity
+	public GameSystem
 {
 public:
 	AssetManager(void);

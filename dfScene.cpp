@@ -62,26 +62,20 @@ void dfScene::RemoveSceneObject(Entity* sceneObj)
 }
 
 void dfScene::DoCollision()
-{
-	for(int ai = 0; ai < currentNum; ai++)
+{	
+	BoxCollider* colliderA = (BoxCollider*)dfComponentMap[typeid(BoxCollider)];
+	while(colliderA != 0)
 	{
-		if(sceneObjects[ai])
+		BoxCollider* colliderB = (BoxCollider*)dfComponentMap[typeid(BoxCollider)];
+		while(colliderB != 0)
 		{
-			BoxCollider* colliderA = sceneObjects[ai]->GetComponent<BoxCollider>();
-			if(colliderA)
+			if(colliderA != colliderB)
 			{
-				for(int bi = 0; bi < currentNum; bi++)
-				{
-					if(sceneObjects[bi])
-					{
-						BoxCollider* colliderB = sceneObjects[bi]->GetComponent<BoxCollider>();
-						if(colliderB && colliderA != colliderB)
-						{
-							colliderA->BoxBoxCollision(*colliderA, *colliderB);
-						}
-					}
-				}
+				colliderA->BoxBoxCollision(*colliderA, *colliderB);
 			}
+
+			colliderB = (BoxCollider*)colliderB->nextInList;
 		}
+		colliderA = (BoxCollider*)colliderA->nextInList;
 	}
 }
