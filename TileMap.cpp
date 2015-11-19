@@ -291,21 +291,36 @@ void TileMap::GenerateMapSystem()
 
 			if(set.hasCollisionAtlas)
 			{
-				for(int cIndex = 0; cIndex < set.collisionAtlas[t.tilesetIndex].size(); cIndex++)
+				for(int cIndex = 0; cIndex < set.collisionAtlas[t.tilesetYIndex * set.numTilesWidth + t.tilesetXIndex].size(); cIndex++)
 				{
 					// todo support non-square
-					CollisionVolumeInfo volume = set.collisionAtlas[t.tilesetIndex][cIndex];
+					CollisionVolumeInfo volume = set.collisionAtlas[t.tilesetYIndex * set.numTilesWidth + t.tilesetXIndex][cIndex];
 					if(volume.square)
 					{
 						BoxCollider* bc = new BoxCollider();
 						Rect* r = new Rect();
-						RectSet(volume.coords[0].x + tile->tf.rectangle.pos.x, 
-							volume.coords[0].y + tile->tf.rectangle.pos.y,
-							volume.coords[3].x - volume.coords[0].x,
+						RectSet(volume.coords[0].x + t.xIndex * set.tilePxWidth, 
+							volume.coords[0].y +  t.yIndex * set.tilePxHeight,
+							volume.coords[2].x - volume.coords[0].x,
 							volume.coords[3].y - volume.coords[0].y, r);
 						bc->collisionRect = r;
 						bc->SetEnabled(true);
 						tile->RegisterComponent(bc);
+
+						// test-block for seeing collision volumes
+						/*
+						Entity* testEnt = sceneMan.CreateSceneObject<Entity>();
+						Transform* newTf = new Transform();
+						testEnt->RegisterComponent(newTf);
+						Renderer* newR = new Renderer();
+						testEnt->RegisterComponent(newR);
+						TextureInfo textureFile = assMan.GetTexture(L"fart\\testTexture2.png");
+						newR->SetTexture(textureFile);
+						newTf->SetRect(r->left, r->top, r->width, r->height);
+						newR->renderInfo.depth = 300;
+						testEnt->Init();
+						newR->renderInfo.matrix = &newTf->matrix;
+						*/
 					}
 				}
 			}

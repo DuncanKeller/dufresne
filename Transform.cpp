@@ -128,3 +128,8 @@ void Transform::MovePos(vec2 p)
 {
 	RectMove(p, &rectangle);
 }
+
+void Transform::SetRect(float x, float y, float w, float h)
+{
+	RectSet(x, y, w, h, &rectangle);
+}

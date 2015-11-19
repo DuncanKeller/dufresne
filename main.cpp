@@ -122,6 +122,8 @@ int CALLBACK WinMain(
 	test->GetComponent<BoxCollider>()->stationary = false;
 	test->render.renderInfo.depth = 50;
 	test->tf.SetPos(50.f, 150.f);
+	test->bc.collisionRect = &test->tf.rectangle;
+	test->bc.stationary = false;
 
 	TileMap tmap = TileMap();
 	tmap.Init();

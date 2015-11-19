@@ -44,8 +44,7 @@ void Renderer::Init()
 
 	// set default render rectangle
 	renderRect = 0;
-	//Transform* tf = entity->GetComponent<Transform>();
-	Transform* tf;
+	Transform* tf = entity->GetComponent<Transform>();
 	if(tf)
 	{
 		renderRect = &tf->rectangle;

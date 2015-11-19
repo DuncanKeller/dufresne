@@ -107,9 +107,6 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	}
 	
 	// 1: add all render-able objects into render box
-	const char* huck = typeid(Renderer).raw_name();
-	const char* ffff =  (typeid(BoxCollider).raw_name());
-	
 	std::type_index infer = typeid(Renderer);
 	Renderer* currRen = (Renderer*)dfComponentMap[typeid(Renderer)];
 	while(currRen != 0)

@@ -34,6 +34,8 @@ public:
 	void SetScale(float x, float y, float z);
 	void SetScale(vec3 p);
 
+	void SetRect(float x, float y, float w, float h);
+
 	void SetRotation(float r);
 
 	void UpdateMatrix();
