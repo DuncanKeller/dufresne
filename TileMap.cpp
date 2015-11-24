@@ -3,6 +3,7 @@
 
 TileMap::TileMap(void)
 {
+	isometric = false;
 }
 
 
@@ -14,8 +15,9 @@ TileMap::~TileMap(void)
 void TileMap::Init()
 {
 	Entity::Init();
-
-	LoadTilemap(L"fart\\tilemap1.json");
+	
+	//LoadTilemap(L"fart\\tilemap1.json");
+	LoadTilemap(L"fart\\test-iso-map.json");
 	GenerateMapSystem();
 }
 
@@ -34,15 +36,17 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 	// workaround is to use the string content, but the file size, which has the correct cap.
 	if(!jsonObj.parse(str.c_str(), assMan.GetAsset((const wchar_t*)mapname).size, &jsonObj))
 	{
-		dfAssert(false);
 		// json load failed...
+		dfAssert(false);
 	}
 
 	// globals
 	int widthInTiles = jsonObj.getChild("width").asInt();
 	int heightInTiles = jsonObj.getChild("height").asInt();
+	isometric = dfStrCmp(jsonObj.getChild("orientation").asString().c_str(), "isometric");
+	pxWidth = jsonObj.getChild("tilewidth").asInt();
+	pxHeight = jsonObj.getChild("tileheight").asInt();
 
-	
 	// tilesets
 	JsonObject tilesetsObj = jsonObj.getChild("tilesets");
 	for(int index = 0; index < tilesetsObj.numChildren(); index++)
@@ -61,7 +65,7 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 		std::string filename = tilesetObj.getChild("image").asString();
 		const char* cstrfilename = filename.c_str();
 		const wchar_t* wcharfilename = (wchar_t*)filename.c_str();
-		TextureInfo texture = assMan.GetTexture(L"fart\\testtiles.png"); // todo obviouslly not hardcode path...
+		TextureInfo texture = assMan.GetTexture(L"fart\\tilemap-iso.png"); // todo obviouslly not hardcode path...
 		set.texture = texture;
 
 		set.numTilesWidth = ((imgWidth - set.margin * 2) + set.spacing) / (set.tilePxWidth + set.spacing);
@@ -111,6 +115,9 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 				{
 					t.xIndex = tileIndex % widthInTiles;
 					t.yIndex = tileIndex / widthInTiles;
+					// todo have a height property for tiles.
+					// does Tiled have a native property for this??
+					t.hIndex = 0;
 					t.layerIndex = layerIndex;
 					t.system = this;
 				
@@ -258,6 +265,33 @@ void TileMap::ParseCollisionAtlas(Tileset* tileset, const wchar_t* filename)
 	}
 }
 
+/* TILE todo
+	Iso tiles need to adhere to a rendering order in a more strict way than ortho tiles
+	This could theoretically be handled by the layer system already in the renderer
+	But it should use some kind of calculation based upon tilemap width, height, and depth
+	to determine how many layers would be required / the idea packing of tiles into layers
+	so that it doesn't use more than needed
+*/
+vec2 TileMap::GetScreenCoordFromIndex(int x, int y, int h)
+{
+	vec2 position;
+
+	if(isometric)
+	{
+		position.x = (x - y) * (pxWidth / 2.f);
+		position.y = ((x + y) * (pxHeight / 2.f)) + 
+			(h * (pxHeight / 2.f));
+		position.x += 400;
+	}
+	else
+	{
+		position.x = x * pxWidth;
+		position.y = y * pxHeight;
+	}
+
+	return position;
+}
+
 void TileMap::GenerateMapSystem()
 {
 	// handle custom properties for tilesets
@@ -282,8 +316,10 @@ void TileMap::GenerateMapSystem()
 			tiles.push_back(tile);
 
 			Tileset set = tilesets[t.tilesetIndex];
-			// todo: use a configurable size for the tiles, not just pixel size of tile
-			tile->tf.SetPos(t.xIndex * set.tilePxWidth, t.yIndex * set.tilePxHeight);
+			// todo: use a configurable size for the tiles, not just pixel size of tile (requir
+			vec2 tilePos = GetScreenCoordFromIndex(t.xIndex, t.yIndex, t.hIndex);
+			tile->tf.SetPos(tilePos.x, tilePos.y);
+
 			RectSize(set.tilePxWidth, set.tilePxHeight, tile->render.renderRect);
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
 			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
@@ -343,6 +379,7 @@ void TileMap::GenerateMapSystem()
 			dfTile* tile = sceneMan.CreateSceneObject<dfTile>();
 			tiles.push_back(tile);
 
+			// todo make sure object groups position correctly in isometric maps
 			Tileset set = tilesets[obj.tilesetIndex];
 			tile->tf.SetPos(obj.xPosition, obj.yPosition); // todo configurable size that matches tilemap size above
 			RectSize(obj.widthPx, obj.heightPx, tile->render.renderRect);

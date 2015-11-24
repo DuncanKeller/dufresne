@@ -40,6 +40,7 @@ struct TileInfo
 	Entity *system;
 	int xIndex;
 	int yIndex;
+	int hIndex;
 	int layerIndex;
 	int tilesetIndex;
 	int tilemapGUID; // index of tile picture
@@ -92,10 +93,15 @@ public:
 	void GenerateMapSystem();
 	void InterpretProperty(Tileset* tileset, const wchar_t* name, const wchar_t* value);
 	void ParseCollisionAtlas(Tileset* tileset, const wchar_t* value);
+	vec2 GetScreenCoordFromIndex(int x, int y, int h);
 
 	std::vector<Tileset> tilesets;
 	std::vector<TileLayer> tileLayers;
 
 	std::vector<dfTile*> tiles;
+
+	bool isometric;
+	int pxWidth;
+	int pxHeight;
 };
 
