@@ -281,7 +281,6 @@ vec2 TileMap::GetScreenCoordFromIndex(int x, int y, int h)
 		position.x = (x - y) * (pxWidth / 2.f);
 		position.y = ((x + y) * (pxHeight / 2.f)) + 
 			(h * (pxHeight / 2.f));
-		position.x += 400;
 	}
 	else
 	{
