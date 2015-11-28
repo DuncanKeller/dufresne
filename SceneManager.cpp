@@ -5,16 +5,24 @@ SceneManager sceneMan;
 SceneManager::SceneManager(void)
 {
 	// create default scene
-	dfScene defaultScene;
-	defaultScene.name = "defaultScene";
+	dfScene* defaultScene = new dfScene();
+	defaultScene->name = "defaultScene";
 	sceneList.push_back(defaultScene);
-	currentScene = &sceneList[0];
+	currentScene = sceneList[0];
 	LoadScene(currentScene);
 }
 
 
 SceneManager::~SceneManager(void)
 {
+}
+
+dfScene* SceneManager::CreateScene(std::string name)
+{
+	dfScene* newScene = new dfScene();
+	newScene->name = name;
+	sceneList.push_back(newScene);
+	return newScene;
 }
 
 void SceneManager::Init()
@@ -40,22 +48,31 @@ void SceneManager::Update()
 
 void SceneManager::LoadScene(dfScene* scene)
 {
+	UnloadScene(currentScene);
 	currentScene = scene;
 	currentScene->Init();
+	currentScene->SetupScene();
 }
 
 void SceneManager::LoadScene(std::string name)
 {
 	for(int i = 0; i < sceneList.size(); i++)
 	{
-		if(dfStrCmp(sceneList[i].name, name))
+		if(dfStrCmp(sceneList[i]->name, name))
 		{
-			LoadScene(&sceneList[i]);
+			LoadScene(sceneList[i]);
 			return;
 		}
 	}
 
 	dfLog("No scene exists with that name"); // todo make dfLogWarning
+}
+
+void SceneManager::UnloadScene(dfScene* scene)
+{
+	if(scene)
+		scene->RemoveAllSceneObjects();
+
 }
 
 void SceneManager::RemoveSceneObject(Entity* system)

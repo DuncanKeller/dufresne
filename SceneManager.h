@@ -12,13 +12,16 @@ public:
 
 	virtual void Init();
 	virtual void Update();
+
+	dfScene* CreateScene(std::string name);
 	
 	void LoadScene(dfScene* scene);
 	void LoadScene(std::string name);
 	// void LoadSceneAdditive(dfScene scene); todo implement
+	void UnloadScene(dfScene* scene);
 
 	dfScene* currentScene;
-	std::vector<dfScene> sceneList;
+	std::vector<dfScene*> sceneList;
 
 	RenderSystem renderer;
 

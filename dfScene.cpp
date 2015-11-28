@@ -8,6 +8,7 @@ dfScene::dfScene(void)
 	{
 		sceneObjects[i] = NULL;
 	}
+	setupFunc = 0;
 }
 
 
@@ -42,6 +43,18 @@ void dfScene::Update()
 	}
 }
 
+void dfScene::SetupScene()
+{
+	if(setupFunc)
+	{
+		setupFunc();
+	}
+	else
+	{
+		dfLog("scene doesn't contain a setup function."); // todo dfWarn
+	}
+}
+
 Entity* dfScene::GetEntityByIndex(int i)
 {
 	return sceneObjects[i];
@@ -59,6 +72,24 @@ void dfScene::RemoveSceneObject(Entity* sceneObj)
 			break;
 		}
 	}
+}
+
+void dfScene::RemoveAllSceneObjects()
+{
+	for(int i = 0; i < currentNum; i++)
+	{
+		if(sceneObjects[i])
+		{
+			for(int cIndex = 0; cIndex < sceneObjects[i]->numComponents; cIndex++)
+			{
+				dfComponent* dfc = sceneObjects[i]->components[cIndex];
+				if(dfc)
+					RemoveComponentFromMap(dfc);
+			}
+			delete sceneObjects[i];
+		}
+	}
+	currentNum = 0;
 }
 
 void dfScene::DoCollision()

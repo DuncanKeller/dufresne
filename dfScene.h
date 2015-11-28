@@ -16,6 +16,8 @@ public:
 	virtual void Init();
 	virtual void Update();
 
+	void (*setupFunc)();
+	virtual void SetupScene();
 
 	std::string name;
 	int currentNum;
@@ -27,6 +29,7 @@ public:
 
 	void DoCollision();
 
+	void RemoveAllSceneObjects();
 	template<class T> T* CreateSceneObject()
 	{
 		int useIndex = -1;

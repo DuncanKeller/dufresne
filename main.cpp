@@ -33,6 +33,36 @@ void GameExit(int ReturnValue)
 	exit( ReturnValue );
 }
 
+TestEntity* testDude;
+void SetupScene1()
+{
+	testDude = sceneMan.CreateSceneObject<TestEntity>();
+	testDude->Init();
+	//RectSize(50, 50, &test->tf.rectangle);
+	testDude->GetComponent<BoxCollider>()->stationary = false;
+	testDude->render.renderInfo.depth = 50;
+	testDude->tf.SetPos(550.f, 200.f);
+	testDude->bc.collisionRect = &testDude->tf.rectangle;
+	testDude->bc.stationary = false;
+
+	TileMap tmap = TileMap(L"fart\\tilemap1.json");
+	tmap.Init();
+}
+void SetupScene2()
+{
+	testDude = sceneMan.CreateSceneObject<TestEntity>();
+	testDude->Init();
+	//RectSize(50, 50, &test->tf.rectangle);
+	testDude->GetComponent<BoxCollider>()->stationary = false;
+	testDude->render.renderInfo.depth = 50;
+	testDude->tf.SetPos(50.f, 200.f);
+	testDude->bc.collisionRect = &testDude->tf.rectangle;
+	testDude->bc.stationary = false;
+
+	TileMap tmap = TileMap(L"fart\\tilemap2.json");
+	tmap.Init();
+}
+
 int CALLBACK WinMain(
 	  _In_ HINSTANCE hInstance,
 	  _In_ HINSTANCE hPrevInstance,
@@ -115,23 +145,25 @@ int CALLBACK WinMain(
 
 	input = Input();
 	input.Init();
-
-	TestEntity* test = sceneMan.CreateSceneObject<TestEntity>();
-	test->Init();
-	//RectSize(50, 50, &test->tf.rectangle);
-	test->GetComponent<BoxCollider>()->stationary = false;
-	test->render.renderInfo.depth = 50;
-	test->tf.SetPos(50.f, 150.f);
-	test->bc.collisionRect = &test->tf.rectangle;
-	test->bc.stationary = false;
-
-	TileMap tmap = TileMap();
-	tmap.Init();
-	//sceneMan.CreateObject(&tmap);
 	
+	dfScene* scene1 = sceneMan.CreateScene("scene-left");
+	dfScene* scene2 = sceneMan.CreateScene("scene-right");
+	scene1->setupFunc = &SetupScene1;
+	scene2->setupFunc = &SetupScene2;
+	
+	sceneMan.LoadScene(scene1);
 	
 	while(true)
 	{
+		if(testDude->tf.rectangle.left > 640)
+		{
+			sceneMan.LoadScene(scene2);
+		}
+		if(testDude->tf.rectangle.right < 0)
+		{
+			sceneMan.LoadScene(scene1);
+		}
+
 		input.Update();
 
 		sceneMan.Update();
@@ -143,3 +175,4 @@ int CALLBACK WinMain(
 	return 0;
 
 }
+	  

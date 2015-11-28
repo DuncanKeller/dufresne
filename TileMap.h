@@ -84,10 +84,11 @@ class TileMap :
 	public Entity
 {
 public:
-	TileMap(void);
+	TileMap(std::wstring tilemapFilename);
 	virtual ~TileMap(void);
 	virtual void Init();
 	virtual void Update();
+	std::wstring tilemapFilename;
 
 	void LoadTilemap(wchar_t* mapname);
 	void GenerateMapSystem();

@@ -1,8 +1,9 @@
 #include "TileMap.h"
 
 
-TileMap::TileMap(void)
+TileMap::TileMap(std::wstring tilemapFilename)
 {
+	TileMap::tilemapFilename = tilemapFilename;
 	isometric = false;
 }
 
@@ -16,8 +17,7 @@ void TileMap::Init()
 {
 	Entity::Init();
 	
-	//LoadTilemap(L"fart\\tilemap1.json");
-	LoadTilemap(L"fart\\test-iso-map.json");
+	LoadTilemap((wchar_t*)tilemapFilename.c_str());
 	GenerateMapSystem();
 }
 
@@ -65,7 +65,7 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 		std::string filename = tilesetObj.getChild("image").asString();
 		const char* cstrfilename = filename.c_str();
 		const wchar_t* wcharfilename = (wchar_t*)filename.c_str();
-		TextureInfo texture = assMan.GetTexture(L"fart\\tilemap-iso.png"); // todo obviouslly not hardcode path...
+		TextureInfo texture = assMan.GetTexture(L"fart\\testtiles.png"); // todo obviouslly not hardcode path...
 		set.texture = texture;
 
 		set.numTilesWidth = ((imgWidth - set.margin * 2) + set.spacing) / (set.tilePxWidth + set.spacing);
@@ -323,6 +323,7 @@ void TileMap::GenerateMapSystem()
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
 			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
 			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
+
 
 			if(set.hasCollisionAtlas)
 			{
