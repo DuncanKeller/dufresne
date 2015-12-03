@@ -11,6 +11,7 @@
 #include "Input.h"
 #include "BoxCollider.h"
 #include "STDUNC.h"
+#include "dfAnimator.h"
 
 class TestEntity :
 	public Entity

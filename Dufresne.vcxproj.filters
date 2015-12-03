@@ -61,6 +61,9 @@
     <ClCompile Include="GameSystem.cpp">
       <Filter>GameSystems</Filter>
     </ClCompile>
+    <ClCompile Include="dfAnimator.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="GameSystem.h">
       <Filter>GameSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="dfAnimator.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

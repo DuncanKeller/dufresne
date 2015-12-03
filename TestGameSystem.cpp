@@ -30,9 +30,13 @@ void TestEntity::Init()
 	
 	
 
-	TextureInfo textureFile = assMan.GetTexture(L"fart\\dude.png");
+	TextureInfo textureFile = assMan.GetTexture(L"fart\\test-anim.png");
 	
-	render.SetTexture(textureFile);
+	render.InitSprite(textureFile, 4, 3, 0, 0);
+
+	dfAnimator* animComp = new dfAnimator(L"fart\\test-anim_animations.json");
+	RegisterComponent(&tf);
+
 	
 }
 
