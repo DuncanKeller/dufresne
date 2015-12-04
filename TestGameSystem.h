@@ -26,5 +26,6 @@ public:
 	Renderer render;
 	Transform tf;
 	BoxCollider bc;
+	dfAnimator* animComp;
 };
 

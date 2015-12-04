@@ -28,6 +28,8 @@ struct SpriteInfo
 	
 	float atlasMargin; // space on the edges 
 	float atlasSpacing; // space in between tiles
+	int atlasRows;
+	int atlasColums;
 };
 
 struct ShaderUniform
@@ -78,6 +80,7 @@ public:
 	void InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing);
 	void SetAtlasLocation(int xIndex, int yIndex);
 	void SetAtlasLocation(float xPos, float Ypos);
+	void SetAtlasLocation(int index);
 
 	// todo: not sure if there is a better way to do this? 
 	//Auto assign rect to transform and re-assign if needed

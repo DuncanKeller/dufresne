@@ -35,5 +35,6 @@ public:
 	void Play();
 	void Play(std::string animName);
 	void Pause();
+	void SetFrame(int frame);
 };
 

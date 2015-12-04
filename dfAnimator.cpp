@@ -8,6 +8,7 @@ dfAnimator::dfAnimator(wchar_t* animFilename)
 	currentAnimIndex = 0;
 	currentFrame = 0;
 	playing = true;
+	timer = 0.f;
 
 	LoadAnimJSON(animFilename);
 }
@@ -19,17 +20,34 @@ dfAnimator::~dfAnimator(void)
 
 void dfAnimator::Init()
 {
+	dfComponent::Init();
+
 	render = entity->GetComponent<Renderer>();
 }
 
 void dfAnimator::Update()
 {
-	timer += 0.01; // todo repalce with dt
+	dfComponent::Update();
+
+	timer += 0.05; // todo repalce with dt
 
 	if(playing)
 	{
+		if(timer > 1.f / anims[currentAnimIndex].framesPerSecond)
+		{
+			timer = 0.f;
+			currentFrame++;
+			if(currentFrame > anims[currentAnimIndex].frames[anims[currentAnimIndex].frames.size() - 1])
+				currentFrame = anims[currentAnimIndex].frames[0];
 
+			SetFrame(currentFrame);
+		}
 	}
+}
+
+void dfAnimator::SetFrame(int n)
+{
+	render->SetAtlasLocation(n);
 }
 
 void dfAnimator::Play()
@@ -41,11 +59,12 @@ void dfAnimator::Play(std::string animName)
 {
 	for(int i = 0; i < anims.size(); i++)
 	{
-		if(animName == anims[i].name && currentAnimIndex != i)
+		if(dfStrCmp(animName.c_str(), anims[i].name.c_str()) && currentAnimIndex != i)
 		{
 			currentAnimIndex = i;
 			currentFrame = anims[i].frames[0];
 			Play();
+			SetFrame(currentFrame);
 		}
 	}
 }

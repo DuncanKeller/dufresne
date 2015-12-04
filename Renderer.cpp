@@ -82,6 +82,8 @@ void Renderer::InitSprite(TextureInfo &t, int rows, int colums, int margin, int 
 	SetTexture(t);
 	spriteInfo.atlasMargin = margin;
 	spriteInfo.atlasSpacing = spacing;
+	spriteInfo.atlasRows = rows;
+	spriteInfo.atlasColums = colums;
 
 	int nonMarginWidth = t.width - (((colums - 1) * spacing) + (2 * margin));
 	float spriteWidth = nonMarginWidth / colums;
@@ -102,6 +104,13 @@ void Renderer::SetAtlasLocation(int xIndex, int yIndex)
 void Renderer::SetAtlasLocation(float xPos, float yPos)
 {
 	spriteInfo.atlasPos = vec2(xPos, yPos);
+}
+
+void Renderer::SetAtlasLocation(int index)
+{
+	int xIndex = index % spriteInfo.atlasColums;
+	int yIndex = index / spriteInfo.atlasColums;
+	SetAtlasLocation(xIndex, yIndex);
 }
 
 // todo move into more general scope

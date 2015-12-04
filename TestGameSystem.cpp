@@ -34,8 +34,8 @@ void TestEntity::Init()
 	
 	render.InitSprite(textureFile, 4, 3, 0, 0);
 
-	dfAnimator* animComp = new dfAnimator(L"fart\\test-anim_animations.json");
-	RegisterComponent(&tf);
+	animComp = new dfAnimator(L"fart\\test-anim_animations.json");
+	RegisterComponent(animComp);
 
 	
 }
@@ -47,18 +47,22 @@ void TestEntity::Update()
 	if(input.keyboard.arrowUp.buttonDown)
 	{
 		RectMove(0, -5.1f, &tf.rectangle);
+		animComp->Play("walk-up");
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
 		RectMove(0, 5, &tf.rectangle);
+		animComp->Play("walk-down");
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
 		RectMove(-5, 0, &tf.rectangle);
+		animComp->Play("walk-left");
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
 		RectMove( 5, 0, &tf.rectangle);
+		animComp->Play("walk-right");
 	}
 }
 
