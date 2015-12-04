@@ -87,6 +87,34 @@ struct vec3
 	float z;
 };
 
+struct vec4
+{
+	vec4()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+		w = 0;
+	}
+	vec4(float posX, float posY, float posZ, float posW)
+	{
+		x = posX;
+		y = posY;
+		z = posZ;
+		w = posW;
+	}
+
+	static vec4 zero()
+	{
+		return vec4(0.f,0.f,0.f,0.f);
+	}
+
+	float x;
+	float y;
+	float z;
+	float w;
+};
+
 struct Rect
 {
 	vec2 pos;
