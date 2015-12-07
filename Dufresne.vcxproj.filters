@@ -64,6 +64,9 @@
     <ClCompile Include="dfAnimator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="dfParticleSystem.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -129,6 +132,9 @@
       <Filter>GameSystems</Filter>
     </ClInclude>
     <ClInclude Include="dfAnimator.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="dfParticleSystem.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,8 @@
 #include <vector>
 #include "STDUNC.h"
 
+struct Mesh;
+
 enum dfBasicType
 {
 	DF_null,
@@ -53,6 +55,32 @@ struct TextureInfo
 	int width;
 	int height;
 };
+
+// -particles-
+const int MAX_PARTICLES = 8192;
+
+struct ParticleInfo
+{
+	vec2 pos;
+	float maxSize;
+	float w;
+	float h;
+	float rotation;
+	float rotationSpd;
+	vec4 color;
+	vec2 veloc;
+	float acc;
+	float lifetime;
+	float lifespan;
+	bool dead;
+};
+
+struct ParticleBox
+{
+	int numParticles;
+	ParticleInfo particles[MAX_PARTICLES];
+};
+// -particles- end
 
 dfBasicType dfGetTypeFromString(std::vector<char> str);
 

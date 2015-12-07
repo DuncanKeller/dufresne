@@ -143,7 +143,7 @@ void RenderSystem::RenderLoop(dfScene* scene)
 					glUseProgram(newShaderProg);
 				}
 			}
-
+			
 			// update uniforms from list
 			for(int uIndex = 0; uIndex < renderBox[i][n].uniforms.size(); uIndex++) 
 			{
