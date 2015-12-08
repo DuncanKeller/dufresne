@@ -34,6 +34,13 @@ dfParticleSystem::dfParticleSystem(void)
 
 	layer = 0;
 	active = true;
+	maxActiveParticles = 100;
+	pbox.numParticles = 0;
+
+	for(int i = 0; i < MAX_PARTICLES; i++)
+	{
+		particleRenderers[i].renderInfo.active = false;
+	}
 }
 
 
@@ -45,7 +52,7 @@ void dfParticleSystem::Init()
 {
 	dfComponent::Init();
 
-	renderer = entity->GetComponent<Renderer>();
+	parentRenderer = entity->GetComponent<Renderer>();
 }
 
 void dfParticleSystem::Update()
@@ -56,7 +63,8 @@ void dfParticleSystem::Update()
 	{
 		timer += 0.05f; // todo dt
 
-		if(timer > nextParticleTime)
+		// todo get ridda pbox don't think I'm using it anymore
+		if(timer > nextParticleTime && pbox.numParticles < maxActiveParticles)
 		{
 			CreateParticle();
 			nextParticleTime =  minSecondsBetweenParticles + (randf() * (maxSecondsBetweenParticles - minSecondsBetweenParticles));
@@ -67,7 +75,7 @@ void dfParticleSystem::Update()
 	{
 		if(!pbox.particles[i].dead)
 		{
-			UpdateParticle(pbox.particles[i]);
+			UpdateParticle(pbox.particles[i], i);
 		}
 	}
 }
@@ -112,16 +120,36 @@ void dfParticleSystem::CreateParticle()
 	p.lifetime = 0;
 	p.rotation = minStartRotation + (randf() * (maxStartRotation - minStartRotation));
 	p.rotationSpd = minRotationSpd + (randf() * (maxRotationSpd - minRotationSpd));
+	p.veloc = vec2(
+		minVeloc + (randf() * (maxVeloc - minVeloc)),
+		minVeloc + (randf() * (maxVeloc - minVeloc)));
 
 	dfAssert(textures.size() > 0); // need a texture to attatch to particle, dawg!
 	int textureIndex = rand() % textures.size();
 	//p.texture = textures[textureIndex];
+	p.renderRect = new Rect();
+	RectSet(p.pos.x - (p.w / 2.f), p.pos.y - (p.h / 2.f), p.w, p.h, p.renderRect);
 
 	for(int i = 0; i < MAX_PARTICLES; i++)
 	{
 		if(pbox.particles[i].dead)
 		{
 			pbox.particles[i] = p;
+			
+			particleRenderers[i].renderRect = p.renderRect;
+			particleRenderers[i].SetTexture(textures[textureIndex]);
+			particleRenderers[i].renderInfo.active = true;
+			particleRenderers[i].renderInfo.depth = layer;
+
+			for(int cIndex = 0; cIndex < particleRenderers[i].renderInfo.uniforms.size(); cIndex++)
+			{
+				if(dfStrCmp("rect", particleRenderers[i].renderInfo.uniforms[cIndex].name))
+				{
+					particleRenderers[i].renderInfo.uniforms[cIndex].valueRect = p.renderRect;
+					break;
+				}
+			}
+
 			pbox.numParticles++;
 			return;
 		}
@@ -130,16 +158,20 @@ void dfParticleSystem::CreateParticle()
 	dfLog("Could not create particle. Max particles!"); // todo dfwarn
 }
 
-void dfParticleSystem::UpdateParticle(ParticleInfo &particle)
+void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 {
 	particle.lifetime += 0.05f; // todo dt
 	if(particle.lifetime > particle.lifespan)
 	{
+		particleRenderers[index].renderInfo.active = false;
 		particle.dead = true;
+		delete particle.renderRect;
+		if(index == pbox.numParticles - 1)
+			pbox.numParticles--;
 		return;
 	}
 
-	float t = particle.lifetime / particle.lifetime;
+	float t = particle.lifetime / particle.lifespan;
 	float ct = t;
 	if(ct < beginFadeTime)
 		ct = 0.f;
@@ -154,8 +186,8 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle)
 
 	if(fadeSize)
 	{
-		particle.w = particle.maxSize * (1-ct);
-		particle.h = particle.maxSize * (1-ct);
+		particle.w = particle.maxSize * (1.f-ct);
+		particle.h = particle.maxSize * (1.f-ct);
 	}
 
 	particle.pos.x += particle.veloc.x;
@@ -164,5 +196,8 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle)
 	particle.veloc.y += particle.acc;
 
 	particle.rotation += particle.rotationSpd;
+	
+	RectSet(particle.pos.x - (particle.w / 2.f), particle.pos.y - (particle.h / 2.f), 
+		particle.w, particle.h, particle.renderRect);
 	
 }

@@ -73,6 +73,8 @@ struct ParticleInfo
 	float lifetime;
 	float lifespan;
 	bool dead;
+
+	Rect* renderRect;
 };
 
 struct ParticleBox

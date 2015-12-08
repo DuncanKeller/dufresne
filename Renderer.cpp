@@ -10,6 +10,7 @@ Renderer::Renderer(void)
 	visible = true;
 	atlased = false;
 
+	renderInfo.active = true;
 	renderInfo.depth = 0;
 	renderInfo.glShaderProgram = 0;
 	renderInfo.glTexture = 0;

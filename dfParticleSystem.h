@@ -16,7 +16,7 @@ public:
 
 	void InitParticle(ParticleInfo &p);
 	void CreateParticle();
-	void UpdateParticle(ParticleInfo &particle);
+	void UpdateParticle(ParticleInfo &particle, int index);
 
 	// BLOCK - particle params used when spawing a particle
 	bool useSpawnRect; // as opposed to spawn point
@@ -38,17 +38,20 @@ public:
 	float minParticleSize;
 	float maxParticleSize;
 	bool fadeSize;
-	std::vector<unsigned int> textures;
+	std::vector<TextureInfo> textures;
 
 	// params related to spawn timing
+	int layer;
 	bool active;
-	float timer;
-	float nextParticleTime;
+	int maxActiveParticles;
 	float minSecondsBetweenParticles;
 	float maxSecondsBetweenParticles;
 
-	int layer;
+	float timer;
+	float nextParticleTime;
+
 	ParticleBox pbox;
-	Renderer* renderer;
+	Renderer* parentRenderer;
+	Renderer particleRenderers[MAX_PARTICLES];
 };
 

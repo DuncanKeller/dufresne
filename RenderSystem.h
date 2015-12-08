@@ -7,6 +7,7 @@
 #include "SDL.h"
 #include "dfScene.h"
 #include "DFCman.h"
+#include "dfParticleSystem.h"
 
 class RenderSystem :
 	public GameSystem

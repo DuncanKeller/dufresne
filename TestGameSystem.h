@@ -12,6 +12,7 @@
 #include "BoxCollider.h"
 #include "STDUNC.h"
 #include "dfAnimator.h"
+#include "dfParticleSystem.h"
 
 class TestEntity :
 	public Entity
@@ -21,11 +22,11 @@ public:
 	virtual ~TestEntity(void);
 	virtual void Init();
 	virtual void Update();
-
 	
 	Renderer render;
 	Transform tf;
 	BoxCollider bc;
 	dfAnimator* animComp;
+	dfParticleSystem* particleSys;
 };
 

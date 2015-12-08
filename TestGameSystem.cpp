@@ -37,7 +37,27 @@ void TestEntity::Init()
 	animComp = new dfAnimator(L"fart\\test-anim_animations.json");
 	RegisterComponent(animComp);
 
-	
+	particleSys = new dfParticleSystem();
+	RegisterComponent(particleSys);
+	particleSys->layer = 300;
+	particleSys->spawnPoint = vec2(100, 100);
+	particleSys->minVeloc = -10;
+	particleSys->maxVeloc = 10;
+	particleSys->minLifespan = 5;
+	particleSys->maxLifespan = 5;
+	particleSys->minAcc = 0;
+	particleSys->maxAcc = 0;
+	particleSys->startColor = vec4(1,0,0,1);
+	particleSys->endColor = vec4(0,1,1,1);
+	particleSys->beginFadeTime = .9f;
+	particleSys->minStartRotation = 0;
+	particleSys->maxStartRotation = 0;
+	particleSys->minRotationSpd = 0;
+	particleSys->maxRotationSpd = 0;
+	particleSys->minParticleSize = 15;
+	particleSys->maxParticleSize = 30;
+	particleSys->fadeSize = 1;
+	particleSys->textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
 }
 
 void TestEntity::Update()
@@ -64,6 +84,8 @@ void TestEntity::Update()
 		RectMove( 5, 0, &tf.rectangle);
 		animComp->Play("walk-right");
 	}
+
+	particleSys->spawnPoint = tf.rectangle.pos;
 }
 
 // todo

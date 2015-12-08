@@ -48,6 +48,8 @@ struct ShaderUniform
 
 struct RenderInfo
 {
+	bool active;
+
 	int depth;
 	unsigned int glShaderProgram;
 	unsigned int glTexture;

@@ -14,7 +14,7 @@ public:
 	virtual void Update();
 
 	// TODO: replace temporary max with a dynamic array solution
-	static const int maxComponents = 5;
+	static const int maxComponents = 20;
 	int numComponents;
 	// major TODO
 	// I'd rather not have an array of pointers, but I can't think of a way
