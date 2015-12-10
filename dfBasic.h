@@ -67,6 +67,7 @@ struct ParticleInfo
 	float h;
 	float rotation;
 	float rotationSpd;
+	vec4 startColor;
 	vec4 color;
 	vec2 veloc;
 	float acc;
@@ -77,11 +78,6 @@ struct ParticleInfo
 	Rect* renderRect;
 };
 
-struct ParticleBox
-{
-	int numParticles;
-	ParticleInfo particles[MAX_PARTICLES];
-};
 // -particles- end
 
 dfBasicType dfGetTypeFromString(std::vector<char> str);

@@ -14,6 +14,7 @@ Renderer::Renderer(void)
 	renderInfo.depth = 0;
 	renderInfo.glShaderProgram = 0;
 	renderInfo.glTexture = 0;
+	renderInfo.color = vec4(1.f,1.f,1.f,1.f);
 	// todo clear me out VVV
 	//renderInfo.mesh;
 	
@@ -164,9 +165,14 @@ void Renderer::InitDefaultShader()
 	defaultShaderProgram = glCreateProgram();
 
 	unsigned int vs = CompileShaderFromSrc("layout(location = 0) in vec3 vertex_position; layout(location = 2) in vec2 in_texture_coordinates; out vec2 texture_coordinates; uniform vec2 resolution; uniform vec4 rect; uniform sampler2D basic_texture; void main () { texture_coordinates = in_texture_coordinates; if(vertex_position.x < 0.0 && vertex_position.y < 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 0; } else if(vertex_position.x > 0.0 && vertex_position.y < 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = ((rect.y / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 0; } else if(vertex_position.x < 0.0 && vertex_position.y > 0.0) { gl_Position.x = ((rect.x / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 0; texture_coordinates.y = 1; } else if(vertex_position.x > 0.0 && vertex_position.y > 0.0) { gl_Position.x = (((rect.x + rect.z) / resolution.x) * 2) - 1; gl_Position.y = (((rect.y + rect.w) / resolution.y) * 2) - 1; texture_coordinates.x = 1; texture_coordinates.y = 1; } gl_Position.y *= -1; gl_Position.z = 0.0; gl_Position.w = 1.0; }  ", GL_VERTEX_SHADER);
-	unsigned int fs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos;uniform vec2 spriteSize;out vec4 frag_color;void main () {vec4 texel = texture2D (basic_texture, texture_coordinates);frag_color = texel;if(frag_color.a == 0){frag_color = vec4(0,0,0,0);}}", GL_FRAGMENT_SHADER);
+	//unsigned int fs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos;uniform vec2 spriteSize;out vec4 frag_color;void main () {vec4 texel = texture2D (basic_texture, texture_coordinates);frag_color = texel;if(frag_color.a == 0){frag_color = vec4(0,0,0,0);}}", GL_FRAGMENT_SHADER);
 	
-	unsigned int atlasFs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos;uniform vec2 spriteSize;out vec4 frag_color;void main () {vec2 realCoord = atlasPos + (spriteSize *texture_coordinates);vec4 texel = texture2D(basic_texture,realCoord);frag_color = texel;}", GL_FRAGMENT_SHADER);
+	//unsigned int atlasFs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos;uniform vec2 spriteSize;out vec4 frag_color;void main () {vec2 realCoord = atlasPos + (spriteSize *texture_coordinates);vec4 texel = texture2D(basic_texture,realCoord);frag_color = texel;}", GL_FRAGMENT_SHADER);
+	
+	unsigned int fs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos,spriteSize;uniform vec4 inColor;out vec4 frag_color;void main(){vec4 texel=texture2D(basic_texture,texture_coordinates);frag_color=vec4(texel.r*inColor.r,texel.g*inColor.g,texel.b*inColor.b,texel.a*inColor.a);if(frag_color.a==0||inColor.a==0)frag_color=vec4(0,0,0,0);}", GL_FRAGMENT_SHADER);
+	
+	unsigned int atlasFs = CompileShaderFromSrc("in vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos,spriteSize;uniform vec4 inColor;out vec4 frag_color;void main(){vec2 realCoord=atlasPos+spriteSize*texture_coordinates;vec4 texel=texture2D(basic_texture,realCoord);frag_color=vec4(texel.r*inColor.r,texel.g*inColor.g,texel.b*inColor.b,texel.a*inColor.a);}", GL_FRAGMENT_SHADER);
+	
 
 
 	// todo duplication, find common place for this
@@ -276,5 +282,11 @@ void Renderer::SetStandardUniforms()
 	uniformSeven.name = "spriteSize";
 	uniformSeven.valueFloat = &(spriteInfo.arr[2]);
 	renderInfo.uniforms.push_back(uniformSeven);
+
+	ShaderUniform uniformEight;
+	uniformEight.type = DF_vec4;
+	uniformEight.name = "inColor";
+	uniformEight.valueFloat = &(renderInfo.color.x);
+	renderInfo.uniforms.push_back(uniformEight);
 
 }

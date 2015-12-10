@@ -28,7 +28,7 @@ public:
 	float maxLifespan;
 	float minAcc;
 	float maxAcc;
-	vec4 startColor;
+	std::vector<vec4> startColors;
 	vec4 endColor;
 	float beginFadeTime; // zero to one
 	float minStartRotation;
@@ -50,8 +50,12 @@ public:
 	float timer;
 	float nextParticleTime;
 
-	ParticleBox pbox;
 	Renderer* parentRenderer;
 	Renderer particleRenderers[MAX_PARTICLES];
+	int currentParticleCap; // used to determine how far to iterate over particles
+
+private:
+	int numParticles;
+	ParticleInfo particles[MAX_PARTICLES];
 };
 

@@ -56,6 +56,7 @@ struct RenderInfo
 	Mesh mesh;
 	std::vector<ShaderUniform> uniforms; 
 	mat4* matrix;
+	vec4 color;
 };
 
 class Renderer :

@@ -18,8 +18,7 @@ dfParticleSystem::dfParticleSystem(void)
 	maxLifespan = 0.f;
 	minAcc = 0.f;
 	maxAcc = 0.f;
-	startColor = vec4(1.f, 1.f, 1.f, 1.f);
-	endColor = vec4(1.f, 1.f, 1.f, 1.f);
+	endColor = vec4(0.f, 0.f, 0.f, 0.f);
 	minStartRotation = 0.f;
 	maxStartRotation = 0.f;
 	minRotationSpd = 0.f;
@@ -35,7 +34,8 @@ dfParticleSystem::dfParticleSystem(void)
 	layer = 0;
 	active = true;
 	maxActiveParticles = 100;
-	pbox.numParticles = 0;
+	numParticles = 0;
+	currentParticleCap = 0;
 
 	for(int i = 0; i < MAX_PARTICLES; i++)
 	{
@@ -64,18 +64,21 @@ void dfParticleSystem::Update()
 		timer += 0.05f; // todo dt
 
 		// todo get ridda pbox don't think I'm using it anymore
-		if(timer > nextParticleTime && pbox.numParticles < maxActiveParticles)
+		if(timer > nextParticleTime && numParticles < maxActiveParticles)
 		{
 			CreateParticle();
 			nextParticleTime =  minSecondsBetweenParticles + (randf() * (maxSecondsBetweenParticles - minSecondsBetweenParticles));
 		}
 	}
 
-	for(int i = 0; i < pbox.numParticles; i++)
+	for(int i = 0; i < numParticles; i++)
 	{
-		if(!pbox.particles[i].dead)
+		if(particles[i].color.x == 1 && particles[i].color.y == 1 && particles[i].color.z == 1)
+			int fut = 4;
+
+		if(!particles[i].dead)
 		{
-			UpdateParticle(pbox.particles[i], i);
+			UpdateParticle(particles[i], i);
 		}
 	}
 }
@@ -111,7 +114,9 @@ void dfParticleSystem::CreateParticle()
 		p.pos = vec2(spawnPoint.x, spawnPoint.y);
 	}
 	p.acc = minAcc + (randf() * (maxAcc - minAcc));
-	p.color = startColor;
+	int colorIndex = rand() % startColors.size();
+	p.startColor = startColors[colorIndex];
+	p.color = p.startColor;
 	p.dead = false;
 	p.maxSize = minParticleSize + (randf() * (maxParticleSize - minParticleSize));
 	p.w = p.maxSize;
@@ -120,9 +125,10 @@ void dfParticleSystem::CreateParticle()
 	p.lifetime = 0;
 	p.rotation = minStartRotation + (randf() * (maxStartRotation - minStartRotation));
 	p.rotationSpd = minRotationSpd + (randf() * (maxRotationSpd - minRotationSpd));
-	p.veloc = vec2(
-		minVeloc + (randf() * (maxVeloc - minVeloc)),
-		minVeloc + (randf() * (maxVeloc - minVeloc)));
+	float newVeloc = randf() * (maxVeloc - minVeloc);
+	float xComp = cos((Pi32 / 180.f) * p.rotation) * newVeloc;
+	float yComp = sin((Pi32 / 180.f) * p.rotation) * newVeloc;
+	p.veloc = vec2(xComp, yComp);
 
 	dfAssert(textures.size() > 0); // need a texture to attatch to particle, dawg!
 	int textureIndex = rand() % textures.size();
@@ -130,11 +136,11 @@ void dfParticleSystem::CreateParticle()
 	p.renderRect = new Rect();
 	RectSet(p.pos.x - (p.w / 2.f), p.pos.y - (p.h / 2.f), p.w, p.h, p.renderRect);
 
-	for(int i = 0; i < MAX_PARTICLES; i++)
+	for(int i = 0; i < currentParticleCap + 1 < MAX_PARTICLES ? currentParticleCap + 1 : MAX_PARTICLES; i++)
 	{
-		if(pbox.particles[i].dead)
+		if(particles[i].dead)
 		{
-			pbox.particles[i] = p;
+			particles[i] = p;
 			
 			particleRenderers[i].renderRect = p.renderRect;
 			particleRenderers[i].SetTexture(textures[textureIndex]);
@@ -150,7 +156,10 @@ void dfParticleSystem::CreateParticle()
 				}
 			}
 
-			pbox.numParticles++;
+			numParticles++;
+			if(i == currentParticleCap)
+				currentParticleCap++;
+
 			return;
 		}
 	}
@@ -166,8 +175,9 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 		particleRenderers[index].renderInfo.active = false;
 		particle.dead = true;
 		delete particle.renderRect;
-		if(index == pbox.numParticles - 1)
-			pbox.numParticles--;
+		numParticles--;
+		if(index == currentParticleCap - 1)
+			currentParticleCap--;
 		return;
 	}
 
@@ -179,10 +189,11 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 		ct = (ct - beginFadeTime) / (1.f - beginFadeTime);
 
 	particle.color = vec4(
-		startColor.x + ((endColor.x - startColor.x) * ct),
-		startColor.y + ((endColor.y - startColor.y) * ct),
-		startColor.z + ((endColor.z - startColor.z) * ct),
-		startColor.w + ((endColor.w - startColor.w) * ct));
+		particle.startColor.x + ((endColor.x - particle.startColor.x) * ct),
+		particle.startColor.y + ((endColor.y - particle.startColor.y) * ct),
+		particle.startColor.z + ((endColor.z - particle.startColor.z) * ct),
+		particle.startColor.w + ((endColor.w - particle.startColor.w) * ct));
+	particleRenderers[index].renderInfo.color = particle.color;
 
 	if(fadeSize)
 	{
@@ -196,6 +207,7 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 	particle.veloc.y += particle.acc;
 
 	particle.rotation += particle.rotationSpd;
+
 	
 	RectSet(particle.pos.x - (particle.w / 2.f), particle.pos.y - (particle.h / 2.f), 
 		particle.w, particle.h, particle.renderRect);

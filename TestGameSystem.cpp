@@ -41,21 +41,22 @@ void TestEntity::Init()
 	RegisterComponent(particleSys);
 	particleSys->layer = 300;
 	particleSys->spawnPoint = vec2(100, 100);
-	particleSys->minVeloc = -10;
-	particleSys->maxVeloc = 10;
-	particleSys->minLifespan = 5;
-	particleSys->maxLifespan = 5;
+	particleSys->minVeloc = 3;
+	particleSys->maxVeloc = 6;
+	particleSys->minLifespan = 1;
+	particleSys->maxLifespan = 1;
 	particleSys->minAcc = 0;
 	particleSys->maxAcc = 0;
-	particleSys->startColor = vec4(1,0,0,1);
-	particleSys->endColor = vec4(0,1,1,1);
+	particleSys->startColors.push_back(vec4(1,0,0,1));
+	particleSys->startColors.push_back(vec4(0,0,1,1));
+	particleSys->startColors.push_back(vec4(0,1,0,1));
 	particleSys->beginFadeTime = .9f;
-	particleSys->minStartRotation = 0;
+	particleSys->minStartRotation = -180;
 	particleSys->maxStartRotation = 0;
 	particleSys->minRotationSpd = 0;
 	particleSys->maxRotationSpd = 0;
-	particleSys->minParticleSize = 15;
-	particleSys->maxParticleSize = 30;
+	particleSys->minParticleSize = 5;
+	particleSys->maxParticleSize = 15;
 	particleSys->fadeSize = 1;
 	particleSys->textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
 }
@@ -86,6 +87,7 @@ void TestEntity::Update()
 	}
 
 	particleSys->spawnPoint = tf.rectangle.pos;
+	particleSys->spawnPoint.x += tf.rectangle.width / 2;
 }
 
 // todo

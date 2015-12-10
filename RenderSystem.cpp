@@ -121,7 +121,7 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	{
 		if(currPartSys->active)
 		{
-			for(int i = 0; i < currPartSys->pbox.numParticles; i++)
+			for(int i = 0; i < currPartSys->currentParticleCap - 1; i++)
 			{
 				if(currPartSys->particleRenderers[i].renderInfo.active)
 					AddToRenderBox(currPartSys->particleRenderers[i].renderInfo);
@@ -147,15 +147,6 @@ void RenderSystem::RenderLoop(dfScene* scene)
 		{
 			if(renderBox[i][n].active)
 			{
-				if(i == 300)
-				{
-					int x = renderBox[i][n].uniforms[3].valueRect->left;
-					int y = renderBox[i][n].uniforms[3].valueRect->top;
-					int w = renderBox[i][n].uniforms[3].valueRect->width;
-					int h = renderBox[i][n].uniforms[3].valueRect->height;
-					int fug = 5;
-				}
-
 				unsigned int newShaderProg = renderBox[i][n].glShaderProgram;
 				if(firstRender) // always set shader program for the first render
 				{
