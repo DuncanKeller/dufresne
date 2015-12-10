@@ -5,20 +5,9 @@
 #include "Mesh.h"
 #include "Renderer.h"
 
-class dfParticleSystem :
-	public dfComponent
+// particle params used when spawing a particle
+struct ParticleSpawnParams
 {
-public:
-	dfParticleSystem(void);
-	virtual ~dfParticleSystem(void);
-	virtual void Init();
-	virtual void Update();
-
-	void InitParticle(ParticleInfo &p);
-	void CreateParticle();
-	void UpdateParticle(ParticleInfo &particle, int index);
-
-	// BLOCK - particle params used when spawing a particle
 	bool useSpawnRect; // as opposed to spawn point
 	Rect spawnRect;
 	vec2 spawnPoint;
@@ -39,6 +28,22 @@ public:
 	float maxParticleSize;
 	bool fadeSize;
 	std::vector<TextureInfo> textures;
+};
+
+class dfParticleSystem :
+	public dfComponent
+{
+public:
+	dfParticleSystem(void);
+	virtual ~dfParticleSystem(void);
+	virtual void Init();
+	virtual void Update();
+
+	void InitParticle(ParticleInfo &p);
+	void CreateParticle();
+	void UpdateParticle(ParticleInfo &particle, int index);
+
+	ParticleSpawnParams sInfo;
 
 	// params related to spawn timing
 	int layer;

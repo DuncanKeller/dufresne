@@ -40,25 +40,25 @@ void TestEntity::Init()
 	particleSys = new dfParticleSystem();
 	RegisterComponent(particleSys);
 	particleSys->layer = 300;
-	particleSys->spawnPoint = vec2(100, 100);
-	particleSys->minVeloc = 3;
-	particleSys->maxVeloc = 6;
-	particleSys->minLifespan = 1;
-	particleSys->maxLifespan = 1;
-	particleSys->minAcc = 0;
-	particleSys->maxAcc = 0;
-	particleSys->startColors.push_back(vec4(1,0,0,1));
-	particleSys->startColors.push_back(vec4(0,0,1,1));
-	particleSys->startColors.push_back(vec4(0,1,0,1));
-	particleSys->beginFadeTime = .9f;
-	particleSys->minStartRotation = -180;
-	particleSys->maxStartRotation = 0;
-	particleSys->minRotationSpd = 0;
-	particleSys->maxRotationSpd = 0;
-	particleSys->minParticleSize = 5;
-	particleSys->maxParticleSize = 15;
-	particleSys->fadeSize = 1;
-	particleSys->textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
+	particleSys->sInfo.spawnPoint = vec2(100, 100);
+	particleSys->sInfo.minVeloc = 3;
+	particleSys->sInfo.maxVeloc = 6;
+	particleSys->sInfo.minLifespan = 1;
+	particleSys->sInfo.maxLifespan = 1;
+	particleSys->sInfo.minAcc = 0;
+	particleSys->sInfo.maxAcc = 0;
+	particleSys->sInfo.startColors.push_back(vec4(1,0,0,1));
+	particleSys->sInfo.startColors.push_back(vec4(0,0,1,1));
+	particleSys->sInfo.startColors.push_back(vec4(0,1,0,1));
+	particleSys->sInfo.beginFadeTime = .9f;
+	particleSys->sInfo.minStartRotation = -180;
+	particleSys->sInfo.maxStartRotation = 0;
+	particleSys->sInfo.minRotationSpd = 0;
+	particleSys->sInfo.maxRotationSpd = 0;
+	particleSys->sInfo.minParticleSize = 5;
+	particleSys->sInfo.maxParticleSize = 15;
+	particleSys->sInfo.fadeSize = 1;
+	particleSys->sInfo.textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
 }
 
 void TestEntity::Update()
@@ -86,8 +86,8 @@ void TestEntity::Update()
 		animComp->Play("walk-right");
 	}
 
-	particleSys->spawnPoint = tf.rectangle.pos;
-	particleSys->spawnPoint.x += tf.rectangle.width / 2;
+	particleSys->sInfo.spawnPoint = tf.rectangle.pos;
+	particleSys->sInfo.spawnPoint.x += tf.rectangle.width / 2;
 }
 
 // todo

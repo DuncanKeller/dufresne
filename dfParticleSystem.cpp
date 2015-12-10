@@ -9,22 +9,22 @@ float randf()
 
 dfParticleSystem::dfParticleSystem(void)
 {
-	useSpawnRect = false;
-	spawnRect = Rect();
-	spawnPoint = vec2(0.f,0.f);
-	minVeloc = 0.f;
-	maxVeloc = 0.f;
-	minLifespan = 0.f;
-	maxLifespan = 0.f;
-	minAcc = 0.f;
-	maxAcc = 0.f;
-	endColor = vec4(0.f, 0.f, 0.f, 0.f);
-	minStartRotation = 0.f;
-	maxStartRotation = 0.f;
-	minRotationSpd = 0.f;
-	maxRotationSpd = 0.f;
-	beginFadeTime = 1.f;
-	fadeSize = false;
+	sInfo.useSpawnRect = false;
+	sInfo.spawnRect = Rect();
+	sInfo.spawnPoint = vec2(0.f,0.f);
+	sInfo.minVeloc = 0.f;
+	sInfo.maxVeloc = 0.f;
+	sInfo.minLifespan = 0.f;
+	sInfo.maxLifespan = 0.f;
+	sInfo.minAcc = 0.f;
+	sInfo.maxAcc = 0.f;
+	sInfo.endColor = vec4(0.f, 0.f, 0.f, 0.f);
+	sInfo.minStartRotation = 0.f;
+	sInfo.maxStartRotation = 0.f;
+	sInfo.minRotationSpd = 0.f;
+	sInfo.maxRotationSpd = 0.f;
+	sInfo.beginFadeTime = 1.f;
+	sInfo.fadeSize = false;
 
 	minSecondsBetweenParticles = 1.f;
 	maxSecondsBetweenParticles = 1.f;
@@ -103,35 +103,35 @@ void dfParticleSystem::CreateParticle()
 {
 	ParticleInfo p;
 	InitParticle(p);
-	if(useSpawnRect)
+	if(sInfo.useSpawnRect)
 	{
 		p.pos = vec2(
-			(randf() * spawnRect.width) + spawnRect.left,
-			(randf() * spawnRect.height) + spawnRect.top);
+			(randf() * sInfo.spawnRect.width) + sInfo.spawnRect.left,
+			(randf() * sInfo.spawnRect.height) + sInfo.spawnRect.top);
 	}
 	else
 	{
-		p.pos = vec2(spawnPoint.x, spawnPoint.y);
+		p.pos = vec2(sInfo.spawnPoint.x, sInfo.spawnPoint.y);
 	}
-	p.acc = minAcc + (randf() * (maxAcc - minAcc));
-	int colorIndex = rand() % startColors.size();
-	p.startColor = startColors[colorIndex];
+	p.acc = sInfo.minAcc + (randf() * (sInfo.maxAcc - sInfo.minAcc));
+	int colorIndex = rand() % sInfo.startColors.size();
+	p.startColor = sInfo.startColors[colorIndex];
 	p.color = p.startColor;
 	p.dead = false;
-	p.maxSize = minParticleSize + (randf() * (maxParticleSize - minParticleSize));
+	p.maxSize = sInfo.minParticleSize + (randf() * (sInfo.maxParticleSize - sInfo.minParticleSize));
 	p.w = p.maxSize;
 	p.h = p.maxSize;
-	p.lifespan = minLifespan + (randf() * (maxLifespan - minLifespan));
+	p.lifespan = sInfo.minLifespan + (randf() * (sInfo.maxLifespan - sInfo.minLifespan));
 	p.lifetime = 0;
-	p.rotation = minStartRotation + (randf() * (maxStartRotation - minStartRotation));
-	p.rotationSpd = minRotationSpd + (randf() * (maxRotationSpd - minRotationSpd));
-	float newVeloc = randf() * (maxVeloc - minVeloc);
+	p.rotation = sInfo.minStartRotation + (randf() * (sInfo.maxStartRotation - sInfo.minStartRotation));
+	p.rotationSpd = sInfo.minRotationSpd + (randf() * (sInfo.maxRotationSpd - sInfo.minRotationSpd));
+	float newVeloc = randf() * (sInfo.maxVeloc - sInfo.minVeloc);
 	float xComp = cos((Pi32 / 180.f) * p.rotation) * newVeloc;
 	float yComp = sin((Pi32 / 180.f) * p.rotation) * newVeloc;
 	p.veloc = vec2(xComp, yComp);
 
-	dfAssert(textures.size() > 0); // need a texture to attatch to particle, dawg!
-	int textureIndex = rand() % textures.size();
+	dfAssert(sInfo.textures.size() > 0); // need a texture to attatch to particle, dawg!
+	int textureIndex = rand() % sInfo.textures.size();
 	//p.texture = textures[textureIndex];
 	p.renderRect = new Rect();
 	RectSet(p.pos.x - (p.w / 2.f), p.pos.y - (p.h / 2.f), p.w, p.h, p.renderRect);
@@ -143,7 +143,7 @@ void dfParticleSystem::CreateParticle()
 			particles[i] = p;
 			
 			particleRenderers[i].renderRect = p.renderRect;
-			particleRenderers[i].SetTexture(textures[textureIndex]);
+			particleRenderers[i].SetTexture(sInfo.textures[textureIndex]);
 			particleRenderers[i].renderInfo.active = true;
 			particleRenderers[i].renderInfo.depth = layer;
 
@@ -183,19 +183,19 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 
 	float t = particle.lifetime / particle.lifespan;
 	float ct = t;
-	if(ct < beginFadeTime)
+	if(ct < sInfo.beginFadeTime)
 		ct = 0.f;
 	else
-		ct = (ct - beginFadeTime) / (1.f - beginFadeTime);
+		ct = (ct - sInfo.beginFadeTime) / (1.f - sInfo.beginFadeTime);
 
 	particle.color = vec4(
-		particle.startColor.x + ((endColor.x - particle.startColor.x) * ct),
-		particle.startColor.y + ((endColor.y - particle.startColor.y) * ct),
-		particle.startColor.z + ((endColor.z - particle.startColor.z) * ct),
-		particle.startColor.w + ((endColor.w - particle.startColor.w) * ct));
+		particle.startColor.x + ((sInfo.endColor.x - particle.startColor.x) * ct),
+		particle.startColor.y + ((sInfo.endColor.y - particle.startColor.y) * ct),
+		particle.startColor.z + ((sInfo.endColor.z - particle.startColor.z) * ct),
+		particle.startColor.w + ((sInfo.endColor.w - particle.startColor.w) * ct));
 	particleRenderers[index].renderInfo.color = particle.color;
 
-	if(fadeSize)
+	if(sInfo.fadeSize)
 	{
 		particle.w = particle.maxSize * (1.f-ct);
 		particle.h = particle.maxSize * (1.f-ct);
