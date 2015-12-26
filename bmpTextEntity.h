@@ -1,14 +1,18 @@
 #pragma once
-#include "entity.h"
+#include "DFComponent.h"
 #include "Transform.h"
 #include "Renderer.h"
+
+
+const int CHAR_LIMIT = 255;
+
 class bmpTextEntity :
-	public Entity
+	public dfComponent
 {
 public:
 	bmpTextEntity(void);
 	bmpTextEntity(std::wstring text);
-	bmpTextEntity(std::wstring text, const wchar_t* fontPath);
+	bmpTextEntity(std::wstring text, const wchar_t* fontPath, int columns, int rows);
 	virtual ~bmpTextEntity(void);
 
 	virtual void Init();
@@ -16,10 +20,24 @@ public:
 
 	void GenGlyphs();
 	void SetText(std::wstring text);
+	void SetColor(vec4 color);
+	void SetCharacterWidths(const wchar_t* assetPath);
+	void SetSize(int newSize);
 	
-	std::vector<Renderer> glyphs;
+	int textLength;
+	point2D characterSize;
+	int modifiedSize;
+	Renderer glyphs[CHAR_LIMIT];
+	Rect glyphRects[CHAR_LIMIT];
+	int layer;
 
-	Transform tf;
+	int rows;
+	int columns;
+
+	std::map<int, int> characterWidths;
+	dfBitmapFont font;
+
+	Transform* tf;
 
 private:
 	std::wstring text;

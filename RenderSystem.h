@@ -8,6 +8,7 @@
 #include "dfScene.h"
 #include "DFCman.h"
 #include "dfParticleSystem.h"
+#include "bmpTextEntity.h"
 
 class RenderSystem :
 	public GameSystem

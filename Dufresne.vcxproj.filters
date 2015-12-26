@@ -67,6 +67,7 @@
     <ClCompile Include="dfParticleSystem.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="bmpTextEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STDUNC.h" />
@@ -112,9 +113,6 @@
     <ClInclude Include="tinyjsonp.h">
       <Filter>External</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
     <ClInclude Include="dfScene.h">
       <Filter>GameSystems</Filter>
     </ClInclude>
@@ -137,6 +135,8 @@
     <ClInclude Include="dfParticleSystem.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="bmpTextEntity.h" />
+    <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

@@ -60,8 +60,6 @@ void Renderer::Init()
 		}
 	}
 
-	//SetStandardUniforms();
-
 }
 
 void Renderer::Update()

@@ -130,6 +130,16 @@ void RenderSystem::RenderLoop(dfScene* scene)
 		}
 	}
 
+	infer = typeid(bmpTextEntity);
+	bmpTextEntity* currBmpTextEntity = (bmpTextEntity*)dfComponentMap[typeid(bmpTextEntity)];
+	while(currBmpTextEntity != 0)
+	{
+		for(int i = 0; i < currBmpTextEntity->textLength; i++)
+		{
+			AddToRenderBox(currBmpTextEntity->glyphs[i].renderInfo);
+		}
+		currBmpTextEntity = (bmpTextEntity*)currBmpTextEntity->nextInList;
+	}
 	
 	// 2: sort renderboxes by similar shader program
 	for(int i = 0; i < renderBox.size(); i++)

@@ -20,13 +20,14 @@
 #include "AssetManager.h"
 #include "BoxCollider.h"
 #include "TileMap.h"
+#include "bmpTextEntity.h"
 
+// extern
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
 float dfDeltaTime; // todo fill me
-
-// extern
 std::map< std::type_index , dfComponent* > dfComponentMap;
+std::map<char, int> asciiTable;
 
 void GameExit(int ReturnValue)
 {
@@ -47,6 +48,17 @@ void SetupScene1()
 
 	TileMap tmap = TileMap(L"fart\\tilemap1.json");
 	tmap.Init();
+
+	Entity* textEntity = sceneMan.CreateSceneObject<Entity>();
+	Transform* tf = new Transform();
+	tf->SetRect(20, 20, 1, 1);
+	textEntity->RegisterComponent(tf);
+	bmpTextEntity* bmpText = new bmpTextEntity(L"The first screen!", L"fart\\testFont.png", 16, 16);
+	bmpText->layer = 31;
+	textEntity->RegisterComponent(bmpText);
+	bmpText->SetCharacterWidths(L"fart\\BFB Font Metrics.dat");
+	bmpText->SetColor(vec4(0.8f, 0.f, 0.5f, 1.f));
+	bmpText->SetSize(30);
 }
 void SetupScene2()
 {
@@ -58,6 +70,17 @@ void SetupScene2()
 	testDude->tf.SetPos(50.f, 200.f);
 	testDude->bc.collisionRect = &testDude->tf.rectangle;
 	testDude->bc.stationary = false;
+
+	Entity* textEntity = sceneMan.CreateSceneObject<Entity>();
+	Transform* tf = new Transform();
+	tf->SetRect(20, 20, 1, 1);
+	textEntity->RegisterComponent(tf);
+	bmpTextEntity* bmpText = new bmpTextEntity(L"The second screen!", L"fart\\testFont.png", 16, 16);
+	bmpText->layer = 31;
+	textEntity->RegisterComponent(bmpText);
+	bmpText->SetCharacterWidths(L"fart\\BFB Font Metrics.dat");
+	bmpText->SetColor(vec4(0.f, 0.6f, 0.2f, 1.f));
+	bmpText->SetSize(30);
 
 	TileMap tmap = TileMap(L"fart\\tilemap2.json");
 	tmap.Init();
@@ -133,6 +156,8 @@ int CALLBACK WinMain(
 	glEnable(GL_TEXTURE_2D);
 
 	tinyjson_init();
+
+	InitEngine();
 		
 	assMan = AssetManager();
 	std::wstring path = L"fart\\";

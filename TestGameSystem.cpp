@@ -36,7 +36,7 @@ void TestEntity::Init()
 
 	animComp = new dfAnimator(L"fart\\test-anim_animations.json");
 	RegisterComponent(animComp);
-
+	/*
 	particleSys = new dfParticleSystem();
 	RegisterComponent(particleSys);
 	particleSys->layer = 300;
@@ -59,6 +59,7 @@ void TestEntity::Init()
 	particleSys->sInfo.maxParticleSize = 15;
 	particleSys->sInfo.fadeSize = 1;
 	particleSys->sInfo.textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
+	*/
 }
 
 void TestEntity::Update()
@@ -86,8 +87,8 @@ void TestEntity::Update()
 		animComp->Play("walk-right");
 	}
 
-	particleSys->sInfo.spawnPoint = tf.rectangle.pos;
-	particleSys->sInfo.spawnPoint.x += tf.rectangle.width / 2;
+	//particleSys->sInfo.spawnPoint = tf.rectangle.pos;
+	//particleSys->sInfo.spawnPoint.x += tf.rectangle.width / 2;
 }
 
 // todo

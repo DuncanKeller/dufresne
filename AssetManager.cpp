@@ -286,7 +286,7 @@ bool AssetManager::LoadLoosePackage(std::wstring path)
                 else 
 				{
 					std::wstring filepath = path + ffd.cFileName;
-					LoadFileIntoPool(filepath.c_str(), assetPointer);
+					LoadFileIntoPool(filepath.c_str(), &assetPointer);
 
                 }
             }
@@ -358,7 +358,7 @@ bool AssetManager::CalculateLoosePackageSize(std::wstring path)
     return true;
 }
 
-bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
+bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation)
 {
 	HANDLE fileHandle = CreateFile(filename, GENERIC_READ, 
 		FILE_SHARE_READ, NULL, OPEN_EXISTING, NULL, NULL);
@@ -371,18 +371,19 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char* loadLocation)
 			dfAssert(fileSize.QuadPart <= 0xFFFFFFFF);
 
 			DWORD bytesRead = 0;
-			if(ReadFile(fileHandle, (LPVOID)loadLocation, (uint32)fileSize.QuadPart, &bytesRead, 0) &&
+			if(ReadFile(fileHandle, (LPVOID)(*loadLocation), (uint32)fileSize.QuadPart, &bytesRead, 0) &&
 				fileSize.QuadPart == bytesRead)
 			{
 				uint32 filesizeOUT = fileSize.QuadPart;
 
 				dfFile newAsset;
 				newAsset.size = filesizeOUT;
-				newAsset.contents = loadLocation;
+				newAsset.contents = *loadLocation;
 				
-				assetMap[GetHash(filename)] = newAsset;
+				long hash = GetHash(filename);
+				assetMap[hash] = newAsset;
 				
-				loadLocation += filesizeOUT;
+				(*loadLocation) += filesizeOUT;
 
 				// check for certain file types that have extra data associated with them
 				std::vector<wchar_t> filetype = GetFileExtension(filename);

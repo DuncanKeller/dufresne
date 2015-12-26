@@ -32,7 +32,7 @@ public:
 	
 	bool CalculateLoosePackageSize(std::wstring );
 	uint32 PlatformGetFileSize(const wchar_t*);
-	bool LoadFileIntoPool(const wchar_t *filename, char* loadLocation);
+	bool LoadFileIntoPool(const wchar_t *filename, char** loadLocation);
 	std::vector<wchar_t> GetFileExtension(const wchar_t* fullFilename);
 
 	// init asset types

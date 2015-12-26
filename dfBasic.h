@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 #include "STDUNC.h"
 
 struct Mesh;
@@ -56,6 +57,12 @@ struct TextureInfo
 	int height;
 };
 
+struct dfBitmapFont
+{
+	TextureInfo texture;
+	std::map<char, int> offsets;
+};
+
 // -particles-
 const int MAX_PARTICLES = 8192;
 
@@ -90,3 +97,8 @@ extern float dfDeltaTime;
 // config
 const int render_box_initial_number_of_layers = 20;
 const int render_box_initial_layer_size = 100;
+
+// fonts
+extern std::map<char, int> asciiTable;
+
+void InitEngine();
