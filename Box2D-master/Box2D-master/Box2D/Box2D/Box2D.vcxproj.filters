@@ -284,9 +284,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Dynamics\Contacts">
       <UniqueIdentifier>{AEEDA32B-9CAB-4D23-A57C-CA458B2DB886}</UniqueIdentifier>
     </Filter>
