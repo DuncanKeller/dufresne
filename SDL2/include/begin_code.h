@@ -41,6 +41,9 @@
 #  endif
 #endif
 
+// Dufresne
+#define DECLSPEC
+
 /* Some compilers use a special export keyword */
 #ifndef DECLSPEC
 # if defined(__WIN32__) || defined(__WINRT__)

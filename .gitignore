@@ -38,7 +38,6 @@
 *.manifest.rc
 *.log
 *.exp
-*.rc
 *.lastbuildstate
 *.res
 /Dufresne.sdf
@@ -49,3 +48,5 @@
 /Debug
 Win32
 Win32
+/*.sdf
+/Debug/*.pdb
