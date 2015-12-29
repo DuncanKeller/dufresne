@@ -21,12 +21,6 @@ Sound
 	with input, I basically have it inherit from gameSystem.cpp, and will have a input obj
 	at global scope
 
-Tilemap Integration
--Read in tilemap file and load info into a struct or something like that
--Again, asset manager will be able to do the file IO and return the data as a void* + file size info,
-	so rely on that if it'll be easiest for you
--Not sure what we want to store this as (component, game system, none of the above?) so some thought to that
-
 Meshes
 -Mesh class is a stub. Since we're doing 2D we mainly need a square, but
 	polygons would be nice too.

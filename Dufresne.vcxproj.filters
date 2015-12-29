@@ -1,152 +1,184 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="STDUNC.cpp" />
-    <ClCompile Include="AssetManager.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="MatMath.cpp" />
-    <ClCompile Include="Transform.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="dfBasic.cpp" />
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="TestGameSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="dfComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="glew.c">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyjson.c">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyjsonp.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfScene.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfTile.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="DFCman.cpp" />
-    <ClCompile Include="Entity.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfAnimator.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="dfParticleSystem.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="bmpTextEntity.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="STDUNC.h" />
-    <ClInclude Include="AssetManager.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="MatMath.h" />
-    <ClInclude Include="Transform.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="dfBasic.h" />
-    <ClInclude Include="RenderSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="TestGameSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="dfComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="wglew.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="glew.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyjson.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyjsonp.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="dfScene.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="dfTile.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="DFCman.h" />
-    <ClInclude Include="Entity.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="dfAnimator.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="dfParticleSystem.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="bmpTextEntity.h" />
-    <ClInclude Include="TileMap.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Components">
-      <UniqueIdentifier>{115108f6-553e-4f6d-a225-531208215502}</UniqueIdentifier>
+      <UniqueIdentifier>{3993a8e6-b1ff-4822-8ab8-f21b72e431ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSystems">
-      <UniqueIdentifier>{b0ef9f7e-f3ca-4b01-b5ef-3143c9fcf051}</UniqueIdentifier>
+    <Filter Include="Core">
+      <UniqueIdentifier>{852b7a8a-c8cc-4e5f-83e0-b85ec6ed3562}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External">
-      <UniqueIdentifier>{fa7c6f43-9e18-4309-a802-c27966902980}</UniqueIdentifier>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{4194d7a7-9a3e-4b09-851a-d003a52a7414}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{eaaa6d53-8437-4d8b-878f-a7e303b5aba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{582da5eb-c5c1-42ed-9a2d-e6b6c2377443}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\System\Input.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\System\RenderSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\System\AssetManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\System\dfScene.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Libs\glew.c">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Libs\tinyjson.c">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Libs\tinyjsonp.cpp">
+      <Filter>Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Entity\TestGameSystem.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Entity\TileMap.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Entity\dfTile.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Entity\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Entity\GameSystem.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Core\Mesh.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Core\STDUNC.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Core\dfBasic.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Core\DFCman.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Core\MatMath.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\dfParticleSystem.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\Renderer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\Transform.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\bmpTextEntity.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\BoxCollider.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\Collider.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\dfAnimator.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Components\dfComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\System\SceneManager.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\System\dfScene.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\System\Input.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\System\RenderSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\System\AssetManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Libs\tinyjsonp.h">
+      <Filter>Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Libs\wglew.h">
+      <Filter>Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Libs\glew.h">
+      <Filter>Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Libs\tinyjson.h">
+      <Filter>Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Entity\TestGameSystem.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Entity\TileMap.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Entity\dfTile.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Entity\Entity.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Entity\GameSystem.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\MatMath.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\Mesh.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\STDUNC.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\dfBasic.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\DFCman.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\dfParticleSystem.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\Renderer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\Transform.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\bmpTextEntity.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\BoxCollider.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\Collider.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\dfAnimator.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Components\dfComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\System\SceneManager.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

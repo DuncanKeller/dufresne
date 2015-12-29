@@ -10,6 +10,64 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Components\bmpTextEntity.cpp" />
+    <ClCompile Include="Src\Components\BoxCollider.cpp" />
+    <ClCompile Include="Src\Components\Collider.cpp" />
+    <ClCompile Include="Src\Components\dfAnimator.cpp" />
+    <ClCompile Include="Src\Components\dfComponent.cpp" />
+    <ClCompile Include="Src\Components\dfParticleSystem.cpp" />
+    <ClCompile Include="Src\Components\Renderer.cpp" />
+    <ClCompile Include="Src\Components\Transform.cpp" />
+    <ClCompile Include="Src\Core\dfBasic.cpp" />
+    <ClCompile Include="Src\Core\DFCman.cpp" />
+    <ClCompile Include="Src\Core\MatMath.cpp" />
+    <ClCompile Include="Src\Core\Mesh.cpp" />
+    <ClCompile Include="Src\Core\STDUNC.cpp" />
+    <ClCompile Include="Src\Entity\dfTile.cpp" />
+    <ClCompile Include="Src\Entity\Entity.cpp" />
+    <ClCompile Include="Src\Entity\GameSystem.cpp" />
+    <ClCompile Include="Src\Entity\TestGameSystem.cpp" />
+    <ClCompile Include="Src\Entity\TileMap.cpp" />
+    <ClCompile Include="Src\Libs\glew.c" />
+    <ClCompile Include="Src\Libs\tinyjson.c" />
+    <ClCompile Include="Src\Libs\tinyjsonp.cpp" />
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\System\AssetManager.cpp" />
+    <ClCompile Include="Src\System\dfScene.cpp" />
+    <ClCompile Include="Src\System\Input.cpp" />
+    <ClCompile Include="Src\System\RenderSystem.cpp" />
+    <ClCompile Include="Src\System\SceneManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Components\bmpTextEntity.h" />
+    <ClInclude Include="Src\Components\BoxCollider.h" />
+    <ClInclude Include="Src\Components\Collider.h" />
+    <ClInclude Include="Src\Components\dfAnimator.h" />
+    <ClInclude Include="Src\Components\dfComponent.h" />
+    <ClInclude Include="Src\Components\dfParticleSystem.h" />
+    <ClInclude Include="Src\Components\Renderer.h" />
+    <ClInclude Include="Src\Components\Transform.h" />
+    <ClInclude Include="Src\Core\dfBasic.h" />
+    <ClInclude Include="Src\Core\DFCman.h" />
+    <ClInclude Include="Src\Core\MatMath.h" />
+    <ClInclude Include="Src\Core\Mesh.h" />
+    <ClInclude Include="Src\Core\STDUNC.h" />
+    <ClInclude Include="Src\Entity\dfTile.h" />
+    <ClInclude Include="Src\Entity\Entity.h" />
+    <ClInclude Include="Src\Entity\GameSystem.h" />
+    <ClInclude Include="Src\Entity\TestGameSystem.h" />
+    <ClInclude Include="Src\Entity\TileMap.h" />
+    <ClInclude Include="Src\Libs\glew.h" />
+    <ClInclude Include="Src\Libs\tinyjson.h" />
+    <ClInclude Include="Src\Libs\tinyjsonp.h" />
+    <ClInclude Include="Src\Libs\wglew.h" />
+    <ClInclude Include="Src\System\AssetManager.h" />
+    <ClInclude Include="Src\System\dfScene.h" />
+    <ClInclude Include="Src\System\Input.h" />
+    <ClInclude Include="Src\System\RenderSystem.h" />
+    <ClInclude Include="Src\System\SceneManager.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A0E5B7DC-ED2B-4E72-BBEB-2B4CA5FA4D96}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -39,6 +97,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>SDL2_image-2.0.0\include;glfw\include\GLFW;$(IncludePath)</IncludePath>
+    <LibraryPath>SDL2_image-2.0.0\lib\x86;SDL2\VisualC\SDL\Win32\Debug;SDL2\VisualC\SDLmain\Win32\Debug;glew\lib\Release\x64;glfw\lib-msvc110;SDL2_image-2.0.0\VisualC\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -50,11 +110,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SDL2\include;SDL2_image-2.0.0;SDL2main.lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,9 +136,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
