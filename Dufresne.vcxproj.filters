@@ -2,141 +2,32 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="STDUNC.cpp" />
-    <ClCompile Include="AssetManager.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="MatMath.cpp" />
-    <ClCompile Include="Transform.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="dfBasic.cpp" />
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="TestGameSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="dfComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="glew.c">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyjson.c">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyjsonp.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfScene.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfTile.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="DFCman.cpp" />
-    <ClCompile Include="Entity.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSystem.cpp">
-      <Filter>GameSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="dfAnimator.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="dfParticleSystem.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
+    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="bmpTextEntity.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="STDUNC.h" />
-    <ClInclude Include="AssetManager.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="MatMath.h" />
-    <ClInclude Include="Transform.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="dfBasic.h" />
-    <ClInclude Include="RenderSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="TestGameSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="dfComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="wglew.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="glew.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyjson.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyjsonp.h">
-      <Filter>External</Filter>
-    </ClInclude>
-    <ClInclude Include="dfScene.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="dfTile.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="DFCman.h" />
-    <ClInclude Include="Entity.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSystem.h">
-      <Filter>GameSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="dfAnimator.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="dfParticleSystem.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="bmpTextEntity.h" />
-    <ClInclude Include="TileMap.h" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="dfAnimator.cpp" />
+    <ClCompile Include="dfBasic.cpp" />
+    <ClCompile Include="DFCman.cpp" />
+    <ClCompile Include="dfComponent.cpp" />
+    <ClCompile Include="dfParticleSystem.cpp" />
+    <ClCompile Include="dfScene.cpp" />
+    <ClCompile Include="dfTile.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameSystem.cpp" />
+    <ClCompile Include="glew.c" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="MatMath.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="STDUNC.cpp" />
+    <ClCompile Include="TestGameSystem.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="tinyjson.c" />
+    <ClCompile Include="tinyjsonp.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -148,5 +39,37 @@
     <Filter Include="External">
       <UniqueIdentifier>{fa7c6f43-9e18-4309-a802-c27966902980}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="bmpTextEntity.h" />
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="dfAnimator.h" />
+    <ClInclude Include="dfBasic.h" />
+    <ClInclude Include="DFCman.h" />
+    <ClInclude Include="dfComponent.h" />
+    <ClInclude Include="dfParticleSystem.h" />
+    <ClInclude Include="dfScene.h" />
+    <ClInclude Include="dfTile.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameSystem.h" />
+    <ClInclude Include="glew.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="MatMath.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="STDUNC.h" />
+    <ClInclude Include="TestGameSystem.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="tinyjson.h" />
+    <ClInclude Include="tinyjsonp.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="wglew.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RYAN_TODO.txt" />
   </ItemGroup>
 </Project>

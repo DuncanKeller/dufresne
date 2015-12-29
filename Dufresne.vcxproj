@@ -39,6 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>SDL2_image-2.0.0\include;glfw\include\GLFW;$(IncludePath)</IncludePath>
+    <LibraryPath>SDL2_image-2.0.0\lib\x86;SDL2\VisualC\SDL\Win32\Debug;SDL2\VisualC\SDLmain\Win32\Debug;glew\lib\Release\x64;glfw\lib-msvc110;SDL2_image-2.0.0\VisualC\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -50,11 +52,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>SDL2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SDL2\include;SDL2_image-2.0.0;SDL2main.lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32s.lib;opengl32.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,7 +79,65 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="bmpTextEntity.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="dfAnimator.cpp" />
+    <ClCompile Include="dfBasic.cpp" />
+    <ClCompile Include="DFCman.cpp" />
+    <ClCompile Include="dfComponent.cpp" />
+    <ClCompile Include="dfParticleSystem.cpp" />
+    <ClCompile Include="dfScene.cpp" />
+    <ClCompile Include="dfTile.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameSystem.cpp" />
+    <ClCompile Include="glew.c" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatMath.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="STDUNC.cpp" />
+    <ClCompile Include="TestGameSystem.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="tinyjson.c" />
+    <ClCompile Include="tinyjsonp.cpp" />
+    <ClCompile Include="Transform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="bmpTextEntity.h" />
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="dfAnimator.h" />
+    <ClInclude Include="dfBasic.h" />
+    <ClInclude Include="DFCman.h" />
+    <ClInclude Include="dfComponent.h" />
+    <ClInclude Include="dfParticleSystem.h" />
+    <ClInclude Include="dfScene.h" />
+    <ClInclude Include="dfTile.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameSystem.h" />
+    <ClInclude Include="glew.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="MatMath.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="STDUNC.h" />
+    <ClInclude Include="TestGameSystem.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="tinyjson.h" />
+    <ClInclude Include="tinyjsonp.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="wglew.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RYAN_TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
