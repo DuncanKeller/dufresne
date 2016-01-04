@@ -90,6 +90,7 @@ struct ParticleInfo
 dfBasicType dfGetTypeFromString(std::vector<char> str);
 
 // globals 
+extern point2D GameResolution;
 extern point2D ScreenResolution;
 extern float dfTotalTime;
 extern float dfDeltaTime;

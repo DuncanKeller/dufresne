@@ -13,11 +13,41 @@ RenderSystem::~RenderSystem(void)
 
 void RenderSystem::Init()
 {
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 	// gl operations
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 	glEnable (GL_BLEND);
 	glDepthMask (GL_FALSE);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// post process init
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+	glGenTextures(1, &colorBufferTexture);
+	glBindTexture(GL_TEXTURE_2D, colorBufferTexture);
+
+	glTexImage2D(
+		GL_TEXTURE_2D, 0, GL_RGB, 
+		GameResolution.x, GameResolution.y, 
+		0, GL_RGB, GL_UNSIGNED_BYTE, NULL
+	);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glFramebufferTexture2D(
+		GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferTexture, 0
+	);
+
+	CreateDefaultMesh(&screenRect);
+	
+	postProcessVert = Renderer::CompileShaderFromSrc("#version 150\nin vec2 position;in vec2 texcoord;out vec2 Texcoord;void main() {Texcoord = texcoord;gl_Position = vec4(position, 0.0, 1.0);}", GL_VERTEX_SHADER);
+	postProcessFrag = Renderer::CompileShaderFromSrc("#version 150\nin vec2 Texcoord;out vec4 outColor;uniform sampler2D texFramebuffer;void main() {outColor = texture(texFramebuffer, Texcoord);}", GL_FRAGMENT_SHADER);
+	
+	postProcessShaderProgram = glCreateProgram();
+	glAttachShader (postProcessShaderProgram, postProcessVert);
+	glAttachShader (postProcessShaderProgram, postProcessFrag);
+	glLinkProgram (postProcessShaderProgram);
 }
 
 void RenderSystem::Update()
@@ -37,6 +67,7 @@ unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 		// todo logging
 		//fprintf (stderr, "ERROR: GL shader index %i did not compile\n", shaderIndex);
 		//PrintShaderLog(shaderIndex);
+		dfAssert(false); // did not compile :(
 		return 0;
 	}
 
@@ -100,6 +131,9 @@ void RenderSystem::RenderLoop(dfScene* scene)
 {
 	// set gl state
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	// render to render buffer
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
 	for(int i = 0; i < renderBox.size(); i++)
 	{
@@ -261,6 +295,19 @@ void RenderSystem::RenderLoop(dfScene* scene)
 			}
 		}
 	}
+
+	// render the buffer to screen
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glUseProgram(postProcessShaderProgram);
+	int uniformLoc = glGetUniformLocation (postProcessShaderProgram, "texFramebuffer");
+	if(uniformLoc >= 0)
+		glUniform1i (uniformLoc, 0);
+
+	glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
+	glBindTexture (GL_TEXTURE_2D, colorBufferTexture);
+	glBindVertexArray (screenRect.vertexArrayObject);
+	glDrawArrays (GL_TRIANGLES, 0, screenRect.numVerts);
 	
 	// end gl stuff
 	glFlush(); 

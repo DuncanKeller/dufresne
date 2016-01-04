@@ -77,6 +77,7 @@ public:
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static void InitDefaultShader();
+	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 	
 	void SetTexture(TextureInfo &t);
 
@@ -94,11 +95,11 @@ public:
 	float testFloat;
 	int testInt;
 
+
 private:
 	static bool defaultShaderAssigned;
 	static unsigned int defaultShaderProgram;
 	static unsigned int defaultAtlasShaderProgram;
-	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 	
 };
 

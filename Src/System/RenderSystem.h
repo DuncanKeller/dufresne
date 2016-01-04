@@ -28,6 +28,14 @@ public:
 
 	std::vector<std::vector<RenderInfo>> renderBox;
 
+	// for post process
+	GLuint frameBuffer; 
+	GLuint colorBufferTexture;
+	Mesh screenRect;
+	unsigned int postProcessShaderProgram;
+	unsigned int postProcessVert;
+	unsigned int postProcessFrag;
+
 
 };
 

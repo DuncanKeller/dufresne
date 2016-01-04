@@ -23,6 +23,7 @@
 #include "Components/bmpTextEntity.h"
 
 // extern
+point2D GameResolution;
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
 float dfDeltaTime; // todo fill me
@@ -95,9 +96,12 @@ int CALLBACK WinMain(
 	int flags = 0;
 
 	dfDeltaTime = 43.f;
-
+	
 	ScreenResolution.x = 640.f;
 	ScreenResolution.y = 480.f;
+	
+	GameResolution.x = 640.f;
+	GameResolution.y = 480.f;
 	
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -180,7 +184,7 @@ int CALLBACK WinMain(
 	
 	while(true)
 	{
-		if(testDude->tf.rectangle.left > 640)
+		if(testDude->tf.rectangle.left > GameResolution.x)
 		{
 			sceneMan.LoadScene(scene2);
 		}
@@ -200,4 +204,3 @@ int CALLBACK WinMain(
 	return 0;
 
 }
-	  
