@@ -9,6 +9,7 @@
 #include "../Core/DFCman.h"
 #include "../Components/dfParticleSystem.h"
 #include "../Components/bmpTextEntity.h"
+#include "../Libs/BuitInShaders.h"
 
 class RenderSystem :
 	public GameSystem

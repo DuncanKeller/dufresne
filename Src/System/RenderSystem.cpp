@@ -41,8 +41,8 @@ void RenderSystem::Init()
 
 	CreateDefaultMesh(&screenRect);
 	
-	postProcessVert = Renderer::CompileShaderFromSrc("#version 150\nin vec2 position;in vec2 texcoord;out vec2 Texcoord;void main() {Texcoord = texcoord;gl_Position = vec4(position, 0.0, 1.0);}", GL_VERTEX_SHADER);
-	postProcessFrag = Renderer::CompileShaderFromSrc("#version 150\nin vec2 Texcoord;out vec4 outColor;uniform sampler2D texFramebuffer;void main() {outColor = texture(texFramebuffer, Texcoord);}", GL_FRAGMENT_SHADER);
+	postProcessVert = Renderer::CompileShaderFromSrc(defaultPostProcessVert, GL_VERTEX_SHADER);
+	postProcessFrag = Renderer::CompileShaderFromSrc(defaultPostProcessFrag, GL_FRAGMENT_SHADER);
 	
 	postProcessShaderProgram = glCreateProgram();
 	glAttachShader (postProcessShaderProgram, postProcessVert);
