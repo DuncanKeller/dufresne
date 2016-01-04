@@ -1,6 +1,6 @@
 #include "BuitInShaders.h"
 
-const char* defaultPostProcessVert = L""
+const char* defaultPostProcessVert = ""
 	"#version 150\n"
 	"in vec2 position;"
 	"in vec2 texcoord;"
@@ -12,7 +12,7 @@ const char* defaultPostProcessVert = L""
 	"}"
 	"";
 
-const char* defaultPostProcessFrag = L""
+const char* defaultPostProcessFrag = ""
 	"#version 150\n"
 	"in vec2 Texcoord;"
 	"out vec4 outColor;"

@@ -1,4 +1,4 @@
 #pragma once
 
-const char* defaultPostProcessVert;
-const char* defaultPostProcessFrag;
+extern const char* defaultPostProcessVert;
+extern const char* defaultPostProcessFrag;

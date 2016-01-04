@@ -28,7 +28,7 @@ void RenderSystem::Init()
 
 	glTexImage2D(
 		GL_TEXTURE_2D, 0, GL_RGB, 
-		GameResolution.x, GameResolution.y, 
+		ScreenResolution.x, ScreenResolution.y, 
 		0, GL_RGB, GL_UNSIGNED_BYTE, NULL
 	);
 
