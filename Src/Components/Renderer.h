@@ -1,5 +1,6 @@
 #pragma once
 #include "../Libs/glew.h"
+#include "../Libs/BuitInShaders.h"
 #include "dfcomponent.h"
 #include "../Core/Mesh.h"
 #include "../Core/dfBasic.h"

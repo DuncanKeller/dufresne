@@ -28,12 +28,13 @@ void RenderSystem::Init()
 
 	glTexImage2D(
 		GL_TEXTURE_2D, 0, GL_RGB, 
-		ScreenResolution.x, ScreenResolution.y, 
+		GameResolution.x * ((float)ScreenResolution.x / (float)GameResolution.x), 
+		GameResolution.y  * ((float)ScreenResolution.y / (float)GameResolution.y), 
 		0, GL_RGB, GL_UNSIGNED_BYTE, NULL
 	);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glFramebufferTexture2D(
 		GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferTexture, 0
@@ -289,18 +290,18 @@ void RenderSystem::RenderLoop(dfScene* scene)
 				unsigned int newTexture = renderBox[i][n].glTexture;
 				glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
 				glBindTexture (GL_TEXTURE_2D, newTexture);
-
+				
 				glBindVertexArray (renderBox[i][n].mesh.vertexArrayObject);
 				glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
 			}
 		}
 	}
-
+	
 	// render the buffer to screen
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glUseProgram(postProcessShaderProgram);
-	int uniformLoc = glGetUniformLocation (postProcessShaderProgram, "texFramebuffer");
+	int uniformLoc = glGetUniformLocation (postProcessShaderProgram, "textureFramebuffer");
 	if(uniformLoc >= 0)
 		glUniform1i (uniformLoc, 0);
 

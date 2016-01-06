@@ -97,8 +97,8 @@ int CALLBACK WinMain(
 
 	dfDeltaTime = 43.f;
 	
-	ScreenResolution.x = 640.f;
-	ScreenResolution.y = 480.f;
+	ScreenResolution.x = 800;
+	ScreenResolution.y = 600;
 	
 	GameResolution.x = 640.f;
 	GameResolution.y = 480.f;
