@@ -97,8 +97,8 @@ int CALLBACK WinMain(
 
 	dfDeltaTime = 43.f;
 	
-	ScreenResolution.x = 800;
-	ScreenResolution.y = 600;
+	ScreenResolution.x = 800.f;
+	ScreenResolution.y = 600.f;
 	
 	GameResolution.x = 640.f;
 	GameResolution.y = 480.f;
@@ -133,7 +133,7 @@ int CALLBACK WinMain(
 	//flags = SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL;
 	flags =  SDL_WINDOW_OPENGL;
 
-	SDL_Window *screen = SDL_CreateWindow("Dufresne",
+	RenderSystem::window = SDL_CreateWindow("Dufresne",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		ScreenResolution.x, ScreenResolution.y, flags);
@@ -150,7 +150,7 @@ int CALLBACK WinMain(
 
 	// init gl
 	SDL_GLContext glcontext;
-    glcontext = SDL_GL_CreateContext(screen);
+    glcontext = SDL_GL_CreateContext(RenderSystem::window);
 	GLint GlewInitResult = glewInit();
 	if (GlewInitResult != GLEW_OK) 
 	{
@@ -193,11 +193,24 @@ int CALLBACK WinMain(
 			sceneMan.LoadScene(scene1);
 		}
 
+		if(input.keyboard.n1.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(640, 480);
+		}
+		if(input.keyboard.n2.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(300, 300);
+		}
+		if(input.keyboard.n3.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(450, 300);
+		}
+
 		input.Update();
 
 		sceneMan.Update();
 
-		SDL_GL_SwapWindow(screen);
+		SDL_GL_SwapWindow(RenderSystem::window);
 	}
 
 

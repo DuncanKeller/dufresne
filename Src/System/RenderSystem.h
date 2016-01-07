@@ -19,6 +19,8 @@ public:
 	virtual ~RenderSystem(void);
 	virtual void Init();
 	virtual void Update();
+	
+	void UpdateResolution(int w, int h);
 
 	void InitRenderBox();
 	void AddToRenderBox(RenderInfo);
@@ -36,6 +38,8 @@ public:
 	unsigned int postProcessShaderProgram;
 	unsigned int postProcessVert;
 	unsigned int postProcessFrag;
+
+	static SDL_Window* window;
 
 
 };

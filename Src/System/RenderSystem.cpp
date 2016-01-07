@@ -1,5 +1,6 @@
 #include "RenderSystem.h"
 
+SDL_Window* RenderSystem::window;
 
 RenderSystem::RenderSystem(void)
 {
@@ -25,7 +26,7 @@ void RenderSystem::Init()
 
 	glGenTextures(1, &colorBufferTexture);
 	glBindTexture(GL_TEXTURE_2D, colorBufferTexture);
-
+	
 	glTexImage2D(
 		GL_TEXTURE_2D, 0, GL_RGB, 
 		GameResolution.x * ((float)ScreenResolution.x / (float)GameResolution.x), 
@@ -49,6 +50,31 @@ void RenderSystem::Init()
 	glAttachShader (postProcessShaderProgram, postProcessVert);
 	glAttachShader (postProcessShaderProgram, postProcessFrag);
 	glLinkProgram (postProcessShaderProgram);
+}
+
+void RenderSystem::UpdateResolution(int w, int h)
+{
+	vec2 oldRatio = vec2(((float)ScreenResolution.x / (float)GameResolution.x), 
+		((float)ScreenResolution.y / (float)GameResolution.y));
+	vec2 oldRes = vec2(ScreenResolution.x, ScreenResolution.y);
+	
+	SDL_SetWindowSize(window, w, h);
+	glViewport(0,0,w,h);
+	
+	ScreenResolution.x = w;
+	ScreenResolution.y = h;
+
+	glBindTexture(GL_TEXTURE_2D, colorBufferTexture);
+
+	glTexImage2D(
+		GL_TEXTURE_2D, 0, GL_RGB, 
+		GameResolution.x * ((float)ScreenResolution.x / (float)GameResolution.x), 
+		GameResolution.y  * ((float)ScreenResolution.y / (float)GameResolution.y), 
+		0, GL_RGB, GL_UNSIGNED_BYTE, NULL
+	);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
 void RenderSystem::Update()
