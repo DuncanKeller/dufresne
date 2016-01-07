@@ -152,6 +152,85 @@ void RenderSystem::SortRenderBox(int boxIndex)
 	}
 }
 
+void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgram )
+{
+	// todo log warning if it can't find the matching uniform name
+	if(uniform.valueInt != 0) // todo is it OK just to check int, instead of depending on type?
+	{
+		int uniformLoc = glGetUniformLocation (shaderProgram, uniform.name);
+		if(uniformLoc >= 0)
+		{
+			// todo implement a buncha deez fuckers
+			switch(uniform.type)
+			{
+			case DF_int:
+				glUniform1i (uniformLoc, *uniform.valueInt);
+				break;
+			case DF_unsigned_int_arr:
+				glUniform1uiv (uniformLoc, uniform.arrSize,
+					uniform.valueUInt);
+				break;
+			case DF_float:
+				glUniform1f (uniformLoc, *uniform.valueFloat);
+				break;
+			case DF_float_arr:
+				glUniform1fv (uniformLoc, uniform.arrSize,
+					uniform.valueFloat);
+				break;
+			case DF_mat4x4:
+				glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, uniform.valueFloat);
+				break;
+			case DF_mat4x4_arr:
+				glUniformMatrix4fv (uniformLoc, uniform.arrSize, GL_FALSE, 
+					uniform.valueFloat);
+				break;
+			case DF_sampler2D:
+				// todo: fart, I forget how to use thisss
+				//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
+				glUniform1i (uniformLoc, 0);
+				break;
+			case DF_point2D:
+				glUniform2f(uniformLoc, (float)uniform.valueInt[0],
+					(float)uniform.valueInt[1]);
+				break;
+			case DF_vec2:
+				glUniform2f(uniformLoc, uniform.valueFloat[0],
+					uniform.valueFloat[1]);
+				break;
+			case DF_vec3:
+				glUniform3f(uniformLoc, uniform.valueFloat[0],
+					uniform.valueFloat[1],
+					uniform.valueFloat[2]);
+				break;
+			case DF_vec4:
+				glUniform4f(uniformLoc, uniform.valueFloat[0],
+					uniform.valueFloat[1],
+					uniform.valueFloat[2],
+					uniform.valueFloat[3]);
+				break;
+			case DF_vec2_arr:
+				glUniform2fv(uniformLoc, uniform.arrSize,
+					&uniform.valueFloat[0]);
+				break;
+			case DF_vec3_arr:
+				glUniform3fv(uniformLoc, uniform.arrSize,
+					&uniform.valueFloat[0]);
+				break;
+			case DF_vec4_arr:
+				glUniform4fv(uniformLoc, uniform.arrSize,
+					&uniform.valueFloat[0]);
+				break;
+			case DF_rect:
+				glUniform4f(uniformLoc, uniform.valueRect->arr[0],
+					uniform.valueRect->arr[1],
+					uniform.valueRect->arr[2],
+					uniform.valueRect->arr[3]);
+				break;
+			}
+		}
+	}
+}
+
 // todo better way than just passing around big vector
 // needs to handle scene hirarchy eventually
 void RenderSystem::RenderLoop(dfScene* scene) 
@@ -236,81 +315,7 @@ void RenderSystem::RenderLoop(dfScene* scene)
 				// update uniforms from list
 				for(int uIndex = 0; uIndex < renderBox[i][n].uniforms.size(); uIndex++) 
 				{
-					// todo log warning if it can't find the matching uniform name
-					if(renderBox[i][n].uniforms[uIndex].valueInt != 0) // todo is it OK just to check int, instead of depending on type?
-					{
-						int uniformLoc = glGetUniformLocation (newShaderProg, renderBox[i][n].uniforms[uIndex].name);
-						if(uniformLoc >= 0)
-						{
-							// todo implement a buncha deez fuckers
-							switch(renderBox[i][n].uniforms[uIndex].type)
-							{
-							case DF_int:
-								glUniform1i (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueInt);
-								break;
-							case DF_unsigned_int_arr:
-								glUniform1uiv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
-									renderBox[i][n].uniforms[uIndex].valueUInt);
-								break;
-							case DF_float:
-								glUniform1f (uniformLoc, *renderBox[i][n].uniforms[uIndex].valueFloat);
-								break;
-							case DF_float_arr:
-								glUniform1fv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
-									renderBox[i][n].uniforms[uIndex].valueFloat);
-								break;
-							case DF_mat4x4:
-								glUniformMatrix4fv (uniformLoc, 1, GL_FALSE, renderBox[i][n].uniforms[uIndex].valueFloat);
-								break;
-							case DF_mat4x4_arr:
-								glUniformMatrix4fv (uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize, GL_FALSE, 
-									renderBox[i][n].uniforms[uIndex].valueFloat);
-								break;
-							case DF_sampler2D:
-								// todo: fart, I forget how to use thisss
-								//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
-								glUniform1i (uniformLoc, 0);
-								break;
-							case DF_point2D:
-								glUniform2f(uniformLoc, (float)renderBox[i][n].uniforms[uIndex].valueInt[0],
-									(float)renderBox[i][n].uniforms[uIndex].valueInt[1]);
-								break;
-							case DF_vec2:
-								glUniform2f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-									renderBox[i][n].uniforms[uIndex].valueFloat[1]);
-								break;
-							case DF_vec3:
-								glUniform3f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-									renderBox[i][n].uniforms[uIndex].valueFloat[1],
-									renderBox[i][n].uniforms[uIndex].valueFloat[2]);
-								break;
-							case DF_vec4:
-								glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueFloat[0],
-									renderBox[i][n].uniforms[uIndex].valueFloat[1],
-									renderBox[i][n].uniforms[uIndex].valueFloat[2],
-									renderBox[i][n].uniforms[uIndex].valueFloat[3]);
-								break;
-							case DF_vec2_arr:
-								glUniform2fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
-									&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
-								break;
-							case DF_vec3_arr:
-								glUniform3fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
-									&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
-								break;
-							case DF_vec4_arr:
-								glUniform4fv(uniformLoc, renderBox[i][n].uniforms[uIndex].arrSize,
-									&renderBox[i][n].uniforms[uIndex].valueFloat[0]);
-								break;
-							case DF_rect:
-								glUniform4f(uniformLoc, renderBox[i][n].uniforms[uIndex].valueRect->arr[0],
-									renderBox[i][n].uniforms[uIndex].valueRect->arr[1],
-									renderBox[i][n].uniforms[uIndex].valueRect->arr[2],
-									renderBox[i][n].uniforms[uIndex].valueRect->arr[3]);
-								break;
-							}
-						}
-					}
+					ApplyUniforms(renderBox[i][n].uniforms[uIndex], newShaderProg);
 				}
 
 				unsigned int newTexture = renderBox[i][n].glTexture;
@@ -330,6 +335,11 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	int uniformLoc = glGetUniformLocation (postProcessShaderProgram, "textureFramebuffer");
 	if(uniformLoc >= 0)
 		glUniform1i (uniformLoc, 0);
+
+	for(int i = 0; i < postProcessUnifroms.size(); i++)
+	{
+		ApplyUniforms(postProcessUnifroms[i], postProcessShaderProgram);
+	}
 
 	glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
 	glBindTexture (GL_TEXTURE_2D, colorBufferTexture);

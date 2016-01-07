@@ -25,6 +25,7 @@ public:
 	void InitRenderBox();
 	void AddToRenderBox(RenderInfo);
 	void SortRenderBox(int);
+	void ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgram );
 	void RenderLoop(dfScene* scene);
 
 	unsigned int CompileShader(ShaderInfo shader);
@@ -38,6 +39,7 @@ public:
 	unsigned int postProcessShaderProgram;
 	unsigned int postProcessVert;
 	unsigned int postProcessFrag;
+	std::vector<ShaderUniform> postProcessUnifroms;
 
 	static SDL_Window* window;
 
