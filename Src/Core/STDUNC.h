@@ -175,3 +175,7 @@ void RectMove(float x, float y, Rect* rect);
 void RectSize(vec2 size, Rect* rect);
 void RectSize(float w, float h, Rect* rect);
 // todo more rect funcs: overlapping, other stuff. check xna for all its useful stuff
+
+float dfRand();
+float dfRand(float min, float max);
+int dfRand(int min, int max);

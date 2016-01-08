@@ -27,6 +27,7 @@ point2D GameResolution;
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
 float dfDeltaTime; // todo fill me
+float dfRandomFloat;
 std::map< std::type_index , dfComponent* > dfComponentMap;
 std::map<char, int> asciiTable;
 
@@ -181,9 +182,16 @@ int CALLBACK WinMain(
 	scene2->setupFunc = &SetupScene2;
 	
 	sceneMan.LoadScene(scene1);
+
+	Uint32 previousMiliseconds = 0;
 	
 	while(true)
 	{
+		Uint32 currentMiliseconds = SDL_GetTicks(); 
+		dfRandomFloat = dfRand();
+		dfTotalTime = currentMiliseconds / 1000.f;
+		dfDeltaTime = (currentMiliseconds / 1000.f) - (previousMiliseconds / 1000.f);
+
 		if(testDude->tf.rectangle.left > GameResolution.x)
 		{
 			sceneMan.LoadScene(scene2);

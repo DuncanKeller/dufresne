@@ -50,6 +50,8 @@ void RenderSystem::Init()
 	glAttachShader (postProcessShaderProgram, postProcessVert);
 	glAttachShader (postProcessShaderProgram, postProcessFrag);
 	glLinkProgram (postProcessShaderProgram);
+
+	Renderer::SetStandardUniforms(postProcessUnifroms);
 }
 
 void RenderSystem::UpdateResolution(int w, int h)

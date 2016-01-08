@@ -94,6 +94,7 @@ extern point2D GameResolution;
 extern point2D ScreenResolution;
 extern float dfTotalTime;
 extern float dfDeltaTime;
+extern float dfRandomFloat;
 
 // config
 const int render_box_initial_number_of_layers = 20;

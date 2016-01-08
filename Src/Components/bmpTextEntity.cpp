@@ -60,6 +60,7 @@ void bmpTextEntity::GenGlyphs()
 			glyphs[i].renderRect = &glyphRects[i];
 			glyphs[i].InitSprite(font.texture, rows, columns, 0, 0);
 			glyphs[i].SetAtlasLocation(asciiTable[text[i]]);
+			Renderer::SetSpecialUniforms(glyphs[i].renderInfo, glyphs[i].spriteInfo, &glyphs[i]);
 			
 			int sizeX = characterSize.x;
 			int sizeY = characterSize.y;

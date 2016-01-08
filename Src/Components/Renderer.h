@@ -72,8 +72,9 @@ public:
 	RenderInfo renderInfo;
 	SpriteInfo spriteInfo;
 	TextureInfo* textureInfo;
-
-	void SetStandardUniforms();
+	
+	static void SetStandardUniforms(std::vector<ShaderUniform> &uniforms);
+	static void SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity);
 	
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
@@ -92,10 +93,6 @@ public:
 	bool visible;
 	bool atlased;
 	Rect* renderRect;
-	
-	float testFloat;
-	int testInt;
-
 
 private:
 	static bool defaultShaderAssigned;

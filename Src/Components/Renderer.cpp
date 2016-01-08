@@ -32,7 +32,7 @@ Renderer::Renderer(void)
 	
 	CreateDefaultMesh(&renderInfo.mesh);
 	renderInfo.glShaderProgram = defaultShaderProgram;
-	SetStandardUniforms();
+	Renderer::SetStandardUniforms(renderInfo.uniforms);
 }
 
 Renderer::~Renderer(void)
@@ -50,14 +50,7 @@ void Renderer::Init()
 	if(tf)
 	{
 		renderRect = &tf->rectangle;
-		for(int i = 0; i < renderInfo.uniforms.size(); i++)
-		{
-			if(dfStrCmp("rect", renderInfo.uniforms[i].name))
-			{
-				renderInfo.uniforms[i].valueRect = renderRect;
-				break;
-			}
-		}
+		Renderer::SetSpecialUniforms(renderInfo, spriteInfo, this);
 	}
 
 }
@@ -228,34 +221,38 @@ void Renderer::InitDefaultShader()
 
 }
 
-void Renderer::SetStandardUniforms()
+void Renderer::SetStandardUniforms(std::vector<ShaderUniform> &uniforms)
 {
 	// todo AddUniform function?
-
+	
 	ShaderUniform uniformOne;
 	uniformOne.type = DF_point2D;
 	uniformOne.name = "resolution";
 	uniformOne.valueInt = &(GameResolution.arr[0]);
-	renderInfo.uniforms.push_back(uniformOne);
+	uniforms.push_back(uniformOne);
 
 	ShaderUniform uniformTwo;
 	uniformTwo.type = DF_float;
 	uniformTwo.name = "time";
 	uniformTwo.valueFloat = &(dfTotalTime);
-	renderInfo.uniforms.push_back(uniformTwo);
+	uniforms.push_back(uniformTwo);
 
-	// todo global random
 	ShaderUniform uniformThree;
 	uniformThree.type = DF_float;
 	uniformThree.name = "rand";
-	//uniformThree.valueInt = 
-	renderInfo.uniforms.push_back(uniformThree);
+	uniformThree.valueFloat = &dfRandomFloat;
+	uniforms.push_back(uniformThree);
 
+
+}
+
+void Renderer::SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity)
+{
 	ShaderUniform uniformFour;
 	uniformFour.type = DF_rect;
 	uniformFour.name = "rect";
-	uniformFour.valueRect = 0; // todo have to assign this after init when we have a transform. Better way to do this?
-	//uniformFour.valueRect = &Entity->GetComponent<Transform>()->rectangle;
+	uniformFour.valueRect = 0; 
+	uniformFour.valueRect = entity->renderRect;
 	renderInfo.uniforms.push_back(uniformFour);
 
 	// todo need a way to deal w/ multiple textures, no textures, etc
@@ -264,6 +261,12 @@ void Renderer::SetStandardUniforms()
 	uniformFive.name = "basic_texture";
 	uniformFive.valueUInt = &renderInfo.glTexture;
 	renderInfo.uniforms.push_back(uniformFive);
+
+	ShaderUniform uniformEight;
+	uniformEight.type = DF_vec4;
+	uniformEight.name = "inColor";
+	uniformEight.valueFloat = &(renderInfo.color.x);
+	renderInfo.uniforms.push_back(uniformEight);
 
 	ShaderUniform uniformSix;
 	uniformSix.type = DF_vec2;
@@ -276,11 +279,5 @@ void Renderer::SetStandardUniforms()
 	uniformSeven.name = "spriteSize";
 	uniformSeven.valueFloat = &(spriteInfo.arr[2]);
 	renderInfo.uniforms.push_back(uniformSeven);
-
-	ShaderUniform uniformEight;
-	uniformEight.type = DF_vec4;
-	uniformEight.name = "inColor";
-	uniformEight.valueFloat = &(renderInfo.color.x);
-	renderInfo.uniforms.push_back(uniformEight);
 
 }
