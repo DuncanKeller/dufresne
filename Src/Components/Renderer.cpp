@@ -15,6 +15,7 @@ Renderer::Renderer(void)
 	renderInfo.glShaderProgram = 0;
 	renderInfo.glTexture = 0;
 	renderInfo.color = vec4(1.f,1.f,1.f,1.f);
+	renderInfo.primitive = 0;
 	// todo clear me out VVV
 	//renderInfo.mesh;
 	
@@ -251,7 +252,6 @@ void Renderer::SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo
 	ShaderUniform uniformFour;
 	uniformFour.type = DF_rect;
 	uniformFour.name = "rect";
-	uniformFour.valueRect = 0; 
 	uniformFour.valueRect = entity->renderRect;
 	renderInfo.uniforms.push_back(uniformFour);
 

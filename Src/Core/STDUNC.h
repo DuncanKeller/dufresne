@@ -62,6 +62,33 @@ struct vec2
 	float y;
 };
 
+struct dfLine
+{
+	dfLine()
+	{
+		a = vec2(0,0);
+		b = vec2(0,0);
+		width = 1;
+	}
+
+	dfLine(float x1, float y1, float x2, float y2)
+	{
+		a = vec2(x1, y1);
+		b = vec2(x2, y2);
+		width = 1;
+	}
+
+	dfLine(vec2 point1, vec2 point2)
+	{
+		a = vec2(point1.x, point1.y);
+		b = vec2(point2.x, point2.y);
+		width = 1;
+	}
+
+	vec2 a, b;
+	float width;
+};
+
 struct vec3
 {
 	vec3()
@@ -113,6 +140,30 @@ struct vec4
 	float y;
 	float z;
 	float w;
+};
+
+struct Circle
+{
+	Circle()
+	{
+		center = vec2(0,0);
+		r = 0;
+	}
+
+	Circle(float x, float y, float radius)
+	{
+		center = vec2(x,y);
+		r = radius;
+	}
+
+	Circle(vec2 c, float radius)
+	{
+		center = vec2(c.x,c.y);
+		r = radius;
+	}
+
+	vec2 center;
+	float r;
 };
 
 struct Rect

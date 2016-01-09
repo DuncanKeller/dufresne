@@ -14,6 +14,8 @@
 #include "../System/AssetManager.h"
 #include "Transform.h"
 
+struct dfPrimitive;
+
 // todo separate atlas and sprite into different structs / components / classes?
 struct SpriteInfo
 {
@@ -47,6 +49,7 @@ struct ShaderUniform
 	};
 };
 
+// todo make init empty renderinfo static func
 struct RenderInfo
 {
 	bool active;
@@ -58,6 +61,7 @@ struct RenderInfo
 	std::vector<ShaderUniform> uniforms; 
 	mat4* matrix;
 	vec4 color;
+	dfPrimitive* primitive;
 };
 
 class Renderer :

@@ -2,6 +2,12 @@
 
 SDL_Window* RenderSystem::window;
 
+int RenderSystem::currentNumPrimitives = 0;
+dfPrimitive RenderSystem::primitives[MAX_DFPRIMITIVES];
+unsigned int RenderSystem::primitiveRectShaderProg;
+unsigned int RenderSystem::primitiveCircleShaderProg;
+unsigned int RenderSystem::primitiveLineShaderProg;
+
 RenderSystem::RenderSystem(void)
 {
 }
@@ -52,6 +58,37 @@ void RenderSystem::Init()
 	glLinkProgram (postProcessShaderProgram);
 
 	Renderer::SetStandardUniforms(postProcessUnifroms);
+
+	SetupPrimitives();
+}
+
+void RenderSystem::SetupPrimitives()
+{
+	unsigned int vert, frag;
+
+	vert = Renderer::CompileShaderFromSrc(defaultVert, GL_VERTEX_SHADER);
+	frag = Renderer::CompileShaderFromSrc(dfPrimitiveRectangleFrag, GL_FRAGMENT_SHADER);
+	
+	RenderSystem::primitiveRectShaderProg = glCreateProgram();
+	glAttachShader (RenderSystem::primitiveRectShaderProg, vert);
+	glAttachShader (RenderSystem::primitiveRectShaderProg, frag);
+	glLinkProgram (RenderSystem::primitiveRectShaderProg);
+
+	vert = Renderer::CompileShaderFromSrc(dfPrimitiveCircleVert, GL_VERTEX_SHADER);
+	frag = Renderer::CompileShaderFromSrc(dfPrimitiveCircleFrag, GL_FRAGMENT_SHADER);
+	
+	RenderSystem::primitiveCircleShaderProg = glCreateProgram();
+	glAttachShader (RenderSystem::primitiveCircleShaderProg, vert);
+	glAttachShader (RenderSystem::primitiveCircleShaderProg, frag);
+	glLinkProgram (RenderSystem::primitiveCircleShaderProg);
+
+	vert = Renderer::CompileShaderFromSrc(dfPrimitiveLineVert, GL_VERTEX_SHADER);
+	frag = Renderer::CompileShaderFromSrc(dfPrimitiveLineFrag, GL_FRAGMENT_SHADER);
+	
+	RenderSystem::primitiveLineShaderProg = glCreateProgram();
+	glAttachShader (RenderSystem::primitiveLineShaderProg, vert);
+	glAttachShader (RenderSystem::primitiveLineShaderProg, frag);
+	glLinkProgram (RenderSystem::primitiveLineShaderProg);
 }
 
 void RenderSystem::UpdateResolution(int w, int h)
@@ -81,8 +118,119 @@ void RenderSystem::UpdateResolution(int w, int h)
 
 void RenderSystem::Update()
 {
-
 }
+
+void RenderSystem::DrawRect(Rect r, vec4 color, int layer)
+{
+	dfPrimitive prim;
+	prim.rect = r;
+	prim.layer = layer;
+	prim.type = dfPrimRectangle;
+	primitives[currentNumPrimitives] = prim;
+	dfPrimitive* p = &primitives[currentNumPrimitives];
+	p->rInfo.primitive = p;
+
+	p->rInfo.active = true;
+	p->rInfo.color = color;
+	p->rInfo.depth = layer;
+	p->rInfo.glShaderProgram = RenderSystem::primitiveRectShaderProg;
+	p->rInfo.glTexture = 0;
+	p->rInfo.matrix = 0;
+	CreateDefaultMesh(&p->rInfo.mesh);
+	
+	ShaderUniform unif;
+	unif.name = "resolution";
+	unif.type = DF_point2D;
+	unif.valueInt = &(GameResolution.arr[0]);
+	p->rInfo.uniforms.push_back(unif);
+	
+	unif.name = "rect";
+	unif.type = DF_rect;
+	unif.valueRect = &p->rect;
+	p->rInfo.uniforms.push_back(unif);
+
+	unif.type = DF_vec4;
+	unif.name = "inColor";
+	unif.valueFloat = &(p->rInfo.color.x);
+	p->rInfo.uniforms.push_back(unif);
+
+	currentNumPrimitives++;
+}
+
+void RenderSystem::DrawCircle(Circle c, vec4 color, int layer)
+{
+	dfPrimitive prim;
+	prim.circle = c;
+	prim.layer = layer;
+	prim.type = dfPrimCircle;
+	primitives[currentNumPrimitives] = prim;
+	dfPrimitive* p = &primitives[currentNumPrimitives];
+	p->rInfo.primitive = p;
+
+	p->rInfo.active = true;
+	p->rInfo.color = color;
+	p->rInfo.depth = layer;
+	p->rInfo.glShaderProgram = RenderSystem::primitiveCircleShaderProg;
+	p->rInfo.glTexture = 0;
+	p->rInfo.matrix = 0;
+	CreateDefaultMesh(&p->rInfo.mesh);
+
+	ShaderUniform unif;
+	unif.name = "resolution";
+	unif.type = DF_point2D;
+	unif.valueInt = &(GameResolution.arr[0]);
+	p->rInfo.uniforms.push_back(unif);
+	
+	unif.name = "pos";
+	unif.type = DF_vec2;
+	unif.valueFloat = &p->circle.center.x;
+	p->rInfo.uniforms.push_back(unif);
+	
+	unif.name = "radius";
+	unif.type = DF_float;
+	unif.valueFloat = &p->circle.r;
+	p->rInfo.uniforms.push_back(unif);
+
+	unif.type = DF_vec4;
+	unif.name = "inColor";
+	unif.valueFloat = &(p->rInfo.color.x);
+	p->rInfo.uniforms.push_back(unif);
+		
+	currentNumPrimitives++;
+}
+
+void RenderSystem::DrawLine(dfLine line, vec4 color, int layer)
+{
+	dfPrimitive prim;
+	prim.line = line;
+	prim.layer = layer;
+	prim.type = dfPrimLine;
+	primitives[currentNumPrimitives] = prim;
+	dfPrimitive* p = &primitives[currentNumPrimitives];
+	p->rInfo.primitive = p;
+
+	p->rInfo.active = true;
+	p->rInfo.color = color;
+	p->rInfo.depth = layer;
+	p->rInfo.glShaderProgram = RenderSystem::primitiveLineShaderProg;
+	p->rInfo.glTexture = 0;
+	p->rInfo.matrix = 0;
+	CreateDefaultMesh(&p->rInfo.mesh);
+
+	ShaderUniform unif;
+	unif.name = "resolution";
+	unif.type = DF_point2D;
+	unif.valueInt = &(GameResolution.arr[0]);
+	p->rInfo.uniforms.push_back(unif);
+
+	unif.type = DF_vec4;
+	unif.name = "inColor";
+	unif.valueFloat = &(p->rInfo.color.x);
+	p->rInfo.uniforms.push_back(unif);
+		
+	currentNumPrimitives++;
+}
+
 
 unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 {
@@ -282,6 +430,13 @@ void RenderSystem::RenderLoop(dfScene* scene)
 		}
 		currBmpTextEntity = (bmpTextEntity*)currBmpTextEntity->nextInList;
 	}
+
+	// add primitives
+	for(int i = 0; i < currentNumPrimitives; i++)
+	{
+		dfPrimitive primitive = primitives[i];
+		AddToRenderBox(primitive.rInfo);
+	}
 	
 	// 2: sort renderboxes by similar shader program
 	for(int i = 0; i < renderBox.size(); i++)
@@ -320,12 +475,26 @@ void RenderSystem::RenderLoop(dfScene* scene)
 					ApplyUniforms(renderBox[i][n].uniforms[uIndex], newShaderProg);
 				}
 
-				unsigned int newTexture = renderBox[i][n].glTexture;
-				glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
-				glBindTexture (GL_TEXTURE_2D, newTexture);
-				
-				glBindVertexArray (renderBox[i][n].mesh.vertexArrayObject);
-				glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
+				if(renderBox[i][n].primitive != NULL && renderBox[i][n].primitive->type == dfPrimLine)
+				{
+					dfLine line = renderBox[i][n].primitive->line;
+					vec4 color = renderBox[i][n].primitive->rInfo.color;
+					glLineWidth(line.width); 
+					glColor3f(color.x, color.y, color.z);
+					glBegin(GL_LINES);
+					glVertex3f((line.a.x / GameResolution.x) * 2 - 1, -((line.a.y / GameResolution.y) * 2 - 1), 0.0f);
+					glVertex3f((line.b.x / GameResolution.x) * 2 - 1, -((line.b.y / GameResolution.y) * 2 - 1), 0.0f);
+					glEnd();
+				}
+				else
+				{
+					unsigned int newTexture = renderBox[i][n].glTexture;
+					glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
+					glBindTexture (GL_TEXTURE_2D, newTexture);
+
+					glBindVertexArray (renderBox[i][n].mesh.vertexArrayObject);
+					glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
+				}
 			}
 		}
 	}
@@ -350,4 +519,5 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	
 	// end gl stuff
 	glFlush(); 
+	currentNumPrimitives = 0;
 }
