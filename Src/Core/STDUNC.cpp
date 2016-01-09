@@ -313,3 +313,18 @@ void RectSize(float w, float h, Rect *rect)
 	rect->size = vec2(w, h);
 	UpdateRectMembers(rect);
 }
+
+float dfRand()
+{
+	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+}
+
+float dfRand(float min, float max)
+{
+	return min + (static_cast <float> (rand()) / ( static_cast <float> (RAND_MAX / max - min)));
+}
+
+int dfRand(int min, int max)
+{
+	return min + (rand() % (max - min));
+}

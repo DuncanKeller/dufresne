@@ -1,5 +1,6 @@
 #pragma once
 #include "../Libs/glew.h"
+#include "../Libs/BuitInShaders.h"
 #include "dfcomponent.h"
 #include "../Core/Mesh.h"
 #include "../Core/dfBasic.h"
@@ -12,6 +13,8 @@
 
 #include "../System/AssetManager.h"
 #include "Transform.h"
+
+struct dfPrimitive;
 
 // todo separate atlas and sprite into different structs / components / classes?
 struct SpriteInfo
@@ -46,6 +49,7 @@ struct ShaderUniform
 	};
 };
 
+// todo make init empty renderinfo static func
 struct RenderInfo
 {
 	bool active;
@@ -57,6 +61,7 @@ struct RenderInfo
 	std::vector<ShaderUniform> uniforms; 
 	mat4* matrix;
 	vec4 color;
+	dfPrimitive* primitive;
 };
 
 class Renderer :
@@ -71,12 +76,14 @@ public:
 	RenderInfo renderInfo;
 	SpriteInfo spriteInfo;
 	TextureInfo* textureInfo;
-
-	void SetStandardUniforms();
+	
+	static void SetStandardUniforms(std::vector<ShaderUniform> &uniforms);
+	static void SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity);
 	
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static void InitDefaultShader();
+	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 	
 	void SetTexture(TextureInfo &t);
 
@@ -90,15 +97,11 @@ public:
 	bool visible;
 	bool atlased;
 	Rect* renderRect;
-	
-	float testFloat;
-	int testInt;
 
 private:
 	static bool defaultShaderAssigned;
 	static unsigned int defaultShaderProgram;
 	static unsigned int defaultAtlasShaderProgram;
-	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
 	
 };
 

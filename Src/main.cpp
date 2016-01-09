@@ -23,9 +23,11 @@
 #include "Components/bmpTextEntity.h"
 
 // extern
+point2D GameResolution;
 point2D ScreenResolution;
 float dfTotalTime; // todo fill me
 float dfDeltaTime; // todo fill me
+float dfRandomFloat;
 std::map< std::type_index , dfComponent* > dfComponentMap;
 std::map<char, int> asciiTable;
 
@@ -95,9 +97,12 @@ int CALLBACK WinMain(
 	int flags = 0;
 
 	dfDeltaTime = 43.f;
-
-	ScreenResolution.x = 640.f;
-	ScreenResolution.y = 480.f;
+	
+	ScreenResolution.x = 800.f;
+	ScreenResolution.y = 600.f;
+	
+	GameResolution.x = 640.f;
+	GameResolution.y = 480.f;
 	
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -129,7 +134,7 @@ int CALLBACK WinMain(
 	//flags = SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL;
 	flags =  SDL_WINDOW_OPENGL;
 
-	SDL_Window *screen = SDL_CreateWindow("Dufresne",
+	RenderSystem::window = SDL_CreateWindow("Dufresne",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		ScreenResolution.x, ScreenResolution.y, flags);
@@ -146,7 +151,7 @@ int CALLBACK WinMain(
 
 	// init gl
 	SDL_GLContext glcontext;
-    glcontext = SDL_GL_CreateContext(screen);
+    glcontext = SDL_GL_CreateContext(RenderSystem::window);
 	GLint GlewInitResult = glewInit();
 	if (GlewInitResult != GLEW_OK) 
 	{
@@ -177,10 +182,17 @@ int CALLBACK WinMain(
 	scene2->setupFunc = &SetupScene2;
 	
 	sceneMan.LoadScene(scene1);
+
+	Uint32 previousMiliseconds = 0;
 	
 	while(true)
 	{
-		if(testDude->tf.rectangle.left > 640)
+		Uint32 currentMiliseconds = SDL_GetTicks(); 
+		dfRandomFloat = dfRand();
+		dfTotalTime = currentMiliseconds / 1000.f;
+		dfDeltaTime = (currentMiliseconds / 1000.f) - (previousMiliseconds / 1000.f);
+
+		if(testDude->tf.rectangle.left > GameResolution.x)
 		{
 			sceneMan.LoadScene(scene2);
 		}
@@ -189,15 +201,27 @@ int CALLBACK WinMain(
 			sceneMan.LoadScene(scene1);
 		}
 
+		if(input.keyboard.n1.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(640, 480);
+		}
+		if(input.keyboard.n2.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(300, 300);
+		}
+		if(input.keyboard.n3.tapped)
+		{
+			sceneMan.renderer.UpdateResolution(450, 300);
+		}
+
 		input.Update();
 
 		sceneMan.Update();
 
-		SDL_GL_SwapWindow(screen);
+		SDL_GL_SwapWindow(RenderSystem::window);
 	}
 
 
 	return 0;
 
 }
-	  
