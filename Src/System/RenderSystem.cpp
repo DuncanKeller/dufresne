@@ -10,6 +10,8 @@ unsigned int RenderSystem::primitiveLineShaderProg;
 
 RenderSystem::RenderSystem(void)
 {
+	letterBox = true;
+	letterBoxRatio = vec2(1.f, 1.f);
 }
 
 
@@ -21,7 +23,7 @@ RenderSystem::~RenderSystem(void)
 void RenderSystem::Init()
 {
 	// gl operations
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable (GL_BLEND);
 	glDepthMask (GL_FALSE);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,6 +60,11 @@ void RenderSystem::Init()
 	glLinkProgram (postProcessShaderProgram);
 
 	Renderer::SetStandardUniforms(postProcessUnifroms);
+	ShaderUniform unif;
+	unif.name = "screenRatio";
+	unif.type = DF_vec2;
+	unif.valueFloat = &letterBoxRatio.x;
+	postProcessUnifroms.push_back(unif);
 
 	SetupPrimitives();
 }
@@ -506,6 +513,28 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	int uniformLoc = glGetUniformLocation (postProcessShaderProgram, "textureFramebuffer");
 	if(uniformLoc >= 0)
 		glUniform1i (uniformLoc, 0);
+
+	if(letterBox)
+	{
+		float gameAspect = (float)GameResolution.x / (float)GameResolution.y;
+		float screenAspect = (float)ScreenResolution.x / (float)ScreenResolution.y;
+		if(gameAspect < screenAspect)
+		{
+			letterBoxRatio = vec2(((float)GameResolution.x * ((float)ScreenResolution.y / (float)GameResolution.y)) / (float)ScreenResolution.x, 1.f);
+		}
+		else if(gameAspect > screenAspect)
+		{
+			letterBoxRatio = vec2(1.f, ((float)GameResolution.y * ((float)ScreenResolution.x / (float)GameResolution.x)) / (float)ScreenResolution.y);
+		}
+		else
+		{
+			letterBoxRatio = vec2(1.f, 1.f);
+		}
+	}
+	else
+	{
+		letterBoxRatio = vec2(1.f, 1.f);
+	}
 
 	for(int i = 0; i < postProcessUnifroms.size(); i++)
 	{

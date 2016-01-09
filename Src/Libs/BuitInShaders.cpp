@@ -70,11 +70,12 @@ const char* defaultPostProcessVert = ""
 	"uniform vec2 resolution;"
 	"uniform float time;"
 	"uniform float rand;"
+	"uniform vec2 screenRatio;"
 	""
 	"void main()" 
 	"{"
 	"	textureCoords = textureCoordsIn;"
-	"	gl_Position = vec4(position.x, position.y, position.z, 1.0);"
+	"	gl_Position = vec4(position.x * screenRatio.x, position.y * screenRatio.y, position.z, 1.0);"
 	"}"
 	"";
 

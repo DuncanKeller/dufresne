@@ -62,8 +62,10 @@ public:
 	unsigned int postProcessVert;
 	unsigned int postProcessFrag;
 	std::vector<ShaderUniform> postProcessUnifroms;
+	vec2 letterBoxRatio;
 
 	static SDL_Window* window;
+	bool letterBox;
 
 	// for drawing primatives
 	static const int MAX_DFPRIMITIVES = 256;
