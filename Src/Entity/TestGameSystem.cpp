@@ -87,6 +87,11 @@ void TestEntity::Update()
 		animComp->Play("walk-right");
 	}
 
+	if(input.keyboard.spacebar.tapped)
+	{
+		sfxMan.PlaySound(L"fart\\shinyget.wav");
+	}
+
 	//particleSys->sInfo.spawnPoint = tf.rectangle.pos;
 	//particleSys->sInfo.spawnPoint.x += tf.rectangle.width / 2;
 }

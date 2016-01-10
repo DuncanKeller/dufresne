@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include "STDUNC.h"
+#include "..\..\SDL2_mixer-2.0.0\SDL_mixer.h"
 
 struct Mesh;
 
@@ -86,6 +87,15 @@ struct ParticleInfo
 };
 
 // -particles- end
+
+// - sound
+
+struct SoundInfo
+{
+	Mix_Chunk* chunk;
+};
+
+// - sound - end
 
 dfBasicType dfGetTypeFromString(std::vector<char> str);
 
