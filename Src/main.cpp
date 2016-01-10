@@ -15,12 +15,14 @@
 #include "Core/dfBasic.h"
 #include "System/Input.h"
 #include "System/SceneManager.h"
+#include "System\SoundSystem.h"
 #include "Entity/TestGameSystem.h"
 #include "System/RenderSystem.h"
 #include "System/AssetManager.h"
 #include "Components/BoxCollider.h"
 #include "Entity/TileMap.h"
 #include "Components/bmpTextEntity.h"
+#include "..\SDL2_mixer-2.0.0\SDL_mixer.h"
 
 // extern
 point2D GameResolution;
@@ -125,6 +127,20 @@ int CALLBACK WinMain(
 		GameExit( 1 );
 	}
 
+	if( SDL_Init( SDL_INIT_AUDIO ) < 0 )
+	{
+		printf( "Audio initialization failed: %s\n",
+			 SDL_GetError( ) );
+		GameExit( 1 );
+	}
+
+	//Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        GameExit( 1 );
+    }
+
 	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
 	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 5 );
 	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
@@ -169,7 +185,9 @@ int CALLBACK WinMain(
 	assMan.CalculateLoosePackageSize(path);
 	assMan.LoadLoosePackage(path);
 	assMan.DebugTestWritePoolToFile();
-
+	
+	sfxMan = SoundSystem();
+	sfxMan.Init();
 
 	sceneMan.Init();
 

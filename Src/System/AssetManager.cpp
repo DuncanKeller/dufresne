@@ -46,6 +46,24 @@ std::string AssetManager::GetTextFile(const wchar_t* key)
 	return textFileMap[keystring];
 }
 
+SoundInfo AssetManager::GetSound(const wchar_t* key)
+{
+	std::wstring keystring = std::wstring(key);
+	return soundMap[keystring];
+}
+
+SoundInfo AssetManager::InitSoundAsset(dfFile &file)
+{
+	SoundInfo sfxInfo;
+
+	if(!(sfxInfo.chunk = Mix_QuickLoad_RAW((Uint8*)file.contents, (Uint32)file.size))) 
+	{
+		dfLog((char*)Mix_GetError());
+	}
+
+	return sfxInfo;
+}
+
 void AssetManager::InitShader(char* src, ShaderInfo &shader)
 {
 	const char* matchingVert = "!vert";
@@ -376,7 +394,7 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 
 				// check for certain file types that have extra data associated with them
 				std::vector<wchar_t> filetype = GetFileExtension(filename);
-				if(dfStrCmp(filetype, "glsl"))
+				if(dfStrCmp(filetype, "glsl")) // shader
 				{
 					ShaderInfo shader;
 					shader.vertFragType = 0;
@@ -387,7 +405,7 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 					shaders.push_back(shader);
 					shaderMap[stringkey] = shader;
 				}
-				else if(dfStrCmp(filetype, "png") || dfStrCmp(filetype, "jpg") || dfStrCmp(filetype, "bmp"))
+				else if(dfStrCmp(filetype, "png") || dfStrCmp(filetype, "jpg") || dfStrCmp(filetype, "bmp")) // image
 				{
 					TextureInfo  texture;
 					texture.file = newAsset;
@@ -399,11 +417,18 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 					textures.push_back(texture);
 					textureMap[stringkey] = texture;
 				}
-				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt"))
+				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt")) // text
 				{
 					std::string str = std::string(newAsset.contents);
 					textFiles.push_back(str);
 					textFileMap[stringkey] = str;
+				}
+				else if(dfStrCmp(filetype, "wav")) // sound
+				{
+					SoundInfo sfxInfo = InitSoundAsset(newAsset);
+
+					sounds.push_back(sfxInfo);
+					soundMap[stringkey] = sfxInfo;
 				}
 				
 			}

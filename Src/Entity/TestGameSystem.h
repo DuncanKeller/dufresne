@@ -13,6 +13,7 @@
 #include "../Core/STDUNC.h"
 #include "../Components/dfAnimator.h"
 #include "../Components/dfParticleSystem.h"
+#include "../System/SoundSystem.h"
 
 class TestEntity :
 	public Entity

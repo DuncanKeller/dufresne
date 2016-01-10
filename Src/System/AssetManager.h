@@ -12,6 +12,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "..\..\SDL2_mixer-2.0.0\SDL_mixer.h"
 
 #include "../Core/dfBasic.h"
 
@@ -29,6 +30,7 @@ public:
 	ShaderInfo GetShader(const wchar_t*);
 	TextureInfo GetTexture(const wchar_t*);
 	std::string GetTextFile(const wchar_t*);
+	SoundInfo GetSound(const wchar_t*);
 	
 	bool CalculateLoosePackageSize(std::wstring );
 	uint32 PlatformGetFileSize(const wchar_t*);
@@ -38,6 +40,7 @@ public:
 	// init asset types
 	void InitShader(char* fullShaderSrc, ShaderInfo &shader);
 	void InitTexture(TextureInfo &texture);
+	SoundInfo InitSoundAsset(dfFile &file);
 
 	// debug
 	void DebugTestWritePoolToFile();
@@ -48,6 +51,8 @@ public:
 	std::map<std::wstring, TextureInfo> textureMap;
 	std::vector<std::string> textFiles;
 	std::map<std::wstring, std::string> textFileMap;
+	std::vector<SoundInfo> sounds;
+	std::map<std::wstring, SoundInfo> soundMap;
 	char* assetPool;
 	std::map<std::wstring, dfFile> assetMap;
 	int poolsize;
