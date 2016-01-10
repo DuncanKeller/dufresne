@@ -51,7 +51,8 @@ public:
 			return newObj;
 		}
 
-		dfAssert(false); // added too many objects to scene, at max number. todo assert message / log
+		dfError("shoot, added too many objects to the scene :c");
+		dfAssert(false);
 		return 0;
 	}
 

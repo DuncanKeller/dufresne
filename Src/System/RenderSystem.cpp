@@ -10,6 +10,8 @@ unsigned int RenderSystem::primitiveLineShaderProg;
 
 RenderSystem::RenderSystem(void)
 {
+	letterBox = true;
+	letterBoxRatio = vec2(1.f, 1.f);
 }
 
 
@@ -21,7 +23,7 @@ RenderSystem::~RenderSystem(void)
 void RenderSystem::Init()
 {
 	// gl operations
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable (GL_BLEND);
 	glDepthMask (GL_FALSE);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,6 +60,11 @@ void RenderSystem::Init()
 	glLinkProgram (postProcessShaderProgram);
 
 	Renderer::SetStandardUniforms(postProcessUnifroms);
+	ShaderUniform unif;
+	unif.name = "screenRatio";
+	unif.type = DF_vec2;
+	unif.valueFloat = &letterBoxRatio.x;
+	postProcessUnifroms.push_back(unif);
 
 	SetupPrimitives();
 }
@@ -134,7 +141,7 @@ void RenderSystem::DrawRect(Rect r, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveRectShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 	
@@ -171,7 +178,7 @@ void RenderSystem::DrawCircle(Circle c, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveCircleShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 
@@ -213,7 +220,7 @@ void RenderSystem::DrawLine(dfLine line, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveLineShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 
@@ -238,15 +245,8 @@ unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 	glShaderSource (shaderIndex, 1, (const GLchar** )&shader.shaderFile.contents, NULL);
 	glCompileShader (shaderIndex);
 	int params = -1;
-	glGetShaderiv (shaderIndex, GL_COMPILE_STATUS, &params);
-	if (GL_TRUE != params) 
-	{
-		// todo logging
-		//fprintf (stderr, "ERROR: GL shader index %i did not compile\n", shaderIndex);
-		//PrintShaderLog(shaderIndex);
-		dfAssert(false); // did not compile :(
-		return 0;
-	}
+
+	Renderer::CheckShaderCompile(shaderIndex);
 
 	return shaderIndex;
 }
@@ -304,13 +304,11 @@ void RenderSystem::SortRenderBox(int boxIndex)
 
 void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgram )
 {
-	// todo log warning if it can't find the matching uniform name
-	if(uniform.valueInt != 0) // todo is it OK just to check int, instead of depending on type?
+	if(uniform.valueInt != 0) 
 	{
 		int uniformLoc = glGetUniformLocation (shaderProgram, uniform.name);
 		if(uniformLoc >= 0)
 		{
-			// todo implement a buncha deez fuckers
 			switch(uniform.type)
 			{
 			case DF_int:
@@ -335,9 +333,7 @@ void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgr
 					uniform.valueFloat);
 				break;
 			case DF_sampler2D:
-				// todo: fart, I forget how to use thisss
-				//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
-				glUniform1i (uniformLoc, 0);
+				glUniform1i (uniformLoc, uniform.valueInt[0]);
 				break;
 			case DF_point2D:
 				glUniform2f(uniformLoc, (float)uniform.valueInt[0],
@@ -381,8 +377,6 @@ void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgr
 	}
 }
 
-// todo better way than just passing around big vector
-// needs to handle scene hirarchy eventually
 void RenderSystem::RenderLoop(dfScene* scene) 
 {
 	// set gl state
@@ -488,9 +482,12 @@ void RenderSystem::RenderLoop(dfScene* scene)
 				}
 				else
 				{
-					unsigned int newTexture = renderBox[i][n].glTexture;
-					glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
-					glBindTexture (GL_TEXTURE_2D, newTexture);
+					for(int textureIndex = 0; textureIndex < renderBox[i][n].numTextures; textureIndex++)
+					{
+						unsigned int newTexture = renderBox[i][n].glTextures[textureIndex];
+						glActiveTexture(GL_TEXTURE0 + textureIndex);
+						glBindTexture (GL_TEXTURE_2D, newTexture);
+					}
 
 					glBindVertexArray (renderBox[i][n].mesh.vertexArrayObject);
 					glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
@@ -507,12 +504,34 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	if(uniformLoc >= 0)
 		glUniform1i (uniformLoc, 0);
 
+	if(letterBox)
+	{
+		float gameAspect = (float)GameResolution.x / (float)GameResolution.y;
+		float screenAspect = (float)ScreenResolution.x / (float)ScreenResolution.y;
+		if(gameAspect < screenAspect)
+		{
+			letterBoxRatio = vec2(((float)GameResolution.x * ((float)ScreenResolution.y / (float)GameResolution.y)) / (float)ScreenResolution.x, 1.f);
+		}
+		else if(gameAspect > screenAspect)
+		{
+			letterBoxRatio = vec2(1.f, ((float)GameResolution.y * ((float)ScreenResolution.x / (float)GameResolution.x)) / (float)ScreenResolution.y);
+		}
+		else
+		{
+			letterBoxRatio = vec2(1.f, 1.f);
+		}
+	}
+	else
+	{
+		letterBoxRatio = vec2(1.f, 1.f);
+	}
+
 	for(int i = 0; i < postProcessUnifroms.size(); i++)
 	{
 		ApplyUniforms(postProcessUnifroms[i], postProcessShaderProgram);
 	}
 
-	glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
+	glActiveTexture(GL_TEXTURE0 + 0); 
 	glBindTexture (GL_TEXTURE_2D, colorBufferTexture);
 	glBindVertexArray (screenRect.vertexArrayObject);
 	glDrawArrays (GL_TRIANGLES, 0, screenRect.numVerts);

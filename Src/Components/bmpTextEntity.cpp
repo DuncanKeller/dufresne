@@ -8,8 +8,7 @@ bmpTextEntity::bmpTextEntity(void)
 
 bmpTextEntity::bmpTextEntity(std::wstring text)
 {
-	dfAssert(false); // todo implement default font
-	bmpTextEntity(text, L"default font path", 16, 16);
+	bmpTextEntity(text, L"fart\\defaultFont.png", 16, 16);
 }
 
 bmpTextEntity::bmpTextEntity(std::wstring text, const wchar_t* fontPath, int columns, int rows)

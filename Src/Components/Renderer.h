@@ -16,7 +16,6 @@
 
 struct dfPrimitive;
 
-// todo separate atlas and sprite into different structs / components / classes?
 struct SpriteInfo
 {
 	union
@@ -49,14 +48,15 @@ struct ShaderUniform
 	};
 };
 
-// todo make init empty renderinfo static func
+const int MAX_GL_SHADERS = 32;
 struct RenderInfo
 {
 	bool active;
 
 	int depth;
 	unsigned int glShaderProgram;
-	unsigned int glTexture;
+	unsigned int glTextures[MAX_GL_SHADERS];
+	int numTextures;
 	Mesh mesh;
 	std::vector<ShaderUniform> uniforms; 
 	mat4* matrix;
@@ -76,14 +76,19 @@ public:
 	RenderInfo renderInfo;
 	SpriteInfo spriteInfo;
 	TextureInfo* textureInfo;
+
+	static void InitEmptyRenderInfo(RenderInfo *info);
 	
 	static void SetStandardUniforms(std::vector<ShaderUniform> &uniforms);
 	static void SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity);
 	
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
-	static void InitDefaultShader();
 	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
+	static bool Renderer::CheckShaderCompile(unsigned int shader);
+	static bool Renderer::CheckShaderLink(unsigned int shader);
+	static void InitDefaultShader();
+
 	
 	void SetTexture(TextureInfo &t);
 
@@ -92,8 +97,6 @@ public:
 	void SetAtlasLocation(float xPos, float Ypos);
 	void SetAtlasLocation(int index);
 
-	// todo: not sure if there is a better way to do this? 
-	//Auto assign rect to transform and re-assign if needed
 	bool visible;
 	bool atlased;
 	Rect* renderRect;
@@ -104,10 +107,3 @@ private:
 	static unsigned int defaultAtlasShaderProgram;
 	
 };
-
-// todo - idea for renderer
-// first, renderer iterates through all components that have a renderer enabled
-// as it goes through, it creates a dynamic array for each unique "depth" found, and stores the component reference
-// (remember not to use some stl shit since this is the renderer we're talking about)
-// each depth array is sorted by shaderProgram, so that componenets with the same shader program are drawn together
-// iterate through each array and call Render on the Renderer component

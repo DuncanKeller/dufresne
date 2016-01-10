@@ -2,7 +2,6 @@
 
 void dfAssert(bool condition)
 {
-	// TODO replace with something reasonable
 	if(!condition)
 	{
 		int farts = 0;
@@ -12,8 +11,17 @@ void dfAssert(bool condition)
 
 void dfLog(char *msg)
 {
-	// TODO more logging. Console output?
-	printf(msg);
+	SDL_Log(msg);
+}
+
+void dfWarn(char *msg)
+{
+	SDL_Log(msg);
+}
+
+void dfError(char *msg)
+{
+	SDL_Log(msg);
 }
 
 int dfStrLen(char* str)

@@ -65,14 +65,13 @@ void SceneManager::LoadScene(std::string name)
 		}
 	}
 
-	dfLog("No scene exists with that name"); // todo make dfLogWarning
+	dfError("No scene exists with that name"); 
 }
 
 void SceneManager::UnloadScene(dfScene* scene)
 {
 	if(scene)
 		scene->RemoveAllSceneObjects();
-
 }
 
 void SceneManager::RemoveSceneObject(Entity* system)
@@ -83,6 +82,6 @@ void SceneManager::RemoveSceneObject(Entity* system)
 	}
 	else
 	{
-		dfLog("NO SCENE TO REMOVE OBJECT FROM"); // todo make dfLogError
+		dfError("NO SCENE TO REMOVE OBJECT FROM");
 	}
 }

@@ -25,8 +25,8 @@
 // extern
 point2D GameResolution;
 point2D ScreenResolution;
-float dfTotalTime; // todo fill me
-float dfDeltaTime; // todo fill me
+float dfTotalTime; 
+float dfDeltaTime; 
 float dfRandomFloat;
 std::map< std::type_index , dfComponent* > dfComponentMap;
 std::map<char, int> asciiTable;

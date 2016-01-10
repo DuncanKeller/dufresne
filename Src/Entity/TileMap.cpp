@@ -32,9 +32,7 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 	JsonObject jsonObj = JsonObject();
 	std::string str = assMan.GetTextFile((const wchar_t*)mapname);
 
-	// todo weird bug, not having some spaces at the end tries to parse garbage... whyyyy...
-	// workaround is to use the string content, but the file size, which has the correct cap.
-	if(!jsonObj.parse(str.c_str(), assMan.GetAsset((const wchar_t*)mapname).size, &jsonObj))
+	if(!jsonObj.parse(str.c_str(), str.length(), &jsonObj))
 	{
 		// json load failed...
 		dfAssert(false);
@@ -77,7 +75,6 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 		JsonObject props = tilesetObj.getChild("properties");
 		for(int pIndex = 0; pIndex < props.numChildren(); pIndex++)
 		{
-			// todo store property as correct type (int or bool) if it can parse it
 			JsonKeyValue propObj = props.getObjectChild(pIndex);
 			TileProperty objProp;
 			objProp.name = propObj.key;
@@ -185,7 +182,6 @@ void TileMap::LoadTilemap(wchar_t* mapname)
 				JsonObject props = objectData.getChild("properties");
 				for(int pIndex = 0; pIndex < props.numChildren(); pIndex++)
 				{
-					// todo store property as correct type (int or bool) if it can parse it
 					JsonKeyValue propObj = props.getObjectChild(pIndex);
 					TileProperty objProp;
 					objProp.name = propObj.key;

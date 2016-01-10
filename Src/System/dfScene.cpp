@@ -51,7 +51,7 @@ void dfScene::SetupScene()
 	}
 	else
 	{
-		dfLog("scene doesn't contain a setup function."); // todo dfWarn
+		dfWarn("scene doesn't contain a setup function."); 
 	}
 }
 

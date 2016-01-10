@@ -10,14 +10,7 @@ Renderer::Renderer(void)
 	visible = true;
 	atlased = false;
 
-	renderInfo.active = true;
-	renderInfo.depth = 0;
-	renderInfo.glShaderProgram = 0;
-	renderInfo.glTexture = 0;
-	renderInfo.color = vec4(1.f,1.f,1.f,1.f);
-	renderInfo.primitive = 0;
-	// todo clear me out VVV
-	//renderInfo.mesh;
+	InitEmptyRenderInfo(&renderInfo);
 	
 	spriteInfo.atlasMargin = 0.f;
 	spriteInfo.atlasSpacing = 0.f;
@@ -39,6 +32,19 @@ Renderer::Renderer(void)
 Renderer::~Renderer(void)
 {
 	dfComponent::~dfComponent();
+}
+
+void Renderer::InitEmptyRenderInfo(RenderInfo *info)
+{
+	info->active = true;
+	info->depth = 0;
+	info->glShaderProgram = 0;
+	info->color = vec4(1.f,1.f,1.f,1.f);
+	info->primitive = 0;
+	info->matrix = 0;
+	for(int i = 0; i < MAX_GL_SHADERS; i++)
+		info->glTextures[i] = 0;
+	info->numTextures = 0;
 }
 
 void Renderer::Init()
@@ -63,7 +69,8 @@ void Renderer::Update()
 
 void Renderer::SetTexture(TextureInfo &t)
 {
-	renderInfo.glTexture = t.glTexture;
+	renderInfo.glTextures[renderInfo.numTextures] = t.glTexture;
+	renderInfo.numTextures++;
 	textureInfo = &t;
 	RectSize(t.width, t.height, renderRect);
 }
@@ -107,25 +114,22 @@ void Renderer::SetAtlasLocation(int index)
 	SetAtlasLocation(xIndex, yIndex);
 }
 
-// todo move into more general scope
 void Renderer::PrintShaderLog(const unsigned int& index)
 {
 	int max_length = 2048;
 	int actual_length = 0;
 	char log[2048];
 	glGetShaderInfoLog (index, max_length, &actual_length, log);
-	// todo dfLog
 	SDL_Log ("shader info log for GL index %i:\n%s\n", index, log);
 	
 }
-// todo move into more general scope
+
 void Renderer::PrintProgramLog (const unsigned int& index) 
 {
 	int max_length = 2048;
 	int actual_length = 0;
 	char log[2048];
 	glGetProgramInfoLog (index, max_length, &actual_length, log);
-	// todo dfLog
 	SDL_Log ("program info log for GL index %i:\n%s", index, log);
 }
 
@@ -138,8 +142,7 @@ unsigned int Renderer::CompileShaderFromSrc(const char* shader, GLuint type)
 	glGetShaderiv (shaderIndex, GL_COMPILE_STATUS, &params);
 	if (GL_TRUE != params) 
 	{
-		// todo logging
-		//fprintf (stderr, "ERROR: GL shader index %i did not compile\n", shaderIndex);
+		SDL_Log ( "ERROR: GL shader index %i did not compile\n", shaderIndex);
 		PrintShaderLog(shaderIndex);
 		dfAssert(false); // shader failed to compile
 		return 0;
@@ -148,78 +151,60 @@ unsigned int Renderer::CompileShaderFromSrc(const char* shader, GLuint type)
 	return shaderIndex;
 }
 
+bool Renderer::CheckShaderCompile(unsigned int shader)
+{
+	GLint compileSuccess = GL_FALSE;
+	glGetShaderiv( shader, GL_COMPILE_STATUS, &compileSuccess );
+    if( compileSuccess != GL_TRUE )
+    {
+        dfLog( "Failed to compile shader");
+		Renderer::PrintShaderLog(shader);
+        dfAssert(false); // failed to compile shader
+		return false;
+    }
+	return true;
+}
+
+bool Renderer::CheckShaderLink(unsigned int shaderProg)
+{
+	GLint compileSuccess = GL_FALSE;
+	glGetProgramiv( shaderProg, GL_LINK_STATUS, &compileSuccess );
+    if( compileSuccess != GL_TRUE )
+    {
+        dfLog( "Failed to compile shader");
+		Renderer::PrintProgramLog(shaderProg);
+        dfAssert(false); // failed to compile shader
+		return false;
+    }
+	return true;
+}
+
+
 void Renderer::InitDefaultShader()
 {
-	// todo remove resolution from this and have it go through the same path as the AssetManager shaders
-	// so that they get the default uniforms
-
 	// create default shader programs
 	defaultShaderProgram = glCreateProgram();
 
 	unsigned int vs = CompileShaderFromSrc(defaultVert, GL_VERTEX_SHADER);
-	
-	unsigned int fs = CompileShaderFromSrc("#version 130\n#extension GL_ARB_explicit_attrib_location : require\n#extension GL_ARB_explicit_uniform_location : require\nin vec2 texture_coordinates;uniform sampler2D basic_texture;uniform vec2 atlasPos,spriteSize;uniform vec4 inColor;out vec4 frag_color;void main(){vec4 texel=texture2D(basic_texture,texture_coordinates);frag_color=vec4(texel.r*inColor.r,texel.g*inColor.g,texel.b*inColor.b,texel.a*inColor.a);if(frag_color.a==0||inColor.a==0)frag_color=vec4(0,0,0,0);}", GL_FRAGMENT_SHADER);
-	
+	unsigned int fs = CompileShaderFromSrc(defaultFrag, GL_FRAGMENT_SHADER);
 	unsigned int atlasFs = CompileShaderFromSrc(defaultAtlassedFrag, GL_FRAGMENT_SHADER);
 
-
-	// todo duplication, find common place for this
-	GLint compileSuccess = GL_FALSE;
-	glGetShaderiv( vs, GL_COMPILE_STATUS, &compileSuccess );
-    if( compileSuccess != GL_TRUE )
-    {
-        dfLog( "Failed to compile shader");
-        //printShaderLog( vertexShader );
-        dfAssert(false); // failed to compile shader
-    }
-
-	compileSuccess = GL_FALSE;
-	glGetShaderiv( fs, GL_COMPILE_STATUS, &compileSuccess );
-    if( compileSuccess != GL_TRUE )
-    {
-        dfLog( "Failed to compile shader");
-        //printShaderLog( vertexShader );
-        dfAssert(false); // failed to compile shader
-    }
-
-	compileSuccess = GL_FALSE;
-	glGetShaderiv( atlasFs, GL_COMPILE_STATUS, &compileSuccess );
-    if( compileSuccess != GL_TRUE )
-    {
-        dfLog( "Failed to compile shader");
-        //printShaderLog( vertexShader );
-        dfAssert(false); // failed to compile shader
-    }
-
+	Renderer::CheckShaderCompile(vs);
+	Renderer::CheckShaderCompile(fs);
+	Renderer::CheckShaderCompile(atlasFs);
 
 	glAttachShader (defaultShaderProgram, vs);
 	glAttachShader (defaultShaderProgram, fs);
 	glLinkProgram (defaultShaderProgram);
-
-    compileSuccess = GL_TRUE;
-    glGetProgramiv( defaultShaderProgram, GL_LINK_STATUS, &compileSuccess );
-    if( compileSuccess != GL_TRUE )
-    {
-        dfLog( "Failed to link shader program");
-        //printProgramLog( vertexShader );
-        dfAssert(false); // failed to compile shader
-    }
-
+  
+	Renderer::CheckShaderLink(defaultShaderProgram);
 	
 	defaultAtlasShaderProgram = glCreateProgram();
 	glAttachShader (defaultAtlasShaderProgram, vs);
 	glAttachShader (defaultAtlasShaderProgram, atlasFs);
 	glLinkProgram (defaultAtlasShaderProgram);
     
-	compileSuccess = GL_TRUE;
-    glGetProgramiv( defaultAtlasShaderProgram, GL_LINK_STATUS, &compileSuccess );
-    if( compileSuccess != GL_TRUE )
-    {
-        dfLog( "Failed to link shader program");
-        //printProgramLog( vertexShader );
-        dfAssert(false); // failed to compile shader
-    }
-
+	Renderer::CheckShaderLink(defaultAtlasShaderProgram);
 }
 
 void Renderer::SetStandardUniforms(std::vector<ShaderUniform> &uniforms)
@@ -243,8 +228,6 @@ void Renderer::SetStandardUniforms(std::vector<ShaderUniform> &uniforms)
 	uniformThree.name = "rand";
 	uniformThree.valueFloat = &dfRandomFloat;
 	uniforms.push_back(uniformThree);
-
-
 }
 
 void Renderer::SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity)
@@ -255,11 +238,10 @@ void Renderer::SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo
 	uniformFour.valueRect = entity->renderRect;
 	renderInfo.uniforms.push_back(uniformFour);
 
-	// todo need a way to deal w/ multiple textures, no textures, etc
 	ShaderUniform uniformFive;
 	uniformFive.type = DF_sampler2D;
 	uniformFive.name = "basic_texture";
-	uniformFive.valueUInt = &renderInfo.glTexture;
+	uniformFive.valueUInt = 0;
 	renderInfo.uniforms.push_back(uniformFive);
 
 	ShaderUniform uniformEight;
