@@ -1,8 +1,6 @@
 #include "dfAnimator.h"
 #include "../Entity/Entity.h"
 
-// todo: constructor that takes some struct so you can manually define animations 
-// without a json file. Will be faster in cases where there are very few anims, or even just one
 dfAnimator::dfAnimator(wchar_t* animFilename)
 {
 	currentAnimIndex = 0;
@@ -13,6 +11,26 @@ dfAnimator::dfAnimator(wchar_t* animFilename)
 	LoadAnimJSON(animFilename);
 }
 
+dfAnimator::dfAnimator(std::string name, float spd, int frames)
+{
+	AnimationInfo info;
+	for(int i = 0; i < frames; i++)
+		info.frames.push_back(i);
+	info.framesPerSecond = spd;
+	info.loopbackFrame = 0;
+	info.looping = true;
+	info.name = name;
+}
+
+dfAnimator::dfAnimator(std::vector<AnimationInfo> animationList)
+{
+	currentAnimIndex = 0;
+	currentFrame = 0;
+	playing = true;
+	timer = 0.f;
+
+	anims = animationList;
+}
 
 dfAnimator::~dfAnimator(void)
 {
@@ -29,7 +47,7 @@ void dfAnimator::Update()
 {
 	dfComponent::Update();
 
-	timer += 0.05; // todo repalce with dt
+	timer += dfDeltaTime;
 
 	if(playing)
 	{
@@ -79,9 +97,7 @@ void dfAnimator::LoadAnimJSON(wchar_t* animFilename)
 	JsonObject jsonObj = JsonObject();
 	std::string str = assMan.GetTextFile((const wchar_t*)animFilename);
 
-	// todo weird bug, not having some spaces at the end tries to parse garbage... whyyyy...
-	// workaround is to use the string content, but the file size, which has the correct cap.
-	if(!jsonObj.parse(str.c_str(), assMan.GetAsset((const wchar_t*)animFilename).size, &jsonObj))
+	if(!jsonObj.parse(str.c_str(), str.length(), &jsonObj))
 	{
 		// json load failed...
 		dfAssert(false);

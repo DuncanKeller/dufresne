@@ -35,7 +35,7 @@ public:
 		}
 		else
 		{
-			dfLog("NO SCENE TO ADD OBJECT TO"); // todo make dfLogError
+			dfError("NO SCENE TO ADD OBJECT TO"); 
 		}
 	}
 };

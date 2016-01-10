@@ -1,12 +1,6 @@
 #include "dfParticleSystem.h"
 #include "../Entity/Entity.h"
 
-// todo move in stdunc or something
-float randf()
-{
-	return (rand() % 100) / 100.f;
-}
-
 dfParticleSystem::dfParticleSystem(void)
 {
 	sInfo.useSpawnRect = false;
@@ -61,13 +55,12 @@ void dfParticleSystem::Update()
 	
 	if(active)
 	{
-		timer += 0.05f; // todo dt
+		timer += dfDeltaTime;
 
-		// todo get ridda pbox don't think I'm using it anymore
 		if(timer > nextParticleTime && numParticles < maxActiveParticles)
 		{
 			CreateParticle();
-			nextParticleTime =  minSecondsBetweenParticles + (randf() * (maxSecondsBetweenParticles - minSecondsBetweenParticles));
+			nextParticleTime =  minSecondsBetweenParticles + (dfRand() * (maxSecondsBetweenParticles - minSecondsBetweenParticles));
 		}
 	}
 
@@ -106,26 +99,26 @@ void dfParticleSystem::CreateParticle()
 	if(sInfo.useSpawnRect)
 	{
 		p.pos = vec2(
-			(randf() * sInfo.spawnRect.width) + sInfo.spawnRect.left,
-			(randf() * sInfo.spawnRect.height) + sInfo.spawnRect.top);
+			(dfRand() * sInfo.spawnRect.width) + sInfo.spawnRect.left,
+			(dfRand() * sInfo.spawnRect.height) + sInfo.spawnRect.top);
 	}
 	else
 	{
 		p.pos = vec2(sInfo.spawnPoint.x, sInfo.spawnPoint.y);
 	}
-	p.acc = sInfo.minAcc + (randf() * (sInfo.maxAcc - sInfo.minAcc));
+	p.acc = sInfo.minAcc + (dfRand() * (sInfo.maxAcc - sInfo.minAcc));
 	int colorIndex = rand() % sInfo.startColors.size();
 	p.startColor = sInfo.startColors[colorIndex];
 	p.color = p.startColor;
 	p.dead = false;
-	p.maxSize = sInfo.minParticleSize + (randf() * (sInfo.maxParticleSize - sInfo.minParticleSize));
+	p.maxSize = sInfo.minParticleSize + (dfRand() * (sInfo.maxParticleSize - sInfo.minParticleSize));
 	p.w = p.maxSize;
 	p.h = p.maxSize;
-	p.lifespan = sInfo.minLifespan + (randf() * (sInfo.maxLifespan - sInfo.minLifespan));
+	p.lifespan = sInfo.minLifespan + (dfRand() * (sInfo.maxLifespan - sInfo.minLifespan));
 	p.lifetime = 0;
-	p.rotation = sInfo.minStartRotation + (randf() * (sInfo.maxStartRotation - sInfo.minStartRotation));
-	p.rotationSpd = sInfo.minRotationSpd + (randf() * (sInfo.maxRotationSpd - sInfo.minRotationSpd));
-	float newVeloc = randf() * (sInfo.maxVeloc - sInfo.minVeloc);
+	p.rotation = sInfo.minStartRotation + (dfRand() * (sInfo.maxStartRotation - sInfo.minStartRotation));
+	p.rotationSpd = sInfo.minRotationSpd + (dfRand() * (sInfo.maxRotationSpd - sInfo.minRotationSpd));
+	float newVeloc = dfRand() * (sInfo.maxVeloc - sInfo.minVeloc);
 	float xComp = cos((Pi32 / 180.f) * p.rotation) * newVeloc;
 	float yComp = sin((Pi32 / 180.f) * p.rotation) * newVeloc;
 	p.veloc = vec2(xComp, yComp);
@@ -164,12 +157,12 @@ void dfParticleSystem::CreateParticle()
 		}
 	}
 
-	dfLog("Could not create particle. Max particles!"); // todo dfwarn
+	dfWarn("Could not create particle. Max particles!");
 }
 
 void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 {
-	particle.lifetime += 0.05f; // todo dt
+	particle.lifetime += dfDeltaTime;
 	if(particle.lifetime > particle.lifespan)
 	{
 		particleRenderers[index].renderInfo.active = false;

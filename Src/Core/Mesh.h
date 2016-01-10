@@ -15,6 +15,3 @@ struct Mesh
 };
 
 void CreateDefaultMesh(Mesh *mesh);
-
-// todo make data structure to store vertices, normals, etc that will be faster than a vector? 
-// investigate if it makes a difference

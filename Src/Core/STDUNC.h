@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <vector>
+#include <SDL.h>
 
 typedef uint8_t uint8;
 typedef uint16_t uint16;
@@ -192,6 +193,8 @@ struct Rect
 void dfAssert(bool);
 
 void dfLog(char*);
+void dfWarn(char*);
+void dfError(char*);
 
 int dfStrLen(char*);
 int dfStrLen(const char*);
@@ -225,7 +228,6 @@ void RectMove(vec2 pos, Rect* rect);
 void RectMove(float x, float y, Rect* rect);
 void RectSize(vec2 size, Rect* rect);
 void RectSize(float w, float h, Rect* rect);
-// todo more rect funcs: overlapping, other stuff. check xna for all its useful stuff
 
 float dfRand();
 float dfRand(float min, float max);

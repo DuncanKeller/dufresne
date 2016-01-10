@@ -42,17 +42,14 @@ public:
 	// debug
 	void DebugTestWritePoolToFile();
 
-	// todo this filename hash is pretty half baked, need a better solution, or at least a better hash
-	// todo apply same treatment of hash to the shader pool.
-	long GetHash(const wchar_t* filename);
 	std::vector<ShaderInfo> shaders;
-	std::map<long, ShaderInfo> shaderMap;
+	std::map<std::wstring, ShaderInfo> shaderMap;
 	std::vector<TextureInfo> textures;
-	std::map<long, TextureInfo> textureMap;
+	std::map<std::wstring, TextureInfo> textureMap;
 	std::vector<std::string> textFiles;
-	std::map<long, std::string> textFileMap;
+	std::map<std::wstring, std::string> textFileMap;
 	char* assetPool;
-	std::map<long, dfFile> assetMap;
+	std::map<std::wstring, dfFile> assetMap;
 	int poolsize;
 
 };

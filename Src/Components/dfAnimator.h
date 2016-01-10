@@ -19,7 +19,10 @@ class dfAnimator :
 {
 public:
 	dfAnimator(wchar_t* animFilename);
+	dfAnimator(std::string name, float spd, int frames);
+	dfAnimator(std::vector<AnimationInfo> anims);
 	virtual ~dfAnimator(void);
+
 	virtual void Init();
 	virtual void Update();
 

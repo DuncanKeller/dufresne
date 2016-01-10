@@ -16,9 +16,6 @@ public:
 	// TODO: replace temporary max with a dynamic array solution
 	static const int maxComponents = 20;
 	int numComponents;
-	// major TODO
-	// I'd rather not have an array of pointers, but I can't think of a way
-	// to avoid object slicing otherwise. R Smtih can halp with ideas maybe
 	dfComponent* components[maxComponents];
 	
 	void RegisterComponent(dfComponent* c);

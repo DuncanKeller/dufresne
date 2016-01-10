@@ -141,7 +141,7 @@ void RenderSystem::DrawRect(Rect r, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveRectShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 	
@@ -178,7 +178,7 @@ void RenderSystem::DrawCircle(Circle c, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveCircleShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 
@@ -220,7 +220,7 @@ void RenderSystem::DrawLine(dfLine line, vec4 color, int layer)
 	p->rInfo.color = color;
 	p->rInfo.depth = layer;
 	p->rInfo.glShaderProgram = RenderSystem::primitiveLineShaderProg;
-	p->rInfo.glTexture = 0;
+	p->rInfo.numTextures = 0;
 	p->rInfo.matrix = 0;
 	CreateDefaultMesh(&p->rInfo.mesh);
 
@@ -245,15 +245,8 @@ unsigned int RenderSystem::CompileShader(ShaderInfo shader)
 	glShaderSource (shaderIndex, 1, (const GLchar** )&shader.shaderFile.contents, NULL);
 	glCompileShader (shaderIndex);
 	int params = -1;
-	glGetShaderiv (shaderIndex, GL_COMPILE_STATUS, &params);
-	if (GL_TRUE != params) 
-	{
-		// todo logging
-		//fprintf (stderr, "ERROR: GL shader index %i did not compile\n", shaderIndex);
-		//PrintShaderLog(shaderIndex);
-		dfAssert(false); // did not compile :(
-		return 0;
-	}
+
+	Renderer::CheckShaderCompile(shaderIndex);
 
 	return shaderIndex;
 }
@@ -311,13 +304,11 @@ void RenderSystem::SortRenderBox(int boxIndex)
 
 void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgram )
 {
-	// todo log warning if it can't find the matching uniform name
-	if(uniform.valueInt != 0) // todo is it OK just to check int, instead of depending on type?
+	if(uniform.valueInt != 0) 
 	{
 		int uniformLoc = glGetUniformLocation (shaderProgram, uniform.name);
 		if(uniformLoc >= 0)
 		{
-			// todo implement a buncha deez fuckers
 			switch(uniform.type)
 			{
 			case DF_int:
@@ -342,9 +333,7 @@ void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgr
 					uniform.valueFloat);
 				break;
 			case DF_sampler2D:
-				// todo: fart, I forget how to use thisss
-				//glUniform1i (uniformLoc, renderBox[i][n].glTexture);
-				glUniform1i (uniformLoc, 0);
+				glUniform1i (uniformLoc, uniform.valueInt[0]);
 				break;
 			case DF_point2D:
 				glUniform2f(uniformLoc, (float)uniform.valueInt[0],
@@ -388,8 +377,6 @@ void RenderSystem::ApplyUniforms(ShaderUniform uniform, unsigned int shaderProgr
 	}
 }
 
-// todo better way than just passing around big vector
-// needs to handle scene hirarchy eventually
 void RenderSystem::RenderLoop(dfScene* scene) 
 {
 	// set gl state
@@ -495,9 +482,12 @@ void RenderSystem::RenderLoop(dfScene* scene)
 				}
 				else
 				{
-					unsigned int newTexture = renderBox[i][n].glTexture;
-					glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
-					glBindTexture (GL_TEXTURE_2D, newTexture);
+					for(int textureIndex = 0; textureIndex < renderBox[i][n].numTextures; textureIndex++)
+					{
+						unsigned int newTexture = renderBox[i][n].glTextures[textureIndex];
+						glActiveTexture(GL_TEXTURE0 + textureIndex);
+						glBindTexture (GL_TEXTURE_2D, newTexture);
+					}
 
 					glBindVertexArray (renderBox[i][n].mesh.vertexArrayObject);
 					glDrawArrays (GL_TRIANGLES, 0, renderBox[i][n].mesh.numVerts);
@@ -541,7 +531,7 @@ void RenderSystem::RenderLoop(dfScene* scene)
 		ApplyUniforms(postProcessUnifroms[i], postProcessShaderProgram);
 	}
 
-	glActiveTexture(GL_TEXTURE0 + 0); // todo + 0 is which texture is passed into the shader... manage this somehow...
+	glActiveTexture(GL_TEXTURE0 + 0); 
 	glBindTexture (GL_TEXTURE_2D, colorBufferTexture);
 	glBindVertexArray (screenRect.vertexArrayObject);
 	glDrawArrays (GL_TRIANGLES, 0, screenRect.numVerts);

@@ -22,39 +22,32 @@ void AssetManager::InitAssetPool(int size)
 	poolsize = size;
 }
 
-long AssetManager::GetHash(const wchar_t* filename)
-{
-	long hash = 0;
-	for(int i = 0; i < dfStrLen(filename); i++)
-	{
-		hash += i * filename[i];
-	}
-	return hash;
-}
-
 dfFile AssetManager::GetAsset(const wchar_t* key)
 {
-	return assetMap[GetHash(key)];
+	std::wstring keystring = std::wstring(key);
+	return assetMap[keystring];
 }
 
 ShaderInfo AssetManager::GetShader(const wchar_t* key)
 {
-	return shaderMap[GetHash(key)];
+	std::wstring keystring = std::wstring(key);
+	return shaderMap[keystring];
 }
 
 TextureInfo AssetManager::GetTexture(const wchar_t* key)
 {
-	return textureMap[GetHash(key)];
+	std::wstring keystring = std::wstring(key);
+	return textureMap[keystring];
 }
 
 std::string AssetManager::GetTextFile(const wchar_t* key)
 {
-	return textFileMap[GetHash(key)];
+	std::wstring keystring = std::wstring(key);
+	return textFileMap[keystring];
 }
 
 void AssetManager::InitShader(char* src, ShaderInfo &shader)
 {
-	// TODO array support
 	const char* matchingVert = "!vert";
 	int matchingVertIndex = 0;
 	const char* matchingFrag = "!frag";
@@ -78,8 +71,8 @@ void AssetManager::InitShader(char* src, ShaderInfo &shader)
 
 	const char* fullShaderSrc = dfStrCat(basicUniforms, src);
 
-	// todo cache strlen, shaders can be looong
-	for(int i = 0; i < dfStrLen(fullShaderSrc); i++)
+	int len = dfStrLen(fullShaderSrc);
+	for(int i = 0; i < len; i++)
 	{
 		// vert or frag
 		if(fullShaderSrc[i] == matchingVert[matchingVertIndex])
@@ -190,7 +183,6 @@ void AssetManager::InitTexture(TextureInfo &texture)
 	unsigned int glTexture;
 
 	glGenTextures(1, &glTexture); 
-	//glActiveTexture(GL_TEXTURE0); todo do I need to do this here?
 	glBindTexture (GL_TEXTURE_2D, glTexture);
 
 	SDL_RWops* textureWops = SDL_RWFromMem((void*)texture.file.contents, texture.file.size);
@@ -216,8 +208,6 @@ void AssetManager::InitTexture(TextureInfo &texture)
 
 	if(dfStrCmp(texture.filetype, "png"))
 		glFormat = GL_RGBA;
-	
-	 //glFormat = GL_RGB; // todo: total fuckin hack, why does RGBA not work for some PNGs????
 
 
 	glTexImage2D (
@@ -232,7 +222,6 @@ void AssetManager::InitTexture(TextureInfo &texture)
 	  textureSurface->pixels
 	);
 
-	// todo error checking for that command
 }
 
 std::vector<wchar_t>  AssetManager::GetFileExtension(const wchar_t* fullFilename)
@@ -380,8 +369,8 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 				newAsset.size = filesizeOUT;
 				newAsset.contents = *loadLocation;
 				
-				long hash = GetHash(filename);
-				assetMap[hash] = newAsset;
+				std::wstring stringkey = std::wstring(filename);
+				assetMap[stringkey] = newAsset;
 				
 				(*loadLocation) += filesizeOUT;
 
@@ -396,7 +385,7 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 					InitShader(dfSubstr(newAsset.contents, newAsset.size), shader);
 
 					shaders.push_back(shader);
-					shaderMap[GetHash(filename)] = shader;
+					shaderMap[stringkey] = shader;
 				}
 				else if(dfStrCmp(filetype, "png") || dfStrCmp(filetype, "jpg") || dfStrCmp(filetype, "bmp"))
 				{
@@ -408,13 +397,13 @@ bool AssetManager::LoadFileIntoPool(const wchar_t *filename, char** loadLocation
 					InitTexture(texture);
 
 					textures.push_back(texture);
-					textureMap[GetHash(filename)] = texture;
+					textureMap[stringkey] = texture;
 				}
 				else if(dfStrCmp(filetype, "json") || dfStrCmp(filetype, "txt"))
 				{
 					std::string str = std::string(newAsset.contents);
 					textFiles.push_back(str);
-					textFileMap[GetHash(filename)] = str;
+					textFileMap[stringkey] = str;
 				}
 				
 			}
