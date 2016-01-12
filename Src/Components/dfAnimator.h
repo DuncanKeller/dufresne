@@ -18,12 +18,14 @@ class dfAnimator :
 	public dfComponent
 {
 public:
-	dfAnimator(wchar_t* animFilename);
-	dfAnimator(std::string name, float spd, int frames);
-	dfAnimator(std::vector<AnimationInfo> anims);
+	dfAnimator();
 	virtual ~dfAnimator(void);
 
 	virtual void Init();
+	virtual void Setup(wchar_t* animFilename);
+	virtual void Setup(std::string name, float spd, int frames);
+	virtual void Setup(std::vector<AnimationInfo> anims);
+
 	virtual void Update();
 
 	Renderer* render;

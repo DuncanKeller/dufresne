@@ -207,10 +207,50 @@ void Renderer::InitDefaultShader()
 	Renderer::CheckShaderLink(defaultAtlasShaderProgram);
 }
 
+void Renderer::AddUniform(ShaderUniform uniform)
+{
+	renderInfo.uniforms.push_back(uniform);
+}
+
+void Renderer::AddUniformInt(const char* name, int* value)
+{
+	ShaderUniform newUniform;
+	newUniform.type = DF_int;
+	newUniform.name = (char*)name;
+	newUniform.valueInt = value;
+	renderInfo.uniforms.push_back(newUniform);
+}
+
+void Renderer::AddUniformFloat(const char* name, float* value)
+{
+	ShaderUniform newUniform;
+	newUniform.type = DF_float;
+	newUniform.name = (char*)name;
+	newUniform.valueFloat = value;
+	renderInfo.uniforms.push_back(newUniform);
+}
+
+void Renderer::AddUniformRect(const char* name, Rect* value)
+{
+	ShaderUniform newUniform;
+	newUniform.type = DF_rect;
+	newUniform.name = (char*)name;
+	newUniform.valueRect = value;
+	renderInfo.uniforms.push_back(newUniform);
+}
+
+void Renderer::AddUniformVec2(const char* name, vec2* value)
+{
+	ShaderUniform newUniform;
+	newUniform.type = DF_vec2;
+	newUniform.name = (char*)name;
+	newUniform.valueFloat = &value->x;
+	renderInfo.uniforms.push_back(newUniform);
+}
+
+
 void Renderer::SetStandardUniforms(std::vector<ShaderUniform> &uniforms)
 {
-	// todo AddUniform function?
-	
 	ShaderUniform uniformOne;
 	uniformOne.type = DF_point2D;
 	uniformOne.name = "resolution";

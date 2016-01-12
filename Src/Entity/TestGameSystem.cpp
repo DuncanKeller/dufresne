@@ -15,7 +15,7 @@ void TestEntity::Init()
 {
 	RegisterComponent(&tf);
 
-	render.renderInfo.matrix = &tf.matrix;
+	//render.renderInfo.matrix = &tf.matrix;
 
 
 	// was model matrix, now coords...
@@ -34,8 +34,8 @@ void TestEntity::Init()
 	
 	render.InitSprite(textureFile, 4, 3, 0, 0);
 
-	animComp = new dfAnimator(L"fart\\test-anim_animations.json");
-	RegisterComponent(animComp);
+	animComp.Setup(L"fart\\test-anim_animations.json");
+	RegisterComponent(&animComp);
 	/*
 	particleSys = new dfParticleSystem();
 	RegisterComponent(particleSys);
@@ -69,22 +69,22 @@ void TestEntity::Update()
 	if(input.keyboard.arrowUp.buttonDown)
 	{
 		RectMove(0, -5.1f, &tf.rectangle);
-		animComp->Play("walk-up");
+		animComp.Play("walk-up");
 	}
 	if(input.keyboard.arrowDown.buttonDown)
 	{
 		RectMove(0, 5, &tf.rectangle);
-		animComp->Play("walk-down");
+		animComp.Play("walk-down");
 	}
 	if(input.keyboard.arrowLeft.buttonDown)
 	{
 		RectMove(-5, 0, &tf.rectangle);
-		animComp->Play("walk-left");
+		animComp.Play("walk-left");
 	}
 	if(input.keyboard.arrowRight.buttonDown)
 	{
 		RectMove( 5, 0, &tf.rectangle);
-		animComp->Play("walk-right");
+		animComp.Play("walk-right");
 	}
 
 	if(input.keyboard.spacebar.tapped)

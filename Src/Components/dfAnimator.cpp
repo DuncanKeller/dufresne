@@ -1,7 +1,15 @@
 #include "dfAnimator.h"
 #include "../Entity/Entity.h"
 
-dfAnimator::dfAnimator(wchar_t* animFilename)
+dfAnimator::dfAnimator()
+{
+}
+
+dfAnimator::~dfAnimator(void)
+{
+}
+
+void dfAnimator::Setup(wchar_t* animFilename)
 {
 	currentAnimIndex = 0;
 	currentFrame = 0;
@@ -11,7 +19,7 @@ dfAnimator::dfAnimator(wchar_t* animFilename)
 	LoadAnimJSON(animFilename);
 }
 
-dfAnimator::dfAnimator(std::string name, float spd, int frames)
+void dfAnimator::Setup(std::string name, float spd, int frames)
 {
 	AnimationInfo info;
 	for(int i = 0; i < frames; i++)
@@ -22,7 +30,7 @@ dfAnimator::dfAnimator(std::string name, float spd, int frames)
 	info.name = name;
 }
 
-dfAnimator::dfAnimator(std::vector<AnimationInfo> animationList)
+void dfAnimator::Setup(std::vector<AnimationInfo> animationList)
 {
 	currentAnimIndex = 0;
 	currentFrame = 0;
@@ -30,10 +38,6 @@ dfAnimator::dfAnimator(std::vector<AnimationInfo> animationList)
 	timer = 0.f;
 
 	anims = animationList;
-}
-
-dfAnimator::~dfAnimator(void)
-{
 }
 
 void dfAnimator::Init()
