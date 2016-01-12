@@ -81,7 +81,12 @@ public:
 	
 	static void SetStandardUniforms(std::vector<ShaderUniform> &uniforms);
 	static void SetSpecialUniforms(RenderInfo &renderInfo, SpriteInfo &spriteInfo, Renderer* entity);
-	
+	void AddUniform(ShaderUniform newUniform);
+	void AddUniformInt(const char* name, int* value);
+	void AddUniformFloat(const char* name, float* value);
+	void AddUniformRect(const char* name, Rect* value);
+	void AddUniformVec2(const char* name, vec2* value);
+
 	static void Renderer::PrintShaderLog(const unsigned int& index);
 	static void Renderer::PrintProgramLog (const unsigned int& index);
 	static unsigned int CompileShaderFromSrc(const char* shader, GLuint type);
