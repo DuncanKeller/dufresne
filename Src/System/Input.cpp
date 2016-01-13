@@ -266,6 +266,98 @@ void Input::Update()
 
 }
 
+void Input::AddMappedDigitalButton(const wchar_t* name, ButtonState* button)
+{
+	MappedInput in;
+	MappedDigitalInput digIn;
+	digIn.button = button;
+	digIn.fakeButton = 0;
+	digIn.fakeButtonPrev = 0;
+	in.type = mapped_digital;
+	in.digital = digIn;
+	mappedInputs[name].push_back(in);
+}
+
+void Input::AddMappedDigitalButton(const wchar_t* name, float* axis)
+{
+	MappedInput in;
+	MappedDigitalInput digIn;
+	digIn.button = 0;
+	digIn.fakeButton = axis;
+	digIn.fakeButtonPrev = 0;
+	in.type = mapped_digital;
+	in.digital = digIn;
+	mappedInputs[name].push_back(in);
+}
+
+void Input::AddMappedAnalogInput(const wchar_t* name, ButtonState* negative, ButtonState* positive)
+{
+	MappedInput in;
+	MappedAnalogInput anIn;
+	anIn.analogAxis = 0;
+	anIn.negativeAxis = negative;
+	anIn.positiveAxis = positive;
+	in.type = mapped_analog;
+	in.analog = anIn;
+	mappedInputs[name].push_back(in);
+}
+
+void Input::AddMappedAnalogInput(const wchar_t* name, float* axis)
+{
+	MappedInput in;
+	MappedAnalogInput anIn;
+	anIn.analogAxis = axis;
+	anIn.negativeAxis = 0;
+	anIn.positiveAxis = 0;
+	in.type = mapped_analog;
+	in.analog = anIn;
+	mappedInputs[name].push_back(in);
+}
+
+float Input::GetMappedAxis(const wchar_t* name)
+{
+	if(!(mappedInputs.find(name) == mappedInputs.end()))
+	{
+		for(int i = 0; i < mappedInputs[name].size(); i++)
+		{
+			if(mappedInputs[name][i].type == mapped_analog)
+			{
+				if(mappedInputs[name][i].analog.analogAxis != 0)
+					return *mappedInputs[name][i].analog.analogAxis;
+				 if(mappedInputs[name][i].analog.negativeAxis->buttonDown)
+					 return -1.f; 
+				 if(mappedInputs[name][i].analog.positiveAxis->buttonDown)
+					 return 1.f;
+			}
+		}
+	}
+	return 0.f;
+}
+
+ButtonState Input::GetMappedButton(const wchar_t* name)
+{
+	if(!(mappedInputs.find(name) == mappedInputs.end()))
+	{
+		for(int i = 0; i < mappedInputs[name].size(); i++)
+		{
+			if(mappedInputs[name][i].type == mapped_digital)
+			{
+				if(mappedInputs[name][i].digital.button)
+					return *mappedInputs[name][i].digital.button;
+				 
+				float threshold = 0.9f;
+				ButtonState fakeState;
+				fakeState.buttonDown == *mappedInputs[name][i].digital.fakeButton > threshold;
+				fakeState.lastFrameDown == mappedInputs[name][i].digital.fakeButtonPrev > threshold;
+				fakeState.tapped == *mappedInputs[name][i].digital.fakeButton > threshold &&
+					mappedInputs[name][i].digital.fakeButtonPrev <= threshold;
+				return fakeState;
+
+			}
+		}
+	}
+}
+
 void Input::HandleKeyboard(SDL_Keycode keycode, bool pressed)
 {
 	switch( keycode )

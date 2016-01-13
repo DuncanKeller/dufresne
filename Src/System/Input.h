@@ -3,14 +3,43 @@
 #include "../Core/STDUNC.h"
 #include "SDL.h"
 #include "../Entity/Entity.h"
+#include <map>
+#include <vector>
 
 const int MAX_KEYS_ON_KEYBOARD = 106;
+
+enum MappedInputType
+{
+	mapped_analog,
+	mapped_digital
+};
 
 struct ButtonState
 {
 	bool buttonDown;
 	bool lastFrameDown;
 	bool tapped;
+};
+
+struct MappedAnalogInput
+{
+	ButtonState* negativeAxis; // to use digital as analog
+	ButtonState* positiveAxis; // 
+	float* analogAxis;
+};
+
+struct MappedDigitalInput
+{
+	ButtonState* button;
+	float* fakeButton; // to use analog as digital
+	float fakeButtonPrev; //
+};
+
+struct MappedInput
+{
+	MappedInputType type;
+	MappedDigitalInput digital;
+	MappedAnalogInput analog;
 };
 
 struct Gamepad
@@ -202,6 +231,15 @@ public:
 
 	void HandleKeyboard(SDL_Keycode keycode, bool pressed);
 	void ProcessButton(ButtonState*, bool);
+
+	std::map<const wchar_t*, std::vector<MappedInput>> mappedInputs;
+	void AddMappedDigitalButton(const wchar_t* name, ButtonState* button);
+	void AddMappedDigitalButton(const wchar_t* name, float* axis);
+	void AddMappedAnalogInput(const wchar_t* name, ButtonState* negative, ButtonState* positive);
+	void AddMappedAnalogInput(const wchar_t* name, float* axis);
+	float GetMappedAxis(const wchar_t* name);
+	ButtonState GetMappedButton(const wchar_t* name);
+
 
 	virtual void Init();
 	virtual void Update();
