@@ -60,28 +60,36 @@ void TestEntity::Init()
 	particleSys->sInfo.fadeSize = 1;
 	particleSys->sInfo.textures.push_back(assMan.GetTexture(L"fart\\test-particle.png"));
 	*/
+
+	input.AddMappedAnalogInput(L"walk x", &input.keyboard.arrowLeft,  &input.keyboard.arrowRight);
+	input.AddMappedAnalogInput(L"walk x", &input.keyboard.a,  &input.keyboard.d);
+	input.AddMappedAnalogInput(L"walk y", &input.keyboard.arrowDown,  &input.keyboard.arrowUp);
+	input.AddMappedAnalogInput(L"walk y", &input.keyboard.s,  &input.keyboard.w);
 }
 
 void TestEntity::Update()
 {
 	Entity::Update();
+	
+	float x = input.GetMappedAxis(L"walk x");
+	float y = input.GetMappedAxis(L"walk y");
 
-	if(input.keyboard.arrowUp.buttonDown)
+	if(y > 0)
 	{
 		RectMove(0, -5.1f, &tf.rectangle);
 		animComp.Play("walk-up");
 	}
-	if(input.keyboard.arrowDown.buttonDown)
+	if(y < 0)
 	{
 		RectMove(0, 5, &tf.rectangle);
 		animComp.Play("walk-down");
 	}
-	if(input.keyboard.arrowLeft.buttonDown)
+	if(x < 0)
 	{
 		RectMove(-5, 0, &tf.rectangle);
 		animComp.Play("walk-left");
 	}
-	if(input.keyboard.arrowRight.buttonDown)
+	if(x > 0)
 	{
 		RectMove( 5, 0, &tf.rectangle);
 		animComp.Play("walk-right");
