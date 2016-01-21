@@ -36,7 +36,7 @@ void dfScene::Update()
 
 	for(int i = 0; i < currentNum; i++)
 	{
-		if(sceneObjects)
+		if(sceneObjects[i])
 		{
 			sceneObjects[i]->Update();
 		}
@@ -66,6 +66,13 @@ void dfScene::RemoveSceneObject(Entity* sceneObj)
 	{
 		if(sceneObj == sceneObjects[i])
 		{
+			for(int cIndex = 0; cIndex < sceneObjects[i]->numComponents; cIndex++)
+			{
+				dfComponent* dfc = sceneObjects[i]->components[cIndex];
+				if(dfc)
+					RemoveComponentFromMap(dfc);
+			}
+
 			delete sceneObj;
 			sceneObjects[i] = 0;
 			freeSpots.push_back(i);

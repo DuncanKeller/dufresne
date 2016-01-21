@@ -322,6 +322,16 @@ void RectSize(float w, float h, Rect *rect)
 	UpdateRectMembers(rect);
 }
 
+bool RectIntersects(Rect r1, Rect r2)
+{
+	if(r1.left > r2.right || 
+		r1.right <  r2.left ||
+		r1.top > r2.bottom ||
+		r1.bottom < r2.top)
+		return false;
+	return true;
+}
+
 float dfRand()
 {
 	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);

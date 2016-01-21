@@ -53,7 +53,7 @@ void dfAnimator::Update()
 
 	timer += dfDeltaTime;
 
-	if(playing)
+	if(playing && anims.size() > 0)
 	{
 		if(timer > 1.f / anims[currentAnimIndex].framesPerSecond)
 		{

@@ -509,17 +509,11 @@ void RenderSystem::RenderLoop(dfScene* scene)
 		float gameAspect = (float)GameResolution.x / (float)GameResolution.y;
 		float screenAspect = (float)ScreenResolution.x / (float)ScreenResolution.y;
 		if(gameAspect < screenAspect)
-		{
 			letterBoxRatio = vec2(((float)GameResolution.x * ((float)ScreenResolution.y / (float)GameResolution.y)) / (float)ScreenResolution.x, 1.f);
-		}
 		else if(gameAspect > screenAspect)
-		{
 			letterBoxRatio = vec2(1.f, ((float)GameResolution.y * ((float)ScreenResolution.x / (float)GameResolution.x)) / (float)ScreenResolution.y);
-		}
 		else
-		{
 			letterBoxRatio = vec2(1.f, 1.f);
-		}
 	}
 	else
 	{

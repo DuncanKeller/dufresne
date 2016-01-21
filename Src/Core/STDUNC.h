@@ -229,6 +229,8 @@ void RectMove(float x, float y, Rect* rect);
 void RectSize(vec2 size, Rect* rect);
 void RectSize(float w, float h, Rect* rect);
 
+bool RectIntersects(Rect r1, Rect r2);
+
 float dfRand();
 float dfRand(float min, float max);
 int dfRand(int min, int max);
