@@ -73,6 +73,20 @@ public:
 	virtual void Init();
 	virtual void Update();
 
+	// top useful functions
+	void SetTexture(TextureInfo &t);
+	void InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing);
+	void SetRenderRect(Rect* r);
+	Rect* GetRenderRect();
+
+	void SetAtlasLocation(int xIndex, int yIndex);
+	void SetAtlasLocation(float xPos, float Ypos);
+	void SetAtlasLocation(int index);
+
+	void SetShader(const char* vert, const char* frag);
+
+	// --------------
+
 	RenderInfo renderInfo;
 	SpriteInfo spriteInfo;
 	TextureInfo* textureInfo;
@@ -94,16 +108,10 @@ public:
 	static bool Renderer::CheckShaderLink(unsigned int shader);
 	static void InitDefaultShader();
 
-	
-	void SetTexture(TextureInfo &t);
-
-	void InitSprite(TextureInfo &t, int rows, int colums, int margin, int spacing);
-	void SetAtlasLocation(int xIndex, int yIndex);
-	void SetAtlasLocation(float xPos, float Ypos);
-	void SetAtlasLocation(int index);
-
 	bool visible;
 	bool atlased;
+
+protected:
 	Rect* renderRect;
 
 private:

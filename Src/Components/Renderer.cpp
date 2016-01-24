@@ -114,6 +114,17 @@ void Renderer::SetAtlasLocation(int index)
 	SetAtlasLocation(xIndex, yIndex);
 }
 
+void Renderer::SetRenderRect(Rect* r)
+{
+	renderRect = r;
+}
+
+Rect* Renderer::GetRenderRect()
+{
+	return renderRect;
+}
+
+
 void Renderer::PrintShaderLog(const unsigned int& index)
 {
 	int max_length = 2048;
@@ -205,6 +216,27 @@ void Renderer::InitDefaultShader()
 	glLinkProgram (defaultAtlasShaderProgram);
     
 	Renderer::CheckShaderLink(defaultAtlasShaderProgram);
+}
+
+void Renderer::SetShader(const char* vert, const char* frag)
+{
+	unsigned int shaderProg = glCreateProgram();
+
+	unsigned int vs = CompileShaderFromSrc(vert, GL_VERTEX_SHADER);
+	unsigned int fs = CompileShaderFromSrc(frag, GL_FRAGMENT_SHADER);
+	unsigned int atlasFs = CompileShaderFromSrc(defaultAtlassedFrag, GL_FRAGMENT_SHADER);
+
+	Renderer::CheckShaderCompile(vs);
+	Renderer::CheckShaderCompile(fs);
+	Renderer::CheckShaderCompile(atlasFs);
+
+	glAttachShader (shaderProg, vs);
+	glAttachShader (shaderProg, fs);
+	glLinkProgram (shaderProg);
+  
+	Renderer::CheckShaderLink(shaderProg);
+	
+	renderInfo.glShaderProgram = shaderProg;
 }
 
 void Renderer::AddUniform(ShaderUniform uniform)

@@ -315,7 +315,7 @@ void TileMap::GenerateMapSystem()
 			vec2 tilePos = GetScreenCoordFromIndex(t.xIndex, t.yIndex, t.hIndex);
 			tile->tf.SetPos(tilePos.x, tilePos.y);
 
-			RectSize(set.tilePxWidth, set.tilePxHeight, tile->render.renderRect);
+			RectSize(set.tilePxWidth, set.tilePxHeight, tile->render.GetRenderRect());
 			tile->render.InitSprite(set.texture, set.numTileHeight, set.numTilesWidth, set.margin, set.spacing);
 			tile->render.SetAtlasLocation(t.tilesetXIndex, t.tilesetYIndex);
 			tile->render.renderInfo.depth = layerIndex + 10; // todo more robust layering for tiles
@@ -378,7 +378,7 @@ void TileMap::GenerateMapSystem()
 			// todo make sure object groups position correctly in isometric maps
 			Tileset set = tilesets[obj.tilesetIndex];
 			tile->tf.SetPos(obj.xPosition, obj.yPosition); // todo configurable size that matches tilemap size above
-			RectSize(obj.widthPx, obj.heightPx, tile->render.renderRect);
+			RectSize(obj.widthPx, obj.heightPx, tile->render.GetRenderRect());
 
 			if(obj.tilemapGUID >= 0)
 			{

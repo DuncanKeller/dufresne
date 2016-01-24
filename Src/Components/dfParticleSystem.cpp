@@ -135,7 +135,7 @@ void dfParticleSystem::CreateParticle()
 		{
 			particles[i] = p;
 			
-			particleRenderers[i].renderRect = p.renderRect;
+			particleRenderers[i].SetRenderRect(p.renderRect);
 			particleRenderers[i].SetTexture(sInfo.textures[textureIndex]);
 			particleRenderers[i].renderInfo.active = true;
 			particleRenderers[i].renderInfo.depth = layer;
