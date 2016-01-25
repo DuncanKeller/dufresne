@@ -24,6 +24,8 @@
 #include "Components/bmpTextEntity.h"
 #include "..\SDL2_mixer-2.0.0\SDL_mixer.h"
 
+#include "Test\DuFradius.h"
+
 // extern
 point2D GameResolution;
 point2D ScreenResolution;
@@ -100,11 +102,11 @@ int CALLBACK WinMain(
 
 	dfDeltaTime = 43.f;
 	
-	ScreenResolution.x = 800.f;
-	ScreenResolution.y = 600.f;
+	ScreenResolution.x = 1100.f;
+	ScreenResolution.y = 700.f;
 	
-	GameResolution.x = 640.f;
-	GameResolution.y = 480.f;
+	GameResolution.x = 1100.f;
+	GameResolution.y = 700.f;
 	
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -199,7 +201,9 @@ int CALLBACK WinMain(
 	scene1->setupFunc = &SetupScene1;
 	scene2->setupFunc = &SetupScene2;
 	
-	sceneMan.LoadScene(scene1);
+	//sceneMan.LoadScene(scene1);
+
+	DufradiuInitGame();
 
 	Uint32 previousMiliseconds = 0;
 	
@@ -210,6 +214,7 @@ int CALLBACK WinMain(
 		dfTotalTime = currentMiliseconds / 1000.f;
 		dfDeltaTime = (currentMiliseconds / 1000.f) - (previousMiliseconds / 1000.f);
 
+		/*
 		if(testDude->tf.rectangle.left > GameResolution.x)
 		{
 			sceneMan.LoadScene(scene2);
@@ -230,12 +235,17 @@ int CALLBACK WinMain(
 		if(input.keyboard.n3.tapped)
 		{
 			sceneMan.renderer.UpdateResolution(450, 300);
-		}
+		}*/
+
 
 		input.Update();
 
-		sceneMan.Update();
 
+		DufradiusUpdate();
+
+		previousMiliseconds = currentMiliseconds;
+
+		sceneMan.Update();
 		SDL_GL_SwapWindow(RenderSystem::window);
 	}
 

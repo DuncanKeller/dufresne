@@ -59,7 +59,7 @@ void Renderer::Init()
 		renderRect = &tf->rectangle;
 		Renderer::SetSpecialUniforms(renderInfo, spriteInfo, this);
 	}
-
+	
 }
 
 void Renderer::Update()
@@ -117,6 +117,15 @@ void Renderer::SetAtlasLocation(int index)
 void Renderer::SetRenderRect(Rect* r)
 {
 	renderRect = r;
+
+	for(int cIndex = 0; cIndex < renderInfo.uniforms.size(); cIndex++)
+	{
+		if(dfStrCmp("rect", renderInfo.uniforms[cIndex].name))
+		{
+			renderInfo.uniforms[cIndex].valueRect = renderRect;
+			break;
+		}
+	}
 }
 
 Rect* Renderer::GetRenderRect()
