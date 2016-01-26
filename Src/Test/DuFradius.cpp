@@ -8,9 +8,9 @@ std::vector<SupaLaser*> lasers;
 std::vector<dfParticleSystem*> playerParticleList;
 
 const char* laserBeamFrag = ""
-	//"#version 130\n"
-	//"#extension GL_ARB_explicit_attrib_location : require\n"
-	//"#extension GL_ARB_explicit_uniform_location : require\n"
+	"#version 130\n"
+	"#extension GL_ARB_explicit_attrib_location : require\n"
+	"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform vec4 inColor;"
 	"uniform float time;"
@@ -58,9 +58,9 @@ const char* laserBeamFrag = ""
 	"";
 
 const char* fradiusEntityFrag = ""
-	//"#version 130\n"
-	//"#extension GL_ARB_explicit_attrib_location : require\n"
-	//"#extension GL_ARB_explicit_uniform_location : require\n"
+	"#version 130\n"
+	"#extension GL_ARB_explicit_attrib_location : require\n"
+	"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform sampler2D basic_texture;"
 	"uniform vec2 atlasPos,spriteSize;"
@@ -144,7 +144,7 @@ void SetupParticles()
 	playerParticles2->sInfo.minAcc = 0;
 	playerParticles2->sInfo.maxAcc = 0;
 	playerParticles2->sInfo.startColors.push_back(vec4(0.2,0.2,0.2,0.9));
-	playerParticles2->sInfo.beginFadeTime = .9f;
+	playerParticles2->sInfo.beginFadeTime = 0.f;
 	playerParticles2->sInfo.minStartRotation = 160;
 	playerParticles2->sInfo.maxStartRotation = 200;
 	playerParticles2->sInfo.minRotationSpd = 0;

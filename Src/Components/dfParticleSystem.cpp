@@ -64,7 +64,7 @@ void dfParticleSystem::Update()
 		}
 	}
 
-	for(int i = 0; i < numParticles; i++)
+	for(int i = 0; i < currentParticleCap; i++)
 	{
 		if(particles[i].color.x == 1 && particles[i].color.y == 1 && particles[i].color.z == 1)
 			int fut = 4;
@@ -89,7 +89,6 @@ void dfParticleSystem::InitParticle(ParticleInfo &p)
 	p.w = 0;
 	p.pos = vec2(0.f, 0.f);
 	p.rotationSpd = 0;
-
 }
 
 void dfParticleSystem::CreateParticle()

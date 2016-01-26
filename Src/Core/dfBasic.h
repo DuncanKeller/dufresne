@@ -65,7 +65,7 @@ struct dfBitmapFont
 };
 
 // -particles-
-const int MAX_PARTICLES = 8192;
+const int MAX_PARTICLES = 300;
 
 struct ParticleInfo
 {
