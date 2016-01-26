@@ -2,6 +2,7 @@
 #include "..\System\AssetManager.h"
 #include "..\System\Input.h"
 #include "..\System\SceneManager.h"
+#include "..\Components\dfParticleSystem.h"
 #include "..\Entity\stdEntity.h"
 #include "..\Core\STDUNC.h"
 #include "..\Libs\BuitInShaders.h"
@@ -101,3 +102,6 @@ void SetupElectric(float height, float offsetX, float offsetY);
 void UpdateLasers();
 
 void ChargerFire(dfEnemy e);
+
+// more fx
+void SetupParticles();

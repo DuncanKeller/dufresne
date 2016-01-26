@@ -118,7 +118,7 @@ void dfParticleSystem::CreateParticle()
 	p.lifetime = 0;
 	p.rotation = sInfo.minStartRotation + (dfRand() * (sInfo.maxStartRotation - sInfo.minStartRotation));
 	p.rotationSpd = sInfo.minRotationSpd + (dfRand() * (sInfo.maxRotationSpd - sInfo.minRotationSpd));
-	float newVeloc = dfRand() * (sInfo.maxVeloc - sInfo.minVeloc);
+	float newVeloc = sInfo.minVeloc + (dfRand() * (sInfo.maxVeloc - sInfo.minVeloc));
 	float xComp = cos((Pi32 / 180.f) * p.rotation) * newVeloc;
 	float yComp = sin((Pi32 / 180.f) * p.rotation) * newVeloc;
 	p.veloc = vec2(xComp, yComp);
@@ -139,6 +139,7 @@ void dfParticleSystem::CreateParticle()
 			particleRenderers[i].SetTexture(sInfo.textures[textureIndex]);
 			particleRenderers[i].renderInfo.active = true;
 			particleRenderers[i].renderInfo.depth = layer;
+			Renderer::SetSpecialUniforms(particleRenderers[i].renderInfo, particleRenderers[i].spriteInfo, &particleRenderers[i]);
 
 			for(int cIndex = 0; cIndex < particleRenderers[i].renderInfo.uniforms.size(); cIndex++)
 			{
@@ -194,10 +195,10 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 		particle.h = particle.maxSize * (1.f-ct);
 	}
 
-	particle.pos.x += particle.veloc.x;
-	particle.pos.y += particle.veloc.y;
-	particle.veloc.x += particle.acc;
-	particle.veloc.y += particle.acc;
+	particle.pos.x += particle.veloc.x * dfDeltaTime;
+	particle.pos.y += particle.veloc.y * dfDeltaTime;
+	particle.veloc.x += particle.acc * dfDeltaTime;
+	particle.veloc.y += particle.acc * dfDeltaTime;
 
 	particle.rotation += particle.rotationSpd;
 

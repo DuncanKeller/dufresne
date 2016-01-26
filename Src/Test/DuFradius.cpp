@@ -5,10 +5,12 @@ std::vector<stdEntity*> bullets;
 std::vector<dfEnemy*> enemies;
 std::vector<SupaLaser*> lasers;
 
+std::vector<dfParticleSystem*> playerParticleList;
+
 const char* laserBeamFrag = ""
-	"#version 130\n"
-	"#extension GL_ARB_explicit_attrib_location : require\n"
-	"#extension GL_ARB_explicit_uniform_location : require\n"
+	//"#version 130\n"
+	//"#extension GL_ARB_explicit_attrib_location : require\n"
+	//"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform vec4 inColor;"
 	"uniform float time;"
@@ -56,9 +58,9 @@ const char* laserBeamFrag = ""
 	"";
 
 const char* fradiusEntityFrag = ""
-	"#version 130\n"
-	"#extension GL_ARB_explicit_attrib_location : require\n"
-	"#extension GL_ARB_explicit_uniform_location : require\n"
+	//"#version 130\n"
+	//"#extension GL_ARB_explicit_attrib_location : require\n"
+	//"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform sampler2D basic_texture;"
 	"uniform vec2 atlasPos,spriteSize;"
@@ -80,7 +82,7 @@ void InitLevel1Scene()
 	ship->tf.SetPos(100, 100);
 	ship->render.renderInfo.depth = 10;
 
-	
+	SetupParticles();
 }
 
 void DufradiuInitGame()
@@ -99,6 +101,60 @@ void DufradiuInitGame()
 	dfScene* scene1 = sceneMan.CreateScene("level 1");
 	scene1->setupFunc = InitLevel1Scene;
 	sceneMan.LoadScene("level 1");
+}
+
+void SetupParticles()
+{
+	playerParticleList.clear();
+	dfParticleSystem* playerParticles =  new dfParticleSystem(); 
+	playerParticles->minSecondsBetweenParticles = 0.01f;
+	playerParticles->maxSecondsBetweenParticles = 0.01f;
+	playerParticles->maxActiveParticles = 1000;
+	playerParticles->layer = 5;
+	playerParticles->sInfo.spawnPoint = vec2(0, 0);
+	playerParticles->sInfo.minVeloc = 300;
+	playerParticles->sInfo.maxVeloc = 300;
+	playerParticles->sInfo.minLifespan = 0.2f;
+	playerParticles->sInfo.maxLifespan = 0.2f;
+	playerParticles->sInfo.minAcc = 0;
+	playerParticles->sInfo.maxAcc = 0;
+	playerParticles->sInfo.startColors.push_back(vec4(1,0,0,1));
+	playerParticles->sInfo.beginFadeTime = .7f;
+	playerParticles->sInfo.minStartRotation = 180;
+	playerParticles->sInfo.maxStartRotation = 180;
+	playerParticles->sInfo.minRotationSpd = 0;
+	playerParticles->sInfo.maxRotationSpd = 0;
+	playerParticles->sInfo.minParticleSize = 20;
+	playerParticles->sInfo.maxParticleSize = 20;
+	playerParticles->sInfo.fadeSize = 0;
+	playerParticles->sInfo.textures.push_back(assMan.GetTexture(L"fart\\dufradius\\particle-gradient.png"));
+	ship->RegisterComponent(playerParticles);
+	playerParticleList.push_back(playerParticles);
+
+	dfParticleSystem* playerParticles2 =  new dfParticleSystem(); 
+	playerParticles2->minSecondsBetweenParticles = 0.1f;
+	playerParticles2->maxSecondsBetweenParticles = 0.1f;
+	playerParticles2->maxActiveParticles = 1000;
+	playerParticles2->layer = 4;
+	playerParticles2->sInfo.spawnPoint = vec2(0, 0);
+	playerParticles2->sInfo.minVeloc = 9;
+	playerParticles2->sInfo.maxVeloc = 9;
+	playerParticles2->sInfo.minLifespan = 0.9f;
+	playerParticles2->sInfo.maxLifespan = 0.9f;
+	playerParticles2->sInfo.minAcc = 0;
+	playerParticles2->sInfo.maxAcc = 0;
+	playerParticles2->sInfo.startColors.push_back(vec4(0.2,0.2,0.2,0.9));
+	playerParticles2->sInfo.beginFadeTime = .9f;
+	playerParticles2->sInfo.minStartRotation = 160;
+	playerParticles2->sInfo.maxStartRotation = 200;
+	playerParticles2->sInfo.minRotationSpd = 0;
+	playerParticles2->sInfo.maxRotationSpd = 0;
+	playerParticles2->sInfo.minParticleSize = 50;
+	playerParticles2->sInfo.maxParticleSize = 70;
+	playerParticles2->sInfo.fadeSize = 0;
+	playerParticles2->sInfo.textures.push_back(assMan.GetTexture(L"fart\\dufradius\\particle-gradient.png"));
+	ship->RegisterComponent(playerParticles2);
+	playerParticleList.push_back(playerParticles2);
 }
 
 void ShootShip(int shipNum)
@@ -133,6 +189,11 @@ void MoveShip(int shipNum)
 		ShootShip(0);
 	}
 
+	for(int i = 0; i < playerParticleList.size(); i++)
+	{
+		playerParticleList[i]->sInfo.spawnPoint = vec2(
+			ship->tf.rectangle.left, ship->tf.rectangle.bottom - ship->tf.rectangle.height / 2);
+	}
 }
 
 void ProcessBullets()
