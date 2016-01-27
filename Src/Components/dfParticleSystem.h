@@ -55,6 +55,9 @@ public:
 	float timer;
 	float nextParticleTime;
 
+	float systemLifeMaxTime;
+	float systemLifeTimer;
+
 	Renderer* parentRenderer;
 	Renderer particleRenderers[MAX_PARTICLES];
 	int currentParticleCap; // used to determine how far to iterate over particles

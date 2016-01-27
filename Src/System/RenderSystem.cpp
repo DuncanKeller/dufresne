@@ -403,15 +403,12 @@ void RenderSystem::RenderLoop(dfScene* scene)
 	dfParticleSystem* currPartSys = (dfParticleSystem*)dfComponentMap[typeid(dfParticleSystem)];
 	while(currPartSys != 0)
 	{
-		if(currPartSys->active)
+		for(int i = 0; i < currPartSys->currentParticleCap - 1; i++)
 		{
-			for(int i = 0; i < currPartSys->currentParticleCap - 1; i++)
-			{
-				if(currPartSys->particleRenderers[i].renderInfo.active)
-					AddToRenderBox(currPartSys->particleRenderers[i].renderInfo);
-			}
-			currPartSys = (dfParticleSystem*)currPartSys->nextInList;
+			if(currPartSys->particleRenderers[i].renderInfo.active)
+				AddToRenderBox(currPartSys->particleRenderers[i].renderInfo);
 		}
+		currPartSys = (dfParticleSystem*)currPartSys->nextInList;
 	}
 
 	infer = typeid(bmpTextEntity);

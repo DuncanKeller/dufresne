@@ -516,6 +516,8 @@ void UpdateEnemies()
 				enemies[i]->shakeTime += ENEMY_MAX_SHAKE;
 				enemies[i]->flashTime = 0.4f;
 
+				SparkFX(bullets[ii]->tf.rectangle.center);
+
  				enemies[i]->health--;
 				if(enemies[i]->health <= 0)
 					removeMe.push_back(i);
@@ -600,4 +602,32 @@ void UpdateLasers()
 		lasers.erase(lasers.begin() + (removeMe[i] - numRemvoed));
 		numRemvoed++;
 	}
+}
+
+void SparkFX(vec2 pos)
+{
+	dfParticleSystem* playerParticles =  new dfParticleSystem(); 
+	playerParticles->systemLifeMaxTime = 0.16f;
+	playerParticles->minSecondsBetweenParticles = 0.08f;
+	playerParticles->maxSecondsBetweenParticles = 0.08f;
+	playerParticles->maxActiveParticles = 1000;
+	playerParticles->layer = 5;
+	playerParticles->sInfo.spawnPoint = pos;
+	playerParticles->sInfo.minVeloc = 600;
+	playerParticles->sInfo.maxVeloc = 700;
+	playerParticles->sInfo.minLifespan = 0.3f;
+	playerParticles->sInfo.maxLifespan = 0.3f;
+	playerParticles->sInfo.minAcc = -1150;
+	playerParticles->sInfo.maxAcc = -1150;
+	playerParticles->sInfo.startColors.push_back(vec4(1,1,0,1));
+	playerParticles->sInfo.beginFadeTime = .85f;
+	playerParticles->sInfo.minStartRotation = 140;
+	playerParticles->sInfo.maxStartRotation = 220;
+	playerParticles->sInfo.minRotationSpd = 0;
+	playerParticles->sInfo.maxRotationSpd = 0;
+	playerParticles->sInfo.minParticleSize = 1;
+	playerParticles->sInfo.maxParticleSize = 3;
+	playerParticles->sInfo.fadeSize = 0;
+	playerParticles->sInfo.textures.push_back(assMan.GetTexture(L"fart\\dufradius\\particle-circle.png"));
+	ship->RegisterComponent(playerParticles);
 }

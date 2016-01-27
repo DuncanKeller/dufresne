@@ -105,3 +105,4 @@ void ChargerFire(dfEnemy e);
 
 // more fx
 void SetupParticles();
+void SparkFX(vec2 pos);

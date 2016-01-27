@@ -24,6 +24,9 @@ dfParticleSystem::dfParticleSystem(void)
 	maxSecondsBetweenParticles = 1.f;
 	timer = 0.f;
 	nextParticleTime = 0.f;
+	
+	systemLifeMaxTime = -1;
+	systemLifeTimer = 0;
 
 	layer = 0;
 	active = true;
@@ -47,11 +50,22 @@ void dfParticleSystem::Init()
 	dfComponent::Init();
 
 	parentRenderer = entity->GetComponent<Renderer>();
+
 }
 
 void dfParticleSystem::Update()
 {
-	dfComponent::Init();
+	dfComponent::Update();
+
+	if(systemLifeMaxTime > 0)
+	{
+		systemLifeTimer += dfDeltaTime;
+		if(systemLifeTimer >= systemLifeMaxTime)
+		{
+			// todo clean up with scene manager. Func to remove on end of update so we can do it within this class without funky stuff
+			active = false;
+		}
+	}
 	
 	if(active)
 	{
@@ -194,10 +208,19 @@ void dfParticleSystem::UpdateParticle(ParticleInfo &particle, int index)
 		particle.h = particle.maxSize * (1.f-ct);
 	}
 
+	point2D accDir = point2D(
+		particle.veloc.x > 0 ? 1 : -1,
+		particle.veloc.y > 0 ? 1 : -1);
+
 	particle.pos.x += particle.veloc.x * dfDeltaTime;
 	particle.pos.y += particle.veloc.y * dfDeltaTime;
-	particle.veloc.x += particle.acc * dfDeltaTime;
-	particle.veloc.y += particle.acc * dfDeltaTime;
+	particle.veloc.x += particle.acc * accDir.x * dfDeltaTime;
+	particle.veloc.y += particle.acc * accDir.y * dfDeltaTime;
+	
+	if(particle.veloc.x * accDir.x < 0)
+		particle.veloc.x = 0;
+	if(particle.veloc.y * accDir.y < 0)
+		particle.veloc.y = 0;
 
 	particle.rotation += particle.rotationSpd;
 
