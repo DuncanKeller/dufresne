@@ -25,7 +25,8 @@ void Entity::Update()
 	dfAssert(numComponents < maxComponents);
 	for(int i = 0; i < numComponents; i++)
 	{
-		(*components[i]).Update();
+		if(components[i] != NULL)
+			(*components[i]).Update();
 	}
 }
 
@@ -42,6 +43,23 @@ void Entity::RegisterComponent(dfComponent* newComponent)
 	else
 	{
 		dfLog("max components reached... need to make dyanmic array, or better component storage solution");
+	}
+}
+
+void Entity::DeleteComponent(dfComponent* component)
+{
+	if(component != NULL)
+	{
+		for(int i = 0; i < numComponents; i++)
+		{
+			if(components[i] == component)
+			{
+				components[i] = 0;
+				RemoveComponentFromMap(component);
+				delete component;
+				return;
+			}
+		}
 	}
 }
 

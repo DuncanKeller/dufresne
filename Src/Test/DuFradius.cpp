@@ -8,9 +8,9 @@ std::vector<SupaLaser*> lasers;
 std::vector<dfParticleSystem*> playerParticleList;
 
 const char* laserBeamFrag = ""
-	"#version 130\n"
-	"#extension GL_ARB_explicit_attrib_location : require\n"
-	"#extension GL_ARB_explicit_uniform_location : require\n"
+//	"#version 130\n"
+//	"#extension GL_ARB_explicit_attrib_location : require\n"
+//	"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform vec4 inColor;"
 	"uniform float time;"
@@ -58,9 +58,9 @@ const char* laserBeamFrag = ""
 	"";
 
 const char* fradiusEntityFrag = ""
-	"#version 130\n"
-	"#extension GL_ARB_explicit_attrib_location : require\n"
-	"#extension GL_ARB_explicit_uniform_location : require\n"
+	//"#version 130\n"
+//	"#extension GL_ARB_explicit_attrib_location : require\n"
+	//"#extension GL_ARB_explicit_uniform_location : require\n"
 	"in vec2 texture_coordinates;"
 	"uniform sampler2D basic_texture;"
 	"uniform vec2 atlasPos,spriteSize;"
@@ -241,6 +241,16 @@ void DufradiusUpdate()
 	Rect r;
 	RectSet(0,0,GameResolution.x,GameResolution.y, &r);
 	RenderSystem::DrawRect(r, vec4(0,0,0,1), 0);
+
+	// clean up particles
+	std::vector<dfParticleSystem*> pList = ship->GetComponents<dfParticleSystem>();
+	for(int i = 0; i < pList.size(); i++)
+	{
+		if(!pList[i]->active)
+		{
+			ship->DeleteComponent(pList[i]);
+		}
+	}
 }
 
 void SetupMiniPather(float lHeight, float rHeight)
@@ -607,7 +617,7 @@ void UpdateLasers()
 void SparkFX(vec2 pos)
 {
 	dfParticleSystem* playerParticles =  new dfParticleSystem(); 
-	playerParticles->systemLifeMaxTime = 0.16f;
+	playerParticles->systemLifeMaxTime = 0.25f;
 	playerParticles->minSecondsBetweenParticles = 0.08f;
 	playerParticles->maxSecondsBetweenParticles = 0.08f;
 	playerParticles->maxActiveParticles = 1000;
